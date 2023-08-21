@@ -1,0 +1,16 @@
+Rodar ele sempre com o HiperSync Fechado
+
+delete hiperloja_sync_protocolo_sincronizacao
+delete hiperloja_sync_protocolo_sincronizacao_arquivos
+delete hiperloja_sync_protocolo_sincronizacao_objetos
+delete hiperloja_sync_protocolo_sincronizacao_objetos_alertas
+delete hiperloja_sync_protocolo_sincronizacao_objetos_entidades
+delete hiperloja_sync_processamento
+
+Roda até parar de aparecer os erros vermelhos e 0 linhas alteradas
+
+select * from hiperloja_sync_auditoria - roda este select se tiver algo
+delete from hiperloja_sync_auditoria - roda este dai
+
+update hiperloja_sync_processamento
+set DataEHoraDaUltimaSolicitacao = GETDATE() - 1

@@ -1,0 +1,16 @@
+# general things to ignore
+build/
+dist/
+docs/
+sphinx/.build/
+*.egg-info/
+*.egg
+*.py[cod]
+__pycache__/
+*.so
+*~
+*.wpr
+*.wpu
+*.log
+
+

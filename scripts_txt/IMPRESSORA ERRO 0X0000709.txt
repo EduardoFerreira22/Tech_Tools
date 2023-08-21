@@ -1,0 +1,77 @@
+
+Passo 1>
+	Ativar o Recurso LPD Printer Service
+	Ativar o Recurso LPR Port Monitor
+	
+Acessar o Painel de Controle, em baixo do nome Programas escolher a opção 'Desinstalar um Programa'.
+	No lado esquerdo, escolher a opção 'Ativar ou desativar recursos do Windows';
+	Procurar por 'Serviços de Impressão e Documentos'
+	Clicar no + para expandir
+	Selecionar Monitor de Porta LPR e Serviço de Impressão LPD e depois clicar em 'OK';
+	
+Passo 2>
+	Abri o Editor de 'Editor de Política de Grupo Local'
+	Para isso. aperta a tecla 'Windows + R' ou então pesquisar na barra de pesquisa pelo nome 'Executar';
+	Na tela que aparece, digite o nome 'gpedit.msc' e aperte enter ou então clique em ok;
+	Na nova tela procure por 'Modelos Administrativos'--> Impressoras;
+	Selecione a opção 'Definir configurações de conexão RCP' -- Voce pode abrir essa opção dando 2 cliques ou 
+	clicar em 'configuração de Politicia'.
+		Na tela que abre, na opção 'Definir configurações de conexão RPC' marque a opção 'habilitado'.
+		Na opçao 'Protocolo a ser usado para conexoes RPC de saida" marque 'RCP sobre pipes nomeados;
+		Na opçao 'Use a autenticação para conexões RPC de saida' marque 'Padrão'
+		Em seguida, clique em aplicar e ok
+		
+Definir configurações de ouvinte RCP
+Configurar RCP sobre porta TCP
+
+Abrir editor de registro
+	Computador\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC
+	RpcOverNamedPipes(1) dword 32
+	RpcOverTcp(0) dword 32
+	RpcUseNamedPipeProtocol(1)
+	
+Dar permissoes
+	Computador\HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Windows
+	dar permissões sobre a pasta Windows (Full control)
+
+Habilitar o RpcAuthnLevelPrivacyEnabled
+	Computador\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print
+	 
+	 REINICIAR O SERVIÇO DE SPOOLER
+	
+	
+	====================
+	
+	
+	Step - 1
+Turn Windows Features On or Off
+Printer and Document Service
+LPD Printer Service
+LPR Port Monitor
+
+Step - 2
+Local Group Policy Editor
+Administrative Templetes
+Printer
+Configure RPC Connection - Enabled- RPC over named pipes
+Configure RPC Listener - Enabled- RPC over named pipes and TCP
+Configure RPC over TCP - Enabled
+
+Step - 3
+[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows NT\Printers\RPC]
+There are 2 values that can be configured:
+RpcUseNamedPipeProtocol REG_DWORD
+0: RpcOverTcp  Value - 0
+1: RpcOverNamedPipes Value - 1
+
+Step - 4
+[HKEY_LOCAL_MACHINE\SYSTEM|CurrentControlSet\Control\Print
+RpcAuthnLevelPrivacyEnabled REG_DWORD
+
+Step - 5
+HKEY_CURRENT_USER\Software\Microsoft\WindowsNT\CurrentVersion\Windows
+Then Right-click on Windows key and select Permissions.
+
+Step - Final
+Print Spooler
+	

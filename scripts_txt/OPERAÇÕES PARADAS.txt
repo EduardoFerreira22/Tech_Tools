@@ -1,0 +1,15 @@
+select * from (
+select 'devoluca' coluna, count( *) qtd from hiper..devolucao_venda (nolock) where status_integracao <> 0
+union all select 'documento_estoque', count( *) from hiper..documento_estoque (nolock) where status_integracao <> 0
+union all select 'entidade', count( *) from hiper..entidade (nolock) where status_integracao <> 0
+union all select 'hierarquia_produto', count( *) from hiper..hierarquia_produto (nolock) where status_integracao <> 0
+union all select 'lancamento_devolucao_venda', count( *) from hiper..lancamento_devolucao_venda (nolock) where status_integracao <> 0
+union all select 'marca_produto', count( *) from hiper..marca_produto (nolock) where status_integracao <> 0
+union all select 'nota_fiscal', count( *) from hiper..nota_fiscal nf (nolock) where status_integracao <> 0 AND ((nf.situacao_registro <> 1 and nf.situacao_registro is not null) or (nf.status_nfe not in (0,1,2,7) and nf.status_nfe is not null))
+union all select 'nota_fiscal_log_email', count( *) from hiper..nota_fiscal_log_email (nolock) where status_integracao <> 0
+union all select 'operacao_pdv', count( *) from hiper..operacao_pdv (nolock) where status_integracao <> 0
+union all select 'pedido_venda', count( *) from hiper..pedido_venda (nolock) where status_integracao <> 0 AND situacao <> 1 AND situacao <> 7 --tira em cadastramento
+union all select 'produto ', count( *) from hiper..produto (nolock) where status_integracao <> 0
+union all select 'tabela_preco_produto', count( *) from hiper..tabela_preco_produto (nolock) where status_integracao <> 0
+union all select 'unidade_medida' , count( *) from hiper..unidade_medida (nolock) where status_integracao <> 0
+) dados where qtd > 0--select * from produto (nolock) where status_integracao <> 0

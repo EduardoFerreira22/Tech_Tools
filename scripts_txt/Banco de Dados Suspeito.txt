@@ -1,0 +1,14 @@
+-- Passo 1
+ALTER DATABASE Hiper SET EMERGENCY
+ALTER DATABASE Hiper SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+
+-- Passo 2
+DBCC CheckDB ('Hiper', REPAIR) -- Tentar este comando, se der erro, tentar o debaixo
+--DBCC CheckDB ('Hiper', REPAIR_ALLOW_DATA_LOSS)
+
+-- Passo 3
+ALTER DATABASE Hiper SET MULTI_USER
+ALTER DATABASE Hiper SET ONLINE
+
+-- Passo 4
+USE Hiper EXEC sp_msforeachtable 'ALTER TABLE ? WITH CHECK CHECK CONSTRAINT ALL'

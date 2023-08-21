@@ -1,0 +1,41 @@
+
+####################################
+FDB - The Python driver for Firebird
+####################################
+
+FDB is a `Python`_ library package that implements `Python Database API 2.0`_-compliant support for the open source relational database `Firebird`_ ®. In addition to the minimal feature set of the standard Python DB API, FDB also exposes the entire native (old-style) client API of the database engine and number of additional extensions and enhancements for convenient use of Firebird.
+
+FDB is developed `under`_ the `Firebird Project`_, and is used internally as key component for `Firebird QA <http://www.firebirdsql.org/en/devel-qa/>`__.
+
+FDB is free -- covered by a permissive BSD-style `license <license.html>`__ that both commercial and noncommercial users should find agreeable.
+
+This documentation set is not a tutorial on Python, SQL, or Firebird; rather, it is a topical presentation of FDB's feature set, with example code to demonstrate basic usage patterns. For detailed information about Firebird features, see the `Firebird documentation <http://www.firebirdsql.org/en/documentation/>`__, and especially the excellent `The Firebird Book <http://www.ibphoenix.com/products/books/firebird_book>`__ written by Helen Borrie and published by IBPhoenix_.
+
+Content
+*******
+
+.. toctree::
+   :maxdepth: 2
+
+   getting-started
+   usage-guide
+   python-db-api-compliance
+   reference
+
+   changelog
+   license
+
+
+Indices and tables
+******************
+
+* :ref:`genindex`
+* :ref:`modindex`
+
+
+.. _IBPhoenix: http://www.ibphoenix.com
+.. _Python: http://python.org
+.. _Python Database API 2.0: http://www.python.org/dev/peps/pep-0249/
+.. _Firebird: http://www.firebirdsql.org
+.. _under: http://www.firebirdsql.org/en/devel-python-driver/
+.. _Firebird Project: http://www.firebirdsql.org

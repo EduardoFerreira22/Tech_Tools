@@ -1,0 +1,7 @@
+select * from pedido_venda where codigo = 'L3204'
+
+select * from pedido_venda_operacao_pdv where id_pedido_venda = 28706
+
+select * from operacao_pdv where id_operacao = 11126
+
+select * from operacao_pdv

@@ -1,0 +1,144 @@
+
+--Produto SEM estoque (COM estoque SE arrumar o GROUP BY)
+SELECT 
+	t1.codigo,
+    COALESCE(t2.codigo_barras, '') AS codigo_barras,
+    t1.referencia_interna_produto,
+	t1.nome AS nome_produto,
+    t9.codigo AS codigo_fornecedor,
+	t4.sigla as sigla_unidade_medida,
+	--CASE WHEN t6.quantidade > '-1' THEN SUM(t6.quantidade) END AS estoque   
+	t1.preco_aquisicao AS precoFornecedor,
+	t1.preco_custo AS preço_de_custo,
+	t1.preco_minimo_venda,
+	t1.preco_venda,
+	t3.id_ncm AS NCM,
+	isnull(cast(t5.id_situacao_tributaria_icms AS VARCHAR), '') AS Codigo_situacao_tributaria_ICMS,
+	isnull(cast(t5.id_situacao_tributaria_simples_nacional AS VARCHAR), '') AS CSOSN,
+	isnull(cast(t5.aliquota_icms AS VARCHAR), '') AS AliquotaICMS,
+	isnull(cast(t5.percentual_reducao_base_icms AS VARCHAR), '') AS ReducaoICMS,
+	isnull(cast(t5.mva AS VARCHAR), '') AS MVA
+FROM produto t1
+	LEFT JOIN produto_sinonimo t2 ON t1.id_produto = t2.id_produto
+	LEFT JOIN ncm t3 ON t1.id_ncm = t3.id_ncm
+	LEFT JOIN unidade_medida t4 ON t1.id_unidade_medida = t4.id_unidade_medida
+	LEFT JOIN regra_tributacao_icms_personalizada t5 ON t1.id_produto = t5.id_produto
+	--LEFT JOIN saldo_estoque t6 ON t1.id_produto = t6.id_produto
+	LEFT JOIN entidade t9 ON t1.id_entidade_fornecedor = t9.id_entidade
+WHERE t1.codigo <> 1
+	--GROUP BY t6.id_produto, t1.codigo, t2.codigo_barras, t1.referencia_interna_produto, t1.nome, t9.codigo, t4.sigla, t6.quantidade --t1.codigo, t2.codigo_barras, t1.referencia_interna_produto, t1.nome, t9.codigo, t4.sigla, t6.quantidade, 
+	ORDER BY t1.codigo
+
+--Estoque
+SELECT
+	t1.id_produto,
+	t2.codigo,
+	SUM(t1.quantidade) as estoque
+FROM saldo_estoque t1
+	LEFT JOIN produto t2 ON t1.id_produto = t2.id_produto
+	GROUP BY t1.id_produto, t2.codigo
+	ORDER BY t1.id_produto
+
+
+--Clientes e Fornecedores
+SELECT
+	CASE WHEN t1.flag_cliente = '1' THEN 'SIM' ELSE 'NAO' END AS eh_cliente,
+	CASE WHEN t1.flag_fornecedor = '1' THEN 'SIM' ELSE 'NAO' END AS eh_fornecedor,
+	CASE WHEN t1.flag_transportadora = '1' THEN 'SIM' ELSE 'NAO' END AS eh_transportadora,
+	t1.codigo,
+	t1.nome,
+	CASE WHEN t1.tipo_entidade = '2' THEN t4.cnpj ELSE t3.cpf END AS cpf_ou_cnpj,
+	CASE WHEN t1.tipo_entidade = '2' THEN t4.nome_fantasia ELSE '' END AS nome_fantasia,
+	CASE WHEN t1.tipo_entidade = '2' THEN t4.ie ELSE t3.ie END AS inscricao_estadual,
+	t3.rg,
+	t1.logradouro,
+	t1.numero_endereco,
+	t1.bairro,
+	t1.complemento,
+	t1.cep,
+	t2.nome as cidade,
+	t2.uf,
+	t1.fone_primario_ddd + fone_primario_numero as telefone_principal,
+	t1.fone_secundario_ddd + fone_secundario_ddd as telefone_secundario,
+	t1.email
+FROM entidade t1
+	LEFT JOIN cidade t2 ON t1.id_cidade = t2.id_cidade
+	LEFT JOIN pessoa_fisica t3 ON t1.id_entidade = t3.id_entidade
+	LEFT JOIN pessoa_juridica t4 ON t1.id_entidade = t4.id_entidade
+
+
+–Ordem Producao
+SELECT 
+        t1.id_ordem_producao AS "codigo Ordem Producao",
+        COALESCE(LEFT(t2.nome,80),'') AS Produto,
+        t1.quantidade AS "quantidade utilizada",
+        t1.quantidade_produzida AS "quantidade produzida",
+        t1.quantidade_desperdicio AS "quantidade Desperdicio",
+    CASE
+        WHEN t3.situacao = 4 THEN 'Producao Concluida'
+        WHEN t3.situacao = 3 THEN 'Producao Parcial'
+        WHEN t3.situacao = 2 THEN 'Producao Pendente'
+        WHEN t3.situacao = 1 THEN 'Em cadastramento'
+        END AS "Status Ordem Producao",
+    t3.observacao,
+    t4.razao_social AS "Nome Empresa",
+    t3.data_hora_cadastro,
+    t5.nome AS "Usuario de cadastro",
+    t3.data_hora_alteracao,
+    CASE
+        WHEN t3.id_usuario_alteracao IS NULL THEN 'Não Alterado'
+        ELSE (SELECT nome 
+                FROM usuario 
+                    WHERE t3.id_usuario_alteracao = id_usuario) 
+                        END AS "Nome usuario Alteracao"
+    FROM item_ordem_producao t1 (NOLOCK)
+        LEFT JOIN produto t2  (NOLOCK) ON t1.id_produto = t2.id_produto
+        LEFT JOIN ordem_producao t3 (NOLOCK) ON t1.id_ordem_producao = t3.id_ordem_producao
+        LEFT JOIN filial t4 (NOLOCK)ON t3.id_filial_ordem = t4.id_filial
+        LEFT JOIN usuario t5 (NOLOCK) ON t3.id_usuario_cadastro = t5.id_usuario
+
+–Pedido de venda
+use Hiper
+
+DECLARE @datainicial date
+SET @datainicial = '2020-01-01' -- pode estar informando a data que inicial desejada (ANO / DIA / MES)
+DECLARE @datafinal  date
+SET @datafinal = '2021-12-31'-- pode estar informando a data que final desejada (ANO / DIA / MES)
+
+SELECT 
+    t2.codigo AS "Codigo Pedido de Venda",
+    t3.nome AS "Nome do Produto",
+    t1.valor_unitario AS "Preço Unitario",
+    t2.observacao,
+    t4.nome AS "Nome Cliente",
+    CASE
+        WHEN t4.tipo_entidade = 1 THEN t6.cpf
+        WHEN t4.tipo_entidade = 2 THEN t7.cnpj
+        ELSE '' END AS "CPF ou CNPJ Cliente",
+    t8.nome AS "usuario Geração Pedido de Venda",
+    left(t2.data_hora_geracao,11) AS "Data Abertura",
+    CASE
+        WHEN CAST(t2.situacao AS VARCHAR(20)) = 1 THEN 'Em cadastramento' 
+        WHEN CAST(t2.situacao AS VARCHAR(20)) = 2 THEN 'Não Faturado'
+        WHEN CAST(t2.situacao AS VARCHAR(20)) = 5 THEN 'Faturado'
+        WHEN CAST(t2.situacao AS VARCHAR(20)) = 6 THEN 'Cancelado'
+        WHEN CAST(t2.situacao AS VARCHAR(20)) = 7 THEN 'Em Faturamento'
+         END AS "Status"
+
+    FROM item_pedido_venda t1 (NOLOCK)
+    LEFT JOIN pedido_venda t2 (NOLOCK) ON t1.id_pedido_venda = t2.id_pedido_venda
+    LEFT JOIN produto t3 (NOLOCK) ON t1.id_produto = t3.id_produto
+    LEFT JOIN entidade t4 (NOLOCK) ON t2.id_entidade_cliente = t4.id_entidade
+    LEFT JOIN filial t5 (NOLOCK) ON t2.id_filial_venda = t5.id_filial
+    LEFT JOIN pessoa_fisica t6 (NOLOCK) ON t4.id_entidade = t6.id_entidade 
+    LEFT JOIN pessoa_juridica t7 (NOLOCK) ON t4.id_entidade = t7.id_entidade
+    LEFT JOIN usuario t8 (NOLOCK) ON t2.id_usuario_geracao = t8.id_usuario
+    WHERE 
+    -- ira pegar somente os pedido que não foram excluidos, caso queira os excluidos também altera o 1 por 99
+    t2.excluido <> 1
+    and t2.data_hora_geracao BETWEEN @dataInicial AND  @dataFinal
+
+    ORDER BY t2.codigo
+
+
+
