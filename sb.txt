@@ -15,3 +15,7 @@ Desenvolvedores:
 
 Eduardo Ferreira;
 Daniel Costa.
+
+login padrão:
+user: admin
+senha:admin

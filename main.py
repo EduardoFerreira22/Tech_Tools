@@ -1301,7 +1301,6 @@ def window_1():
         app.mainloop()
         gc.collect()
 
-
 def abrir_tela_app(login):
       # Declarar a variável login como global
     login.destroy()
@@ -1329,23 +1328,32 @@ def show_progress_bar(login):
 
     login.after(int(update_interval), update_progress)  # Ajuste o tempo aqui (em milissegundos)
 
-
-
 def verificar_login(login):
     login_conn = Sqlite_Conn()
     user = user_login_et.get()
     password = pass_login_et.get()
 
-    comando = f"SELECT USER, PASSWORD FROM USERS WHERE USER = '{user}' AND PASSWORD = '{password}';"
-    login_conn.cursor.execute(comando)
-    resultado = login_conn.cursor.fetchall()
+    comando_users = f"SELECT USER, PASSWORD FROM USERS WHERE USER = '{user}' AND PASSWORD = '{password}';"
+    comando_manager_pass = f"SELECT NOME, SENHA FROM MANAGER_PASS WHERE NOME = '{user}' AND SENHA = '{password}';"
 
-    if resultado:
+    login_conn.cursor.execute(comando_users)
+    resultado_users = login_conn.cursor.fetchall()
+
+    if resultado_users:
         show_progress_bar(login)
-        login.after(100, lambda: abrir_tela_app(login))  # Chama a função abrir_tela_app() após 100ms
+        login.after(100, lambda: abrir_tela_app(login))
     else:
-        messagebox.showerror("Erro", "Usuário ou senha incorretos")
-        login_conn.cursor.close()
+        login_conn.cursor.execute(comando_manager_pass)
+        resultado_manager_pass = login_conn.cursor.fetchall()
+
+        if resultado_manager_pass:
+            show_progress_bar(login)
+            login.after(100, lambda: abrir_tela_app(login))
+        else:
+            messagebox.showerror("Erro", "Usuário ou senha incorretos")
+
+    login_conn.cursor.close()
+
 
 def win_login():
     global user_login_et, pass_login_et, bt_login
