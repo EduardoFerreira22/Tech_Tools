@@ -1,3 +1,6 @@
+
+
+
 O desenvolvimento do Tech Tools surgiu como resposta direta à necessidade de acesso rápido a algumas das ferramentas mais frequentemente utilizadas por mim e pelos meus colegas de trabalho. No contexto da Mundo Technology, uma renomada softwarehouse especializada na revenda de sistemas de gestão, o Tech Tools foi concebido para complementar a base de programas já existentes, que desempenham um papel fundamental no cotidiano dos técnicos de TI.
 
 Além de oferecer um conjunto diversificado de programas essenciais, o Tech Tools é um recurso completo, abrangendo também os drivers das principais impressoras amplamente empregadas no mercado atual. Este aspecto é fundamental para agilizar as operações diárias e garantir um fluxo de trabalho eficiente para os profissionais de TI.
