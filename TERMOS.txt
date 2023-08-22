@@ -32,7 +32,7 @@ O Programa é disponibilizado para uso gratuito e é licenciado sob a licença G
 
 6. Alterações dos Termos
 
-O Detentor da Propriedade Intelectual reserva o direito de atualizar ou modificar estes termos de uso a qualquer momento. Os usuários serão notificados sobre essas mudanças por meio do https://github.com/EduardoFerreira22/TechTools.
+O Detentor da Propriedade Intelectual reserva o direito de atualizar ou modificar estes termos de uso a qualquer momento. Os usuários serão notificados sobre essas mudanças por meio do https://github.com/EduardoFerreira22/Tech_Tools.
 
 7. Aceitação dos Termos
 
