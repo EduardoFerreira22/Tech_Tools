@@ -984,6 +984,7 @@ def tela_sobre():
     sobre_text.config(xscrollcommand=scrollbar.set)
 
     janela_sobre.mainloop()
+    gc.collect()
 
 def window_1():
         global app, icon_path, tree, sqllite
@@ -1298,5 +1299,6 @@ def window_1():
             tree.insert("", "end",iid=rows[0],text=[0], values=rows)
     
         app.mainloop()
+        gc.collect()
 
 window_1()
