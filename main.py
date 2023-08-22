@@ -1301,4 +1301,99 @@ def window_1():
         app.mainloop()
         gc.collect()
 
-window_1()
+
+def abrir_tela_app(login):
+      # Declarar a variável login como global
+    login.destroy()
+    window_1()
+
+def show_progress_bar(login):
+    
+    progress_bar = ttk.Progressbar(login, mode='determinate', maximum=100, length=400)  # Altere o valor de 'length' conforme necessário
+    progress_bar.place(x=230, y=520)
+    progress_bar.start(1)  # Inicia a animação do ProgressBar
+    increment = 1  # Valor do incremento a cada iteração
+    total_iterations = 1  # Total de iterações para atingir 100%
+    update_interval = 5000000 / total_iterations  # Tempo entre cada iteração (em milissegundos)
+
+    def update_progress():
+        nonlocal increment
+        current_value = progress_bar['value'] + increment
+        if current_value <= 10:
+            progress_bar['value'] = current_value
+            login.after(int(update_interval), update_progress)  # Ajuste o tempo aqui (em milissegundos)
+        else:
+            progress_bar.stop()  # Para a animação do ProgressBar
+            progress_bar.destroy()  # Remove o ProgressBar da tela
+            abrir_tela_app()
+
+    login.after(int(update_interval), update_progress)  # Ajuste o tempo aqui (em milissegundos)
+
+
+
+def verificar_login(login):
+    login_conn = Sqlite_Conn()
+    user = user_login_et.get()
+    password = pass_login_et.get()
+
+    comando = f"SELECT USER, PASSWORD FROM USERS WHERE USER = '{user}' AND PASSWORD = '{password}';"
+    login_conn.cursor.execute(comando)
+    resultado = login_conn.cursor.fetchall()
+
+    if resultado:
+        show_progress_bar(login)
+        login.after(100, lambda: abrir_tela_app(login))  # Chama a função abrir_tela_app() após 100ms
+    else:
+        messagebox.showerror("Erro", "Usuário ou senha incorretos")
+        login_conn.cursor.close()
+
+def win_login():
+    global user_login_et, pass_login_et, bt_login
+    login = Tk()
+    login.title("Login")
+    login.geometry("400x200")
+    login.maxsize(400,200)
+    login.minsize(400,200)
+    login.configure(bg=c['3'])
+    icon_path = os.path.join(os.path.dirname(__file__), 'image', 'IMG.ico')
+    login.iconbitmap(icon_path)
+    screen_width = login.winfo_screenwidth()
+    screen_height = login.winfo_screenheight()
+
+    # Define as dimensões da janela
+    window_width = 400
+    window_height = 200
+
+    # Calcula as coordenadas para centralizar a janela
+    x = int(screen_width / 2 - window_width / 2)
+    y = int(screen_height / 2 - window_height / 2)
+
+    # Define as coordenadas da janela
+    login.geometry(f"{window_width}x{window_height}+{x}+{y}")
+
+    frame_central = tk.Frame(login, width=380, height=175,bg=c['3'],bd=1,highlightthickness=1,highlightbackground=c['2'])
+    frame_central.place_configure(x=10, y=15)
+
+    user_login_lb = tk.Label(frame_central,text='Usuário:',font=st_f['f3'],bg=c['3'], fg=c['2'])
+    user_login_lb.place_configure(x=100, y=15)
+
+    user_login_et = tk.Entry(frame_central,width=30,bd=2,highlightthickness=1,highlightbackground=c['7'] ,fg=c['7'],font=st_f['f3'])
+    user_login_et.place_configure(x=100, y=40)
+
+    pass_login_lb = tk.Label(frame_central,text='Senha:',font=st_f['f3'],bg=c['3'], fg=c['2'])
+    pass_login_lb.place_configure(x=100, y=70)
+
+    pass_login_et = tk.Entry(frame_central,show='*',width=30,bd=2,highlightthickness=1,highlightbackground=c['7'] ,fg=c['7'],font=st_f['f3'])
+    pass_login_et.place_configure(x=100, y=95)
+    
+    def press_enter(event):
+        verificar_login(login)
+
+    pass_login_et.bind('<Return>', press_enter)
+
+    bt_login = tk.Button(frame_central, text='Login', width=10,font=st_f['f3'],bg=c['5'], fg=c['2'], command=lambda: verificar_login(login))
+    bt_login.place_configure(x=148, y=130)
+
+
+    login.mainloop()
+win_login()
