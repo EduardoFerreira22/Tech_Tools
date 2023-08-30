@@ -12,8 +12,9 @@ Outra dimensão significativa do Tech Tools é sua utilidade como Sistema de Ger
 Em resumo, o Tech Tools representa um avanço essencial na otimização das operações da Mundo Technology. Ao reunir ferramentas de acesso rápido, drivers de impressoras, conhecimento consolidado e capacidades de SGBD, a ferramenta se destaca como um ativo valioso para a eficiência e a eficácia do trabalho da equipe de TI.
 
 Desenvolvedores:
-
 Eduardo Ferreira;
+
+Colaboração:
 Daniel Costa.
 
 login padrão:
