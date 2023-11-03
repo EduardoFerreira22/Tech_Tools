@@ -14,9 +14,6 @@ Em resumo, o Tech Tools representa um avanço essencial na otimização das oper
 Desenvolvedores:
 Eduardo Ferreira;
 
-Colaboração:
-Daniel Costa.
-
 login padrão:
 user: admin
 senha:admin
