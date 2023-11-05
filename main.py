@@ -13,11 +13,12 @@ import pyodbc
 import mysql.connector
 import webbrowser
 import datetime
+import bcrypt
 import csv
 import os
 import re
 import gc
-#IMPORTANDO AS FUNÇÕES DO ARQUIVO EXECT.PY
+#IMPORTANDO AS FUNÇÕES DO ARQUIVO EXECUT.PY
 from execut import (
     ib_expert,
     exec_rufus,
@@ -38,7 +39,7 @@ st_f = {'f1':('M Hei PRC', 10, 'bold'),'f2':('Helvetica', 8,'bold','italic'),'f3
 #DICIONÁRIO DE CORES USADAS DENTRO DO PROGRAMA.
 # C REPRESENTA CORES
 		#CORES	LARANJA			BRANCO		 AZUL ESCURO	AZUL CEU	  VERDE			VERMELHO
-c: dict = {'1':'#e69138', '2':'#ffffff','3':'#104e8b', '4':'#f0ffff','5':'#44ab4c','6':'#e32636','7':'#000000'}
+c: dict = {'1':'#e69138', '2':'#ffffff','3':'#033364', '4':'#f0ffff','5':'#44ab4c','6':'#e32636','7':'#000000'}
 
 links1 = {
         'Hiper.Setup': 'https://downloads.hiper.com.br/Hiper.Setup.exe',
@@ -238,7 +239,7 @@ class Img():
             self.users = ImageTk.PhotoImage(resized_image4)
 
             image5 = Image.open("image\\TECHTOOL_LOGO.png")
-            desired_size5 = (350, 350)  # Tamanho desejado
+            desired_size5 = (590, 390)  # Tamanho desejado
             resized_image5 = image5.resize(desired_size5)
             self.tech = ImageTk.PhotoImage(resized_image5)
 
@@ -367,20 +368,7 @@ class Sqlite_Conn():
 
         if search_query == '' and bt_seach_dados:
             self.cursor.execute("SELECT id ,nome, senha, email, obs FROM manager_pass")
-            search_results = self.cursor.fetchall()
-            # id_entry.config(state=tk.NORMAL)  # Habilita o campo temporariamente
-            # id_entry.delete(0, tk.END)  # Limpa o campo de entrada
-            # id_entry.insert(0, search_results[0][0])  # Insere o valor do ID obtido
-            # id_entry.config(state=tk.DISABLED)  # Desabilita o campo novamente
-            # manager_user_et.delete(0, END)
-            # manager_user_et.insert(0, search_results[0][1])
-            # manager_pass_et.delete(0 , END)
-            # manager_pass_et.insert(0, search_results[0][2])
-            # obs_entry.delete(0, END)
-            # obs_entry.insert(0, search_results[0][3])
-            # email_entry.delete(0, END)
-            # email_entry.insert(0, search_results[0][2])
-            
+            search_results = self.cursor.fetchall()           
             # Limpa a Treeview
             tree.delete(*tree.get_children())
 
@@ -388,6 +376,7 @@ class Sqlite_Conn():
             for row in search_results:
                 tree.insert("", "end", values=row)
 
+    #ADICIONA USUÁRIOS E GERENCIAMENTOS DE LOGINS
     def add_manager_pass(self):
         manager_pass = manager_pass_et.get()
         manager_user = manager_user_et.get()
@@ -402,13 +391,13 @@ class Sqlite_Conn():
             else:
                 try:
                     if new_user_var.get() == 1:
-                        manager_pass = manager_pass_et.get()
-                        manager_user = manager_user_et.get()
-                        query_salvar4 = f"INSERT INTO manager_pass(nome, senha) VALUES ('{manager_user}','{manager_pass}')"
-                        self.cursor.execute(query_salvar4)
+                        hash_pass = bcrypt.hashpw(manager_pass.encode('utf-8'),bcrypt.gensalt())
+                            # Armazene o nome de usuário e o hash da senha no seu banco de dados ou onde desejar
+                            # Certifique-se de armazenar o hash, não a senha em texto claro
+                        self.cursor.execute("INSERT INTO USERS (user, password) VALUES (?,?)",(manager_user,hash_pass))
                         self.conn.commit()
-                        messagebox.showinfo("Sucesso!", "Usuário cadastrado com sucesso!")
-                    
+                        messagebox.showinfo("Sucesso!", "Cadastro realizado com sucesso!")
+
                     if alt_user_var.get() == 1:
                         manager_pass = manager_pass_et.get()
                         manager_user = manager_user_et.get()
@@ -419,8 +408,9 @@ class Sqlite_Conn():
                         self.conn.commit()
                         messagebox.showinfo("Sucesso!", "Cadastro realizado com sucesso!")
                 except Exception as e:
-                    messagebox.showerror("Error!", f"Não foi possível cadastrar um novo usuário!\n{e}")
-
+                    #messagebox.showerror("Error!", f"Não foi possível cadastrar um novo usuário!\n{e}")
+                    print(e)
+    #ALTERAÇÃO DE USUÁRIOS
     def alter_user(self):
         user = manager_user_et.get()
         senha = manager_pass_et.get()
@@ -435,6 +425,7 @@ class Sqlite_Conn():
         except Exception as e:
             messagebox.showerror("Error!", f"Não foi possível alterar os dados inseridos!\n{e}")
 
+    #EXCLUI USUÁRIOS
     def exclude_data4(self):
         id_entry4 = id_entry.get()
         try:
@@ -445,6 +436,7 @@ class Sqlite_Conn():
         except Exception as e:
                 messagebox.showerror("Error!", f"Não foi possível excluir os dados inseridos!\n{e}")
 
+#CLASSE EXECUT CRIA FUNÇÕES E EXECUTA TODOS AS FUNÇÕES IMPORTADAS  DO ARQUIVO EXECUT.PY
 class Execut():
 	def __init__(self):
 		pass
@@ -471,6 +463,7 @@ class Execut():
 	def ipscaner(self):
 		exec_ipscaner()
 
+#LISTA DE ARQUIVOS QUE CHAMA AS FUNÇÕES E EXECUTAM OS EXECUTÁVEIS.
 def file_list():
     executor = Execut()  # Renomeia a variável para evitar colisão de nomes
     selected_value = aq_inst.get()  # Obtém o valor selecionado no Combobox
@@ -503,6 +496,7 @@ def file_list():
     elif selected_value == 'SQL Server 2019 Express' and bt_baixar_file:
         webbrowser.open(links1['SQL Server® 2019 Express'])
 
+#LISTA DE NOMES DE IMPRESSORAS QUE CHAMA OS LINKS DE IMPRESSORAS SELECIONADAS
 def list_printers():
     impressoras = prints.get()
 
@@ -619,7 +613,6 @@ def lists_servers():
 
     # Lista de processos encontrados
     processos = []
-
     # Percorre todos os processos em execução
     for proc in psutil.process_iter():
         try:
@@ -766,7 +759,7 @@ def conectar():
 		conection.conect_sqlserver()
 
 	if selected_db == 'MySQL':
-		sqllite.conect_my_sql()
+		conection.conect_my_sql()
 
 #MOSTRA A LISTA DE TABELAS DISPONÍVEIS
 def view_tables():
@@ -991,8 +984,7 @@ def window_1():
         app = Tk()
         app.title("Tech Tools")
         app.geometry("600x460")
-        app.maxsize(600,460)
-        app.minsize(600,460)
+        app.resizable(False,False)
         app.configure(bg=c['3'])
         icon_path = os.path.join(os.path.dirname(__file__), 'image', 'IMG.ico')
         app.iconbitmap(icon_path)
@@ -1026,7 +1018,7 @@ def window_1():
         notebook = ttk.Notebook(app, width=590, height=390,style='TNotebook')
         notebook.place_configure(x=5, y=1)
         # Criando as páginas do notebook
-        page1 = tk.Frame(notebook,bg=c['3'],bd=1,highlightthickness=2,highlightbackground=c['7'])
+        page1 = tk.Frame(notebook,bg=c['7'],bd=1,highlightthickness=2,highlightbackground=c['7'])
         page2 = tk.Frame(notebook,bg=c['3'],bd=1,highlightthickness=2,highlightbackground=c['7'])
         page3 = tk.Frame(notebook,bg=c['3'],bd=1,highlightthickness=2,highlightbackground=c['7'])
         page4 = tk.Frame(notebook,bg=c['3'],bd=1,highlightthickness=2,highlightbackground=c['7'])
@@ -1035,10 +1027,9 @@ def window_1():
         notebook.add(page1, text="HOME",image=img.home)
 
         logo_tech = tk.Label(page1,image=img.tech,bg=c['3'],highlightbackground=c['7'])
-        logo_tech.place_configure(x=120, y=70)
+        logo_tech.place_configure(x=0, y=0)
 
-        frame_up = tk.Frame(page1,width=580, height=80, bg=c['3'],bd=1,highlightthickness=1,highlightbackground=c['2'])
-        frame_up.place_configure(x=2, y=5)
+
 
         def terms(event):
             tela_termos_uso()
@@ -1333,27 +1324,23 @@ def verificar_login(login):
     user = user_login_et.get()
     password = pass_login_et.get()
 
-    comando_users = f"SELECT USER, PASSWORD FROM USERS WHERE USER = '{user}' AND PASSWORD = '{password}';"
-    comando_manager_pass = f"SELECT NOME, SENHA FROM MANAGER_PASS WHERE NOME = '{user}' AND SENHA = '{password}';"
+    comando_users = f"SELECT user,PASSWORD FROM USERS WHERE USER = '{user}'"
+
 
     login_conn.cursor.execute(comando_users)
-    resultado_users = login_conn.cursor.fetchall()
+    stored_password_hash = login_conn.cursor.fetchone()
 
-    if resultado_users:
-        show_progress_bar(login)
-        login.after(100, lambda: abrir_tela_app(login))
-    else:
-        login_conn.cursor.execute(comando_manager_pass)
-        resultado_manager_pass = login_conn.cursor.fetchall()
-
-        if resultado_manager_pass:
-            show_progress_bar(login)
-            login.after(100, lambda: abrir_tela_app(login))
+    if stored_password_hash:
+        # Verifique se a senha fornecida corresponde ao hash armazenado
+        if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash[1]):
+                # A senha está correta, continue com o login
+                show_progress_bar(login)
+                login.after(100, lambda: abrir_tela_app(login))
         else:
-            messagebox.showerror("Erro", "Usuário ou senha incorretos")
+            messagebox.showerror("Erro", f"Usuário ou senha incorretos")
 
+ 
     login_conn.cursor.close()
-
 
 def win_login():
     global user_login_et, pass_login_et, bt_login
@@ -1404,4 +1391,5 @@ def win_login():
 
 
     login.mainloop()
+
 win_login()
