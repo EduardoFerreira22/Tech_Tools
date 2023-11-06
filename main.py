@@ -7,6 +7,7 @@ from PIL import Image, ImageTk
 import pandas as pd
 import PySimpleGUI as sg
 import sqlite3
+import pycipher
 import psutil
 import socket
 import pyodbc
@@ -313,12 +314,14 @@ class Conexao():
 
 class Sqlite_Conn():
     def __init__(self):
-
-         # Conecta-se ao banco de dados (ou cria um novo se não existir)
-        self.conn = sqlite3.connect('resources\\file_db\\file\\bd\\manager.db')
-        self.cursor = self.conn.cursor()
-        self.cursor.execute("SELECT * FROM MANAGER_PASS")
-        self.result = self.cursor.fetchall()
+        try:
+            # Conecta-se ao banco de dados (ou cria um novo se não existir)
+            self.conn = sqlite3.connect('venv\\Lib\\site-packages\\.lt\\temp\\sqlite\\cryptograf\\.manager.db')
+            self.cursor = self.conn.cursor()
+            self.cursor.execute("SELECT * FROM MANAGER_PASS")
+            self.result = self.cursor.fetchall()
+        except Exception as e:
+             messagebox.showerror("Error!",f"Erro ao conectar à DataBase\n'{e}'")
 
     def seach_data_page4(self):
         # Executa a pesquisa
@@ -394,7 +397,7 @@ class Sqlite_Conn():
                         hash_pass = bcrypt.hashpw(manager_pass.encode('utf-8'),bcrypt.gensalt())
                             # Armazene o nome de usuário e o hash da senha no seu banco de dados ou onde desejar
                             # Certifique-se de armazenar o hash, não a senha em texto claro
-                        self.cursor.execute("INSERT INTO USERS (user, password) VALUES (?,?)",(manager_user,hash_pass))
+                        self.cursor.execute("INSERT INTO USERS (user, password, TYPE_US) VALUES (?,?,?)",(manager_user,hash_pass, '20'))
                         self.conn.commit()
                         messagebox.showinfo("Sucesso!", "Cadastro realizado com sucesso!")
 
@@ -1043,6 +1046,9 @@ def window_1():
         sobre_label = tk.Label(app,text='Sobre...',font=st_f['f2'],bg=c['3'],fg=c['2'])
         sobre_label.place_configure(x=240, y=440)
         sobre_label.bind("<Button-1>",arq_sobre)
+        global user
+        user_label = Label(app,text=f'teste',font=st_f['f2'],bg=c['3'],fg=c['2'])
+        user_label.place_configure(x=300, y=440)
 
         version_label = tk.Label(app,text=f'Tech Tools ®  -  v{version}  |',font=st_f['f2'], bg=c['3'], fg=c['2'])	
         version_label.place_configure(x=5, y=440)
@@ -1324,23 +1330,37 @@ def verificar_login(login):
     user = user_login_et.get()
     password = pass_login_et.get()
 
-    comando_users = f"SELECT user,PASSWORD FROM USERS WHERE USER = '{user}'"
+    # Consulta para recuperar os dados do usuário com base no nome de usuário
+    comando_users = "SELECT USER, PASSWORD FROM USERS WHERE USER = ?"
+    user_data = (user,)  # Usando um parâmetro de ligação
 
+    login_conn.cursor.execute(comando_users, user_data)
+    stored_user_data = login_conn.cursor.fetchone()
 
-    login_conn.cursor.execute(comando_users)
-    stored_password_hash = login_conn.cursor.fetchone()
-
-    if stored_password_hash:
+    if stored_user_data:
+        stored_password_hash = stored_user_data[1]
         # Verifique se a senha fornecida corresponde ao hash armazenado
-        if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash[1]):
-                # A senha está correta, continue com o login
-                show_progress_bar(login)
-                login.after(100, lambda: abrir_tela_app(login))
-        else:
-            messagebox.showerror("Erro", f"Usuário ou senha incorretos")
+        if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash):
+            # A senha está correta, continue com o login
+            # Recupere o tipo de acesso do usuário
+            tipo_acesso_query = "SELECT USER,TYPE_US FROM USERS WHERE USER = ?"
+            login_conn.cursor.execute(tipo_acesso_query, user_data)
+            tipo_acesso = login_conn.cursor.fetchone()
 
- 
+            if tipo_acesso:
+                print(f"Tipo de acesso do usuário {user}: {tipo_acesso[1]}")
+            else:
+                print(f"Tipo de acesso não encontrado para o usuário {user}")
+
+            show_progress_bar(login)
+            login.after(100, lambda: abrir_tela_app(login))
+        else:
+            messagebox.showerror("Erro", "Usuário ou senha incorretos")
+    else:
+        messagebox.showerror("Erro", "Usuário não encontrado")
+
     login_conn.cursor.close()
+
 
 def win_login():
     global user_login_et, pass_login_et, bt_login
