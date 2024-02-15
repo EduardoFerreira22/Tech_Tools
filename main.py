@@ -1238,6 +1238,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow):
 
         # Connect signals
         self.bt_login.clicked.connect(self.login_user)
+        
 
         # Conectar o evento returnPressed dos line edits ao verificador de campos de login
         self.txt_username.returnPressed.connect(self.check_login_fields)
