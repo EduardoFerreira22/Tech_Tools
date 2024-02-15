@@ -1,0 +1,10 @@
+# Ignora a pasta venv/
+venv/
+
+# Ignora os arquivos drivers.csv, scripts.csv e instaladores.csv
+drivers.csv
+scripts.csv
+instaladores.csv
+
+# Ignora a pasta Ativador Magico/
+Ativador Magico/

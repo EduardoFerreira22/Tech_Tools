@@ -1,0 +1,26 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>image/icons8-anydesk-32.png</file>
+    <file>image/exe.png</file>
+    <file>image/TECH TOOLS TITULO LOGO.png</file>
+    <file>image/TECH NEW LOGO - BRANCO.png</file>
+    <file>image/salvar.png</file>
+    <file>image/bracket.png</file>
+    <file>image/LOGO BRANCO - TEXTO.png</file>
+    <file>image/TechTools_logo-64x64.png</file>
+    <file>image/data-server.png</file>
+    <file>image/printer.png</file>
+    <file>image/repair.png</file>
+    <file>image/data-server.png</file>
+    <file>image/home.png</file>
+    <file>image/database.png</file>
+    <file>image/home.png</file>
+    <file>image/database.png</file>
+    <file>image/3.png</file>
+    <file>image/home.png</file>
+    <file>image/ibExp.png</file>
+    <file>image/lupa.png</file>
+    <file>image/IMG.ico</file>
+    <file>image/save.png</file>
+  </qresource>
+</RCC>
