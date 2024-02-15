@@ -1348,6 +1348,7 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Tabelas", None));
         ___qtablewidgetitem1 = self.table_printers.horizontalHeaderItem(0)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Lista de Impressoras", None));
+        self.table_printers.verticalHeader().hide()
         self.txt_nome_printers.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nome da Impressora", None))
         self.txt_link_printers.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Link", None))
         self.bt_novo_printers.setText(QCoreApplication.translate("MainWindow", u"Novo", None))
@@ -1357,6 +1358,7 @@ class Ui_MainWindow(object):
         self.txt_id_printer.setPlaceholderText(QCoreApplication.translate("MainWindow", u"ID", None))
         ___qtablewidgetitem2 = self.table_arquivos.horizontalHeaderItem(0)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Lista de Intaladores", None));
+        self.table_arquivos.verticalHeader().hide()
         self.bt_novo_arquivo.setText(QCoreApplication.translate("MainWindow", u"Novo", None))
         self.label_arquivos.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Arquivo selecionado</p></body></html>", None))
         self.txt_nome_arquivo.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nome do istalador", None))
@@ -1464,6 +1466,10 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Descri\u00e7\u00e3o", None));
         ___qtablewidgetitem5 = self.tableWidget_ncm.horizontalHeaderItem(2)
         ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Vencimento", None));
+        # Esconder a primeira coluna que mostra os números das linhas
+        self.tableWidget_ncm.verticalHeader().hide()
+        self.tableWidget_ncm.setColumnWidth(0, 80)
+        self.tableWidget_ncm.setColumnWidth(1, 300)
 #if QT_CONFIG(tooltip)
         self.bt_salvar_ncm.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:7pt;\">Salvar .csv</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)

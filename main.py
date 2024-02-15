@@ -9,6 +9,7 @@ from functions.conect import Erros
 from functions.data import SQLite_Data
 from openpyxl import Workbook
 import subprocess
+from datetime import datetime
 import sqlite3
 import bcrypt
 import json
@@ -1167,31 +1168,58 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     print(e)
                     pass
 
-    #CARREGA OS DADOS  DO ARQUIVO .JSON
+
+
+    # CARREGA OS DADOS DOS ARQUIVOS .JSON
     def carregar_dados_ncm(self):
         try:
             with open('resource\\NCM.json', 'r', encoding='utf-8') as f:
                 ncm_data = json.load(f)
-                self.nomenclaturas = ncm_data['Nomenclaturas']
-                self.atualiza_tabela_ncm(self.nomenclaturas)
+                self.nomenclaturas_vigentes = ncm_data['Nomenclaturas']
+
+            with open('resource\\EXPIRED_NCM.json', 'r', encoding='utf-8') as f:
+                ncm_data = json.load(f)
+                self.nomenclaturas_expiradas = ncm_data['Nomenclaturas']
+
+            ncm_filtradas = self.nomenclaturas_vigentes + self.nomenclaturas_expiradas
+            self.atualiza_tabela_ncm(ncm_filtradas)  # Preenche a tabela com os dados carregados
 
         except FileNotFoundError:
-            self.show_error_popup("Erro!",f"Arquivo 'NCM.json' não encontrado.")
+            self.show_error_popup("Erro!", "Arquivos 'NCM.json' e 'EXPIRED_NCM.json' não encontrados.")
+
 
     #FILTRA OS DADOS DIGITADOS PELO USUÁRIO
     def filtrar_ncm(self, texto):
-        ncm_filtradas = [n for n in self.nomenclaturas if texto.lower() in n['Codigo'].lower()]
+        ncm_vigentes_filtradas = [n for n in self.nomenclaturas_vigentes if texto.lower() in n['Codigo'].lower()]
+        ncm_expiradas_filtradas = [n for n in self.nomenclaturas_expiradas if texto.lower() in n['Codigo'].lower()]
+        ncm_filtradas = ncm_vigentes_filtradas + ncm_expiradas_filtradas
         self.atualiza_tabela_ncm(ncm_filtradas)
 
-    #ATUALIZA A TABELA A MEDIDA QUE O USUÁRIO DIGITA O NCM
+    # ATUALIZA A TABELA A MEDIDA QUE O USUÁRIO DIGITA O NCM
     def atualiza_tabela_ncm(self, nomenclaturas):
         self.tableWidget_ncm.clearContents()
         self.tableWidget_ncm.setRowCount(len(nomenclaturas))
-
+        data_atual = datetime.now().date()
         for i, nomenclatura in enumerate(nomenclaturas):
             self.tableWidget_ncm.setItem(i, 0, QTableWidgetItem(nomenclatura['Codigo']))
             self.tableWidget_ncm.setItem(i, 1, QTableWidgetItem(nomenclatura['Descricao']))
-            self.tableWidget_ncm.setItem(i, 2, QTableWidgetItem(nomenclatura['Data_Fim']))
+
+            data_vencimento = datetime.strptime(nomenclatura['Data_Fim'], '%d/%m/%Y').date()
+            # Verifica se a data de vencimento é anterior à data atual
+            if data_vencimento < data_atual:
+                # Formata a mensagem de expiração
+                mensagem = f"Expirado em: {data_vencimento.strftime('%d/%m/%Y')}"
+
+                # Cria um novo QTableWidgetItem para a mensagem de expiração
+                item = QTableWidgetItem(mensagem)
+                # Define a cor do texto como vermelho
+                item.setForeground(QColor('red'))
+                # Define o item na coluna de vencimento
+                self.tableWidget_ncm.setItem(i, 2, item)
+            else:
+                # Preenche a coluna de vencimento com a data normal
+                self.tableWidget_ncm.setItem(i, 2, QTableWidgetItem(nomenclatura['Data_Fim']))
+
 
     #MOSTRA UM POPUP DE NOTIFICAÇÃO DE ERRO 
     def show_error_popup(self, title, message):
@@ -1238,8 +1266,6 @@ class LoginWindow(QMainWindow, UI_LoginWindow):
 
         # Connect signals
         self.bt_login.clicked.connect(self.login_user)
-        
-
         # Conectar o evento returnPressed dos line edits ao verificador de campos de login
         self.txt_username.returnPressed.connect(self.check_login_fields)
         self.txt_senha_login.returnPressed.connect(self.check_login_fields)
