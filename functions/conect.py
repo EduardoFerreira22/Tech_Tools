@@ -37,8 +37,7 @@ class Conections_SQLServer():
             
             # abre a conexão com o banco de dados
             self.cursor = self.conn.cursor()
-            if self.cursor:
-                return "OK"
+            return "OK"
         except Exception as e:
             return "ERRO"
 

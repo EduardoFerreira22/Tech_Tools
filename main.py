@@ -196,16 +196,18 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         self.setWindowTitle("Tech Tools")
         appIcon = QIcon(u"img\\TECH NEW LOGO.png")
         self.setWindowIcon(appIcon)
-        self.setFixedSize(642, 473)
+        self.setFixedSize(673, 493)
         self.label_conectando.setVisible(False)
         self.label_conectado.setVisible(False)
         self.label_script_copiado.setVisible(False)
         self.radioButton_login.setChecked(True)
         self.bt_mostrar_tabelas.setVisible(False)
         self.tooltip_sqlite.setVisible(False)
+
         self.check_user_login()
         self.show_printers()
         self.show_instadores()
+
         chek = self.get_type_ac()
          # Chama a função para verificar o tipo de login
         if chek == 0:
@@ -287,6 +289,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         self.bt_alterar_script.clicked.connect(self.update_script_combo)
         self.bt_excluirScript.clicked.connect(self.delete_script_confirmation)
         self.bt_copiarScripts.clicked.connect(self.copy_script_combo)
+        self.bt_enviar_script.clicked.connect(self.copy_send_Script)
         # Páginas do Sistema
         self.bt_home.clicked.connect(lambda: self.pages.setCurrentWidget(self.pg_home))
         self.bt_data_base.clicked.connect(lambda: self.pages.setCurrentWidget(self.pg_Data_base))
@@ -307,11 +310,19 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         self.tableWidget_user_login.clicked.connect(self.select_line_user_login)
 
         ##############PAGINA DE NCM########################################################################################
+        self.radioButton_list_ncm.setChecked(True)
+        self.check_tb_ncm()
+        self.radioButton_list_ncm.clicked.connect(self.check_tb_ncm)
+        self.radioButton_ncm_dataBases.clicked.connect(self.check_tb_ncm)
         self.bt_salvar_ncm.clicked.connect(self.save_data_ncm)
         self.txt_ncm.textChanged.connect(self.filtrar_ncm)
+        self.bt_buscarncm_database.clicked.connect(self.buscar_ncm_inDataBases)
         self.carregar_dados_ncm()
 
         self.bt_executar_exe.clicked.connect(self.executar_programa)
+    
+
+    
     #FUNÇÃO PARA ESCONDER A BARRA DE MENU LATERAL
     def leftMenu(self):
         width = self.left_frame.width()
@@ -412,8 +423,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             msg2 = f"Não foi possível se conectar ao banco de dados {database}"
 
             # Instancie a classe Conections_SQLServer com os argumentos necessários
-            conn1 = conect.Conections_SQLServer()
-            self.conn1 = conn1
+            self.conn1 = conect.Conections_SQLServer()
             resp = self.conn1.conect_sqlserver(server, database, user, password)
             
             self.msg_popup(resp,msg1,msg2)
@@ -1168,8 +1178,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     print(e)
                     pass
 
-
-
+    ##################################   NCM'S ###############################################################################
     # CARREGA OS DADOS DOS ARQUIVOS .JSON
     def carregar_dados_ncm(self):
         try:
@@ -1186,7 +1195,6 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
         except FileNotFoundError:
             self.show_error_popup("Erro!", "Arquivos 'NCM.json' e 'EXPIRED_NCM.json' não encontrados.")
-
 
     #FILTRA OS DADOS DIGITADOS PELO USUÁRIO
     def filtrar_ncm(self, texto):
@@ -1220,6 +1228,54 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 # Preenche a coluna de vencimento com a data normal
                 self.tableWidget_ncm.setItem(i, 2, QTableWidgetItem(nomenclatura['Data_Fim']))
 
+    def check_tb_ncm(self):
+        if self.radioButton_list_ncm.isChecked():
+            # Ocultar elementos quando radioButton_list_ncm estiver selecionado
+            self.comboBox_list_datas_ncm.setVisible(False)
+            self.bt_buscarncm_database.setVisible(False)
+        elif self.radioButton_ncm_dataBases.isChecked():
+            # Mostrar elementos quando radioButton_ncm_dataBases estiver selecionado
+            self.comboBox_list_datas_ncm.setVisible(True)
+            self.bt_buscarncm_database.setVisible(True)
+
+    def buscar_ncm_inDataBases(self):
+        #INICIA A CONECÇÃO E EXECUTA A QUERY
+        query1 = "SELECT CODIGO, DESCRICAO FROM NCM"
+        query2 = "SELECT ID_NCM,NOME FROM NCM"
+
+        select_data = self.comboBox_list_datas_ncm.currentIndex()
+
+        if select_data == 'Etrade':   
+            self.conn1.cursor.execute(query1)
+            self.ncm_bd = self.conn1.cursor.fetchall()
+            
+        elif select_data == 'Hiper':
+            self.conn1.cursor.execute(query2)
+            self.ncm_bd = self.conn1.cursor.fetchall()
+            
+        
+        data_atual = datetime.now().date()
+
+        #CARREGA OS DADOS DO ARQUIVO .JSON
+        try:
+            # Carregar os NCMS expirados do arquivo JSON
+            with open('resource\\EXPIRED_NCM.json', 'r', encoding='utf-8') as f:
+                expired_ncms_data = json.load(f)
+                expired_ncms = expired_ncms_data['Nomenclaturas']
+        except FileNotFoundError:
+            self.show_error_popup("Erro!", "Arquivos 'NCM.json' e 'EXPIRED_NCM.json' não encontrados.")
+
+        list_ncm_expired = []
+        for ncm in self.ncm_bd:
+            if ncm in expired_ncms:
+                data_expiracao = datetime.strptime(expired_ncms[ncm]['data_expiracao'], '%Y-%m-%d').date()
+                if data_expiracao < data_atual:
+                    list_ncm_expired.append({
+                        'ncm': ncm,
+                        'data_expiracao': data_expiracao.strftime('%d/%m/%Y')
+                    })
+
+        self.atualiza_tabela_ncm(list_ncm_expired)
 
     #MOSTRA UM POPUP DE NOTIFICAÇÃO DE ERRO 
     def show_error_popup(self, title, message):
@@ -1253,6 +1309,11 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                             row_data.append('')
                     writer.writerow(row_data)
 
+    def copy_send_Script(self):
+        capt_script = self.txt_Scripts.toPlainText()
+        self.plainTextEdit.setPlainText(capt_script)
+        # Mudar para a página de conexões
+        self.pages.setCurrentWidget(self.pg_Data_base)
 
 class LoginWindow(QMainWindow, UI_LoginWindow):
     def __init__(self):

@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="icons">
-    <file>image/icons8-anydesk-32.png</file>
+    <file>image/lupa.png</file>
+    <file>image/refresh-page-option(1).png</file>
     <file>image/exe.png</file>
     <file>image/TECH TOOLS TITULO LOGO.png</file>
     <file>image/TECH NEW LOGO - BRANCO.png</file>
