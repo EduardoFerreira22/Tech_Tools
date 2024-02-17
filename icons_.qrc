@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>image/data-processing.png</file>
     <file>image/lupa.png</file>
     <file>image/refresh-page-option(1).png</file>
     <file>image/exe.png</file>

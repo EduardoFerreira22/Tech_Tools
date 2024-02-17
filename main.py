@@ -1238,44 +1238,69 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             self.comboBox_list_datas_ncm.setVisible(True)
             self.bt_buscarncm_database.setVisible(True)
 
+    #FAZ A COMPARAÇÃO DE TODOS OS OS PRODUTOS COM NCM'S INVÁLIDOS E MOSTRA A LISTA EM UMA TABELA
     def buscar_ncm_inDataBases(self):
-        #INICIA A CONECÇÃO E EXECUTA A QUERY
+        # INICIA A CONECÇÃO E EXECUTA A QUERY
         query1 = "SELECT CODIGO, DESCRICAO FROM NCM"
-        query2 = "SELECT ID_NCM,NOME FROM NCM"
+        query2 = """SELECT p.id_produto, p.nome, n.id_ncm 
+                    FROM produto p
+                    INNER JOIN ncm n
+                    ON p.id_ncm = n.id_ncm
+                    ORDER BY p.id_produto"""
 
-        select_data = self.comboBox_list_datas_ncm.currentIndex()
+        select_data = self.comboBox_list_datas_ncm.currentText()
 
         if select_data == 'Etrade':   
             self.conn1.cursor.execute(query1)
-            self.ncm_bd = self.conn1.cursor.fetchall()
+            ncm_bd = self.conn1.cursor.fetchall()
             
         elif select_data == 'Hiper':
             self.conn1.cursor.execute(query2)
-            self.ncm_bd = self.conn1.cursor.fetchall()
+            ncm_bd = self.conn1.cursor.fetchall()
             
-        
+        else:
+            ncm_bd = []
+
         data_atual = datetime.now().date()
 
-        #CARREGA OS DADOS DO ARQUIVO .JSON
+        # CARREGA OS DADOS DO ARQUIVO .JSON
         try:
             # Carregar os NCMS expirados do arquivo JSON
             with open('resource\\EXPIRED_NCM.json', 'r', encoding='utf-8') as f:
                 expired_ncms_data = json.load(f)
-                expired_ncms = expired_ncms_data['Nomenclaturas']
+                expired_ncms = expired_ncms_data.get('Nomenclaturas', [])
         except FileNotFoundError:
-            self.show_error_popup("Erro!", "Arquivos 'NCM.json' e 'EXPIRED_NCM.json' não encontrados.")
+            self.show_error_popup("Erro!", "Arquivo 'EXPIRED_NCM.json' não encontrado.")
+            expired_ncms = []
 
         list_ncm_expired = []
-        for ncm in self.ncm_bd:
-            if ncm in expired_ncms:
-                data_expiracao = datetime.strptime(expired_ncms[ncm]['data_expiracao'], '%Y-%m-%d').date()
-                if data_expiracao < data_atual:
-                    list_ncm_expired.append({
-                        'ncm': ncm,
-                        'data_expiracao': data_expiracao.strftime('%d/%m/%Y')
-                    })
+        for ncm in ncm_bd:
+            for expired_ncm in expired_ncms:
+                if ncm[0] == expired_ncm.get('Codigo'):
+                    data_expiracao = datetime.strptime(expired_ncm.get('Data_Fim'), '%d/%m/%Y').date()
+                    if data_expiracao < data_atual:
+                        list_ncm_expired.append({
+                            'Codigo': ncm[0],
+                            'Produto': ncm[1],
+                            'NCM': ncm[2],
+                            'Data_Fim': data_expiracao.strftime('%d/%m/%Y')
+                        })
+                        print(f"NCM expirado encontrado no banco de dados: {ncm}")
 
-        self.atualiza_tabela_ncm(list_ncm_expired)
+        # Limpa a tabela antes de adicionar os novos dados
+        self.tableWidget_ncm.clearContents()
+        self.tableWidget_ncm.setRowCount(0)
+
+        # Adiciona os dados à tabela
+        row_position = 0
+        for item in list_ncm_expired:
+            self.tableWidget_ncm.insertRow(row_position)
+            for col, value in enumerate(item.values()):
+                self.tableWidget_ncm.setItem(row_position, col, QTableWidgetItem(str(value)))
+            row_position += 1
+
+        # Atualiza os cabeçalhos da tabela
+        self.tableWidget_ncm.setHorizontalHeaderLabels(['Codigo', 'Produto', 'NCM', 'Data_Fim'])
 
     #MOSTRA UM POPUP DE NOTIFICAÇÃO DE ERRO 
     def show_error_popup(self, title, message):

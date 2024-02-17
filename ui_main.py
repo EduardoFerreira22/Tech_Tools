@@ -194,7 +194,7 @@ class Ui_MainWindow(object):
         self.toolBox.setFrameShape(QFrame.NoFrame)
         self.box_buttons = QWidget()
         self.box_buttons.setObjectName(u"box_buttons")
-        self.box_buttons.setGeometry(QRect(0, 0, 93, 387))
+        self.box_buttons.setGeometry(QRect(0, 0, 93, 393))
         self.verticalLayout_4 = QVBoxLayout(self.box_buttons)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.bt_home = QPushButton(self.box_buttons)
@@ -204,7 +204,7 @@ class Ui_MainWindow(object):
         icon = QIcon()
         icon.addFile(u":/icons/image/home.png", QSize(), QIcon.Normal, QIcon.Off)
         self.bt_home.setIcon(icon)
-        self.bt_home.setIconSize(QSize(45, 45))
+        self.bt_home.setIconSize(QSize(40, 40))
 
         self.verticalLayout_4.addWidget(self.bt_home, 0, Qt.AlignHCenter)
 
@@ -214,7 +214,7 @@ class Ui_MainWindow(object):
         icon1 = QIcon()
         icon1.addFile(u":/icons/image/data-server.png", QSize(), QIcon.Normal, QIcon.Off)
         self.bt_data_base.setIcon(icon1)
-        self.bt_data_base.setIconSize(QSize(45, 45))
+        self.bt_data_base.setIconSize(QSize(40, 40))
 
         self.verticalLayout_4.addWidget(self.bt_data_base, 0, Qt.AlignHCenter)
 
@@ -224,7 +224,7 @@ class Ui_MainWindow(object):
         icon2 = QIcon()
         icon2.addFile(u":/icons/image/printer.png", QSize(), QIcon.Normal, QIcon.Off)
         self.bt_printers.setIcon(icon2)
-        self.bt_printers.setIconSize(QSize(45, 45))
+        self.bt_printers.setIconSize(QSize(40, 40))
 
         self.verticalLayout_4.addWidget(self.bt_printers, 0, Qt.AlignHCenter)
 
@@ -234,7 +234,7 @@ class Ui_MainWindow(object):
         icon3 = QIcon()
         icon3.addFile(u":/icons/image/repair.png", QSize(), QIcon.Normal, QIcon.Off)
         self.bt_instaladores.setIcon(icon3)
-        self.bt_instaladores.setIconSize(QSize(45, 45))
+        self.bt_instaladores.setIconSize(QSize(40, 40))
 
         self.verticalLayout_4.addWidget(self.bt_instaladores, 0, Qt.AlignHCenter)
 
@@ -244,18 +244,29 @@ class Ui_MainWindow(object):
         icon4 = QIcon()
         icon4.addFile(u":/icons/image/bracket.png", QSize(), QIcon.Normal, QIcon.Off)
         self.bt_scripts.setIcon(icon4)
-        self.bt_scripts.setIconSize(QSize(45, 45))
+        self.bt_scripts.setIconSize(QSize(40, 40))
 
         self.verticalLayout_4.addWidget(self.bt_scripts)
 
         self.bt_executaveis = QPushButton(self.box_buttons)
         self.bt_executaveis.setObjectName(u"bt_executaveis")
+        self.bt_executaveis.setCursor(QCursor(Qt.PointingHandCursor))
         icon5 = QIcon()
         icon5.addFile(u":/icons/image/exe.png", QSize(), QIcon.Normal, QIcon.Off)
         self.bt_executaveis.setIcon(icon5)
-        self.bt_executaveis.setIconSize(QSize(45, 45))
+        self.bt_executaveis.setIconSize(QSize(40, 40))
 
         self.verticalLayout_4.addWidget(self.bt_executaveis)
+
+        self.bt_processar_planilha = QPushButton(self.box_buttons)
+        self.bt_processar_planilha.setObjectName(u"bt_processar_planilha")
+        self.bt_processar_planilha.setCursor(QCursor(Qt.PointingHandCursor))
+        icon6 = QIcon()
+        icon6.addFile(u":/icons/image/data-processing.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_processar_planilha.setIcon(icon6)
+        self.bt_processar_planilha.setIconSize(QSize(40, 40))
+
+        self.verticalLayout_4.addWidget(self.bt_processar_planilha)
 
         self.bt_ncm_page = QPushButton(self.box_buttons)
         self.bt_ncm_page.setObjectName(u"bt_ncm_page")
@@ -263,9 +274,10 @@ class Ui_MainWindow(object):
         font.setFamilies([u"Arial Black"])
         font.setBold(True)
         self.bt_ncm_page.setFont(font)
-        icon6 = QIcon()
-        icon6.addFile(u":/icons/image/lupa.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_ncm_page.setIcon(icon6)
+        self.bt_ncm_page.setCursor(QCursor(Qt.PointingHandCursor))
+        icon7 = QIcon()
+        icon7.addFile(u":/icons/image/lupa.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_ncm_page.setIcon(icon7)
         self.bt_ncm_page.setIconSize(QSize(25, 30))
 
         self.verticalLayout_4.addWidget(self.bt_ncm_page)
@@ -277,7 +289,7 @@ class Ui_MainWindow(object):
         self.toolBox.addItem(self.box_buttons, icon, u"Home")
         self.widget = QWidget()
         self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(0, 0, 93, 387))
+        self.widget.setGeometry(QRect(0, 0, 93, 393))
         self.label_2 = QLabel(self.widget)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setGeometry(QRect(0, 250, 91, 111))
@@ -332,9 +344,9 @@ class Ui_MainWindow(object):
         self.btn_tech_tools.setObjectName(u"btn_tech_tools")
         self.btn_tech_tools.setGeometry(QRect(0, 10, 44, 40))
         self.btn_tech_tools.setCursor(QCursor(Qt.PointingHandCursor))
-        icon7 = QIcon()
-        icon7.addFile(u":/icons/image/TECH NEW LOGO - BRANCO.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_tech_tools.setIcon(icon7)
+        icon8 = QIcon()
+        icon8.addFile(u":/icons/image/TECH NEW LOGO - BRANCO.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_tech_tools.setIcon(icon8)
         self.btn_tech_tools.setIconSize(QSize(40, 40))
         self.bt_atualizacoes = QPushButton(self.frame_19)
         self.bt_atualizacoes.setObjectName(u"bt_atualizacoes")
@@ -357,9 +369,9 @@ class Ui_MainWindow(object):
 "	color: rgb(255, 255, 255);\n"
 "	\n"
 "}")
-        icon8 = QIcon()
-        icon8.addFile(u":/icons/image/refresh-page-option(1).png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_atualizacoes.setIcon(icon8)
+        icon9 = QIcon()
+        icon9.addFile(u":/icons/image/refresh-page-option(1).png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_atualizacoes.setIcon(icon9)
         self.bt_atualizacoes.setIconSize(QSize(17, 17))
         self.bt_atualizacoes.setCheckable(False)
         self.bt_atualizacoes.setAutoDefault(False)
@@ -411,9 +423,9 @@ class Ui_MainWindow(object):
         self.pushButton_4.setObjectName(u"pushButton_4")
         self.pushButton_4.setGeometry(QRect(10, 10, 501, 381))
         self.pushButton_4.setStyleSheet(u"border:none;")
-        icon9 = QIcon()
-        icon9.addFile(u":/icons/image/LOGO BRANCO - TEXTO.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton_4.setIcon(icon9)
+        icon10 = QIcon()
+        icon10.addFile(u":/icons/image/LOGO BRANCO - TEXTO.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton_4.setIcon(icon10)
         self.pushButton_4.setIconSize(QSize(400, 500))
         self.pages.addWidget(self.pg_home)
         self.pg_Data_base = QWidget()
@@ -576,9 +588,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "	background-color: rgb(251, 99, 4);\n"
 "}")
-        icon10 = QIcon()
-        icon10.addFile(u":/icons/image/ibExp.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_conectar_db_4.setIcon(icon10)
+        icon11 = QIcon()
+        icon11.addFile(u":/icons/image/ibExp.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_conectar_db_4.setIcon(icon11)
         self.bt_conectar_db_4.setIconSize(QSize(50, 50))
 
         self.verticalLayout_2.addWidget(self.frame)
@@ -1042,7 +1054,8 @@ class Ui_MainWindow(object):
         # Crie um QScrollArea e defina o QLabel como seu widget filho
         self.scroll_area = QScrollArea(self.pg_Sobre)
         self.scroll_area.setGeometry(10, 10, 491, 361)
-        self.scroll_area.setWidget(self.label_sobre)          
+        self.scroll_area.setWidget(self.label_sobre)   
+        
         self.pages.addWidget(self.pg_Sobre)
         self.pg_terms = QWidget()
         self.pg_terms.setObjectName(u"pg_terms")
@@ -1206,7 +1219,7 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "	border: 1px solid rgb(121, 121, 121);\n"
 "}")
-        self.bt_buscarncm_database.setIcon(icon6)
+        self.bt_buscarncm_database.setIcon(icon7)
         self.bt_buscarncm_database.setIconSize(QSize(20, 20))
         self.radioButton_list_ncm = QRadioButton(self.frame_13)
         self.radioButton_list_ncm.setObjectName(u"radioButton_list_ncm")
@@ -1275,9 +1288,9 @@ class Ui_MainWindow(object):
 "	color: rgb(255, 255, 255);\n"
 "	background-color:rgb(49,147,0)\n"
 "}")
-        icon11 = QIcon()
-        icon11.addFile(u":/icons/image/salvar.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_salvar_ncm.setIcon(icon11)
+        icon12 = QIcon()
+        icon12.addFile(u":/icons/image/salvar.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_salvar_ncm.setIcon(icon12)
         self.bt_salvar_ncm.setIconSize(QSize(25, 25))
         self.txt_ncm = QLineEdit(self.frame_14)
         self.txt_ncm.setObjectName(u"txt_ncm")
@@ -1305,9 +1318,9 @@ class Ui_MainWindow(object):
         self.frame_15.setFrameShadow(QFrame.Raised)
         self.comboBox_executaveis = QComboBox(self.frame_15)
         self.comboBox_executaveis.addItem("")
-        icon12 = QIcon()
-        icon12.addFile(u":/icons/image/icons8-anydesk-32.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.comboBox_executaveis.addItem(icon12, "")
+        icon13 = QIcon()
+        icon13.addFile(u":/icons/image/icons8-anydesk-32.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.comboBox_executaveis.addItem(icon13, "")
         self.comboBox_executaveis.addItem("")
         self.comboBox_executaveis.addItem("")
         self.comboBox_executaveis.addItem("")
@@ -1345,8 +1358,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.toolBox.setCurrentIndex(0)
-        self.toolBox.layout().setSpacing(5)
-        self.pages.setCurrentIndex(9)
+        self.toolBox.layout().setSpacing(2)
+        self.pages.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1381,7 +1394,38 @@ class Ui_MainWindow(object):
         self.bt_scripts.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#00007f;\">Scripts</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.bt_scripts.setText("")
+#if QT_CONFIG(tooltip)
+        self.bt_executaveis.setToolTip(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#00007f;\">Execut\u00e1veis</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.bt_executaveis.setText("")
+#if QT_CONFIG(tooltip)
+        self.bt_processar_planilha.setToolTip(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#00007f;\">Tratamento de .CSV</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.bt_processar_planilha.setText("")
+#if QT_CONFIG(tooltip)
+        self.bt_ncm_page.setToolTip(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#00007f;\">NCM's</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.bt_ncm_page.setText(QCoreApplication.translate("MainWindow", u"NCM", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.box_buttons), QCoreApplication.translate("MainWindow", u"Home", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:7pt; font-weight:700;\">vers\u00e3o: 4.0.0</span></p><p align=\"center\"><span style=\" font-size:7pt; font-weight:700;\">Copyright \u00a9 </span></p><p align=\"center\"><span style=\" font-size:7pt; font-weight:700;\">2023-2024</span></p><p align=\"center\"><span style=\" font-size:7pt; font-weight:700;\">TechTools.</span></p></body></html>", None))
@@ -1471,7 +1515,9 @@ class Ui_MainWindow(object):
         self.scroll_area.setWidgetResizable(True)
         # Defina a largura da barra de rolagem horizontal
         self.horizontal_scroll_bar = self.scroll_area.horizontalScrollBar()
-        self.horizontal_scroll_bar.setStyleSheet("QScrollBar:horizontal { height: 8px; }")         
+        self.horizontal_scroll_bar.setStyleSheet("QScrollBar:horizontal { height: 8px; }") 
+
+        
         self.plainTextEdit_3.setPlainText(QCoreApplication.translate("MainWindow", u"TERMOS DE USO DO PROGRAMA TECH TOOLS\n"
 "\n"
 "\n"
@@ -1557,7 +1603,7 @@ class Ui_MainWindow(object):
         # Definir tamanho das colunas
         self.tableWidget_ncm.setColumnWidth(0, 80)
         self.tableWidget_ncm.setColumnWidth(1, 300)
-        self.tableWidget_ncm.setColumnWidth(2, 200)
+        self.tableWidget_ncm.setColumnWidth(2, 200)        
 #if QT_CONFIG(tooltip)
         self.bt_salvar_ncm.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:7pt;\">Salvar .csv</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
