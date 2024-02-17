@@ -111,7 +111,7 @@ QPushButton:hover{
               </rect>
              </property>
              <attribute name="icon">
-              <iconset resource="icons_.qrc">
+              <iconset>
                <normaloff>:/icons/image/home.png</normaloff>:/icons/image/home.png</iconset>
              </attribute>
              <attribute name="label">
@@ -133,7 +133,7 @@ QPushButton:hover{
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="icons_.qrc">
+                 <iconset>
                   <normaloff>:/icons/image/home.png</normaloff>:/icons/image/home.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -156,7 +156,7 @@ QPushButton:hover{
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="icons_.qrc">
+                 <iconset>
                   <normaloff>:/icons/image/data-server.png</normaloff>:/icons/image/data-server.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -186,7 +186,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="icons_.qrc">
+                 <iconset>
                   <normaloff>:/icons/image/printer.png</normaloff>:/icons/image/printer.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -209,7 +209,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="icons_.qrc">
+                 <iconset>
                   <normaloff>:/icons/image/repair.png</normaloff>:/icons/image/repair.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -232,7 +232,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="icons_.qrc">
+                 <iconset>
                   <normaloff>:/icons/image/bracket.png</normaloff>:/icons/image/bracket.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -262,7 +262,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="icons_.qrc">
+                 <iconset>
                   <normaloff>:/icons/image/exe.png</normaloff>:/icons/image/exe.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -292,7 +292,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="icons_.qrc">
+                 <iconset>
                   <normaloff>:/icons/image/data-processing.png</normaloff>:/icons/image/data-processing.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -328,7 +328,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <string>NCM</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="icons_.qrc">
+                 <iconset>
                   <normaloff>:/icons/image/lupa.png</normaloff>:/icons/image/lupa.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -517,7 +517,7 @@ QLabel{
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="icons_.qrc">
+            <iconset>
              <normaloff>:/icons/image/TECH NEW LOGO - BRANCO.png</normaloff>:/icons/image/TECH NEW LOGO - BRANCO.png</iconset>
            </property>
            <property name="iconSize">
@@ -569,7 +569,7 @@ QPushButton:hover{
             <string>1</string>
            </property>
            <property name="icon">
-            <iconset resource="icons_.qrc">
+            <iconset>
              <normaloff>:/icons/image/refresh-page-option(1).png</normaloff>:/icons/image/refresh-page-option(1).png</iconset>
            </property>
            <property name="iconSize">
@@ -660,7 +660,7 @@ QPlainTextEdit{
         <enum>QFrame::Raised</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="pg_home">
         <widget class="QPushButton" name="pushButton_4">
@@ -679,7 +679,7 @@ QPlainTextEdit{
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="icons_.qrc">
+          <iconset>
            <normaloff>:/icons/image/LOGO BRANCO - TEXTO.png</normaloff>:/icons/image/LOGO BRANCO - TEXTO.png</iconset>
          </property>
          <property name="iconSize">
@@ -1126,7 +1126,7 @@ QPushButton:hover{
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="icons_.qrc">
+             <iconset>
               <normaloff>:/icons/image/ibExp.png</normaloff>:/icons/image/ibExp.png</iconset>
             </property>
             <property name="iconSize">
@@ -2649,7 +2649,7 @@ QPushButton:hover{
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="icons_.qrc">
+              <iconset>
                <normaloff>:/icons/image/lupa.png</normaloff>:/icons/image/lupa.png</iconset>
              </property>
              <property name="iconSize">
@@ -2835,7 +2835,7 @@ QPushButton:hover{
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="icons_.qrc">
+              <iconset>
                <normaloff>:/icons/image/salvar.png</normaloff>:/icons/image/salvar.png</iconset>
              </property>
              <property name="iconSize">

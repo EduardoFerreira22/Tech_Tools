@@ -39,6 +39,7 @@ class Conections_SQLServer():
             self.cursor = self.conn.cursor()
             return "OK"
         except Exception as e:
+            print(e)
             return "ERRO"
 
 class Conections_MySQL():

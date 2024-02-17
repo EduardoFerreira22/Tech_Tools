@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>image/direita-e-esquerda.png</file>
     <file>image/data-processing.png</file>
     <file>image/lupa.png</file>
     <file>image/refresh-page-option(1).png</file>
@@ -9,7 +10,6 @@
     <file>image/salvar.png</file>
     <file>image/bracket.png</file>
     <file>image/LOGO BRANCO - TEXTO.png</file>
-    <file>image/TechTools_logo-64x64.png</file>
     <file>image/data-server.png</file>
     <file>image/printer.png</file>
     <file>image/repair.png</file>
@@ -22,7 +22,6 @@
     <file>image/home.png</file>
     <file>image/ibExp.png</file>
     <file>image/lupa.png</file>
-    <file>image/IMG.ico</file>
     <file>image/save.png</file>
   </qresource>
 </RCC>
