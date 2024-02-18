@@ -83,7 +83,6 @@ class Ui_ProcessCSV(object):
         self.txt_output_logs.setObjectName(u"txt_output_logs")
         self.txt_output_logs.setGeometry(QRect(10, 10, 181, 181))
         self.txt_output_logs.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
-"color: rgb(0, 0, 0);\n"
 "font: 8pt \"Segoe UI\";\n"
 "font: 700 7pt \"Segoe UI\";")
 
@@ -153,10 +152,10 @@ class Ui_ProcessCSV(object):
 "	color: rgb(255, 255, 255);\n"
 "	background-color:rgb(49,147,0)\n"
 "}")
-        self.lineEdit = QLineEdit(self.frame_3)
-        self.lineEdit.setObjectName(u"lineEdit")
-        self.lineEdit.setGeometry(QRect(10, 80, 191, 21))
-        self.lineEdit.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+        self.txt_buscar_ncm = QLineEdit(self.frame_3)
+        self.txt_buscar_ncm.setObjectName(u"txt_buscar_ncm")
+        self.txt_buscar_ncm.setGeometry(QRect(10, 80, 191, 21))
+        self.txt_buscar_ncm.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(255, 85, 0);\n"
 "font: 600 9pt \"Segoe UI\";")
         self.label_2 = QLabel(self.frame_3)
@@ -206,6 +205,19 @@ class Ui_ProcessCSV(object):
         icon.addFile(u":/icons/image/direita-e-esquerda.png", QSize(), QIcon.Normal, QIcon.Off)
         self.bt_setas_ncm.setIcon(icon)
         self.bt_setas_ncm.setIconSize(QSize(20, 20))
+        self.bt_executar_process = QPushButton(self.frame_6)
+        self.bt_executar_process.setObjectName(u"bt_executar_process")
+        self.bt_executar_process.setGeometry(QRect(590, 30, 75, 24))
+        self.bt_executar_process.setStyleSheet(u"QPushButton{\n"
+"	background-color: rgb(255, 255, 255);\n"
+"	color: rgb(0, 0, 127);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color:rgb(49,147,0)\n"
+"}")
 
         self.horizontalLayout.addWidget(self.frame_6)
 
@@ -237,7 +249,7 @@ class Ui_ProcessCSV(object):
         self.comboBox_op_busca.setCurrentText("")
         self.comboBox_op_busca.setPlaceholderText(QCoreApplication.translate("ProcessCSV", u"Op\u00e7\u00f5es de busca", None))
         self.bt_buscar_opcoes.setText(QCoreApplication.translate("ProcessCSV", u"Pesquisar", None))
-        self.lineEdit.setPlaceholderText(QCoreApplication.translate("ProcessCSV", u"Procurar por?", None))
+        self.txt_buscar_ncm.setPlaceholderText(QCoreApplication.translate("ProcessCSV", u"Procurar por?", None))
         self.label_2.setText(QCoreApplication.translate("ProcessCSV", u"<html><head/><body><p><span style=\" font-weight:700; color:#ffffff;\">Op\u00e7\u00f5es de busca:</span></p></body></html>", None))
         self.comboBox_op_processamentos.setItemText(0, QCoreApplication.translate("ProcessCSV", u"Substituir NCM.", None))
         self.comboBox_op_processamentos.setItemText(1, QCoreApplication.translate("ProcessCSV", u"Remover duplicados.", None))
@@ -250,5 +262,6 @@ class Ui_ProcessCSV(object):
         self.txt_alt_NCM1.setPlaceholderText(QCoreApplication.translate("ProcessCSV", u"De 0000.00.00", None))
         self.txt_alt_NCM2.setPlaceholderText(QCoreApplication.translate("ProcessCSV", u"Para 0000.00.00", None))
         self.bt_setas_ncm.setText("")
+        self.bt_executar_process.setText(QCoreApplication.translate("ProcessCSV", u"Executar", None))
     # retranslateUi
 

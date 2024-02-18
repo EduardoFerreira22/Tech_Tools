@@ -143,7 +143,6 @@ QPushButton:hover{
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);
 font: 8pt &quot;Segoe UI&quot;;
 font: 700 7pt &quot;Segoe UI&quot;;</string>
        </property>
@@ -311,7 +310,7 @@ QPushButton:hover{
            <string>Pesquisar</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="txt_buscar_ncm">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -484,6 +483,31 @@ font: 600 9pt &quot;Segoe UI&quot;;</string>
             <width>20</width>
             <height>20</height>
            </size>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="bt_executar_process">
+          <property name="geometry">
+           <rect>
+            <x>590</x>
+            <y>30</y>
+            <width>75</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 127);
+}
+
+QPushButton:hover{
+	
+	color: rgb(255, 255, 255);
+	background-color:rgb(49,147,0)
+}</string>
+          </property>
+          <property name="text">
+           <string>Executar</string>
           </property>
          </widget>
         </widget>
