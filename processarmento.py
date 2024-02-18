@@ -91,8 +91,6 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.txt_output_logs.appendPlainText("\nDados do arquivo CSV inseridos na tabela com sucesso.")
         
  
-                    
-
     def processing_ncms_json(self):
         try:
             with open('resource\\EXPIRED_NCM.json', 'r', encoding='utf-8') as f:
@@ -113,7 +111,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
     
     def combo_op_busca(self):
         opcoes = self.comboBox_op_busca.currentText()
-        self.txt_output_logs.appendPlainText(f"Opção selecionada: {opcoes}")
+        self.txt_output_logs.appendPlainText(f"\nOpção selecionada: {opcoes}")
         if opcoes == '':
             self.show_error_popup("Erro!", f"É necessário selecionar uma das opções antes de realizar a busca.")
             self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")
@@ -214,8 +212,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             self.tb_dados_csv.clearContents()
             self.tb_dados_csv.setRowCount(0)
             self.tb_dados_csv.setColumnCount(0)
-            self.txt_output_logs.setStyleSheet("color: red")  # Muda a cor do texto para vermelho
-            self.txt_output_logs.appendPlainText("Nenhum dado encontrado. Tabela limpa.")
+            self.txt_output_logs.appendPlainText("\nNenhum dado encontrado. Tabela limpa.")
             return
         
         num_rows = len(data)
@@ -236,7 +233,6 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
 
             self.txt_output_logs.appendPlainText("Tabela atualizada com NCMs expirados.")
         except Exception as e:
-            self.txt_output_logs.setStyleSheet("color: red")  # Muda a cor do texto para vermelho
             self.txt_output_logs.appendPlainText(f"Erro ao atualizar tabela: {e}")
             self.show_error_popup("Erro!", f"Erro ao atualizar tabela: {e}")
 
