@@ -4,7 +4,7 @@ from PySide6 import QtCore
 from PySide6.QtWidgets import (QApplication,QMainWindow,QMessageBox,QTableWidgetItem,QFileDialog,QMenu, QWidgetAction,
                                QPlainTextEdit, QPushButton, QVBoxLayout, QWidget, QSystemTrayIcon, QMenu)
 from ui_main import Ui_MainWindow,UI_LoginWindow
-from win_result import SQLWindow
+from win_result import SQLWindown
 from functions.conect import Erros
 from functions.data import SQLite_Data
 from openpyxl import Workbook
@@ -504,7 +504,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             self.bt_mostrar_tabelas.setVisible(True)
 
     def open_secondary_window(self):
-        self.secondary_window = SQLWindow()  # Instanciando a tela secundária
+        self.secondary_window = SQLWindown()  # Instanciando a tela secundária
         self.secondary_window.setupUi(self.secondary_window)  # Configurando a interface da tela secundária
         self.secondary_window.show()  # Exibindo a tela secundária
 
@@ -529,7 +529,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 # Recupera os nomes das colunas
                 column_names = [column[0] for column in self.conn1.cursor.description]
                 self.open_secondary_window() 
-                if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindow):
+                if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
                     self.secondary_window.update_table_data(column_names,resp)  
                 else:
                     print("Tela secundária não foi inicializada corretamente.")
@@ -542,7 +542,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 # Recupera os nomes das colunas
                 column_names = self.conn2.cursor.column_names
                 self.open_secondary_window() 
-                if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindow):
+                if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
                     self.secondary_window.update_table_data(column_names,resp)  
                 else:
                     print("Tela secundária não foi inicializada corretamente.")
@@ -559,7 +559,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     column_names = [description[0] for description in self.conn3.cursor.description]
                     print(res)
                     self.open_secondary_window() 
-                    if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindow):
+                    if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
                         self.secondary_window.update_table_data(column_names, res)
                     else:
                         print("Tela secundária não foi inicializada corretamente.")
@@ -678,7 +678,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 # Recupera os nomes das colunas
                 column_names = [column[0] for column in self.conn1.cursor.description]
                 self.open_secondary_window() 
-                if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindow):
+                if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
                     self.secondary_window.update_table_data(column_names,resp)  
                 else:
                     print("Tela secundária não foi inicializada corretamente.")
@@ -693,7 +693,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 # Recupera os nomes das colunas
                 column_names = self.conn2.cursor.column_names
                 self.open_secondary_window() 
-                if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindow):
+                if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
                     self.secondary_window.update_table_data(column_names,resp)  
                 else:
                     print("Tela secundária não foi inicializada corretamente.")
@@ -712,7 +712,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     column_names = [description[0] for description in self.conn3.cursor.description]
                     print(res)
                     self.open_secondary_window() 
-                    if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindow):
+                    if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
                         self.secondary_window.update_table_data(column_names, res)
                     else:
                         print("Tela secundária não foi inicializada corretamente.")

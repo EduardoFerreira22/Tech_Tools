@@ -1188,6 +1188,12 @@ QPushButton:hover{
               <height>281</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::NoContextMenu</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">QHeaderView::section{
 background-color:rgb(148,148,148);
@@ -1207,6 +1213,9 @@ QTableWidget{
             </property>
             <attribute name="horizontalHeaderMinimumSectionSize">
              <number>490</number>
+            </attribute>
+            <attribute name="verticalHeaderVisible">
+             <bool>false</bool>
             </attribute>
             <column>
              <property name="text">

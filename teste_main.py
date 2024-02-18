@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QFr
     QMainWindow, QPlainTextEdit, QPushButton, QRadioButton,
     QSizePolicy, QSpacerItem, QStackedWidget, QTableWidget,
     QTableWidgetItem, QToolBox, QVBoxLayout, QWidget)
-import icons__rc
+import icons_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -506,6 +506,8 @@ class Ui_MainWindow(object):
         self.tableWidget_show_tables.setHorizontalHeaderItem(0, __qtablewidgetitem)
         self.tableWidget_show_tables.setObjectName(u"tableWidget_show_tables")
         self.tableWidget_show_tables.setGeometry(QRect(10, 10, 491, 281))
+        self.tableWidget_show_tables.setFocusPolicy(Qt.NoFocus)
+        self.tableWidget_show_tables.setContextMenuPolicy(Qt.NoContextMenu)
         self.tableWidget_show_tables.setStyleSheet(u"QHeaderView::section{\n"
 "background-color:rgb(148,148,148);\n"
 "	color:rgb(255,255,255);\n"
@@ -518,6 +520,7 @@ class Ui_MainWindow(object):
         self.tableWidget_show_tables.setGridStyle(Qt.SolidLine)
         self.tableWidget_show_tables.setColumnCount(1)
         self.tableWidget_show_tables.horizontalHeader().setMinimumSectionSize(490)
+        self.tableWidget_show_tables.verticalHeader().setVisible(False)
 
         self.verticalLayout_8.addWidget(self.frame_11)
 
@@ -932,7 +935,8 @@ class Ui_MainWindow(object):
         # Crie um QScrollArea e defina o QLabel como seu widget filho
         self.scroll_area = QScrollArea(self.pg_Sobre)
         self.scroll_area.setGeometry(10, 10, 491, 361)
-        self.scroll_area.setWidget(self.label_sobre)           
+        self.scroll_area.setWidget(self.label_sobre)   
+        
         self.pages.addWidget(self.pg_Sobre)
         self.pg_terms = QWidget()
         self.pg_terms.setObjectName(u"pg_terms")
@@ -1385,6 +1389,7 @@ class Ui_MainWindow(object):
         self.label_sobre.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:11pt; font-weight:700;\">Como o TechTools surgiu?</span></p><p>O <span style=\" font-weight:700;\">TechTools</span> foi inicialmente projetado para estabelecer conex\u00e3o com o banco de dados SQL Server e executar consultas pr\u00e9-definidas dentro do c\u00f3digo do programa.</p><p>O projeto, inicialmente, visava agilizar o processo de migra\u00e7\u00e3o de dados entre sistemas de gest\u00e3o diferentes. Facilitava a conex\u00e3o e apresentava os dados formatados, economizando tempo para o t\u00e9cnico respons\u00e1vel pela tarefa.</p><p>Com o tempo, o <span style=\" font-weight:700;\">TechTools</span> recebeu novas vers\u00f5es e adquiriu a capacidade de se conectar com outros bancos de dados, como <span style=\" font-weight:700;\">MySQL</span> e <span style=\" font-weight:700;\">SQL Server</span>. Logo, passou a apresentar os dados em uma tela em formato de tabela e a exibir as tabelas existentes no banco de dados, permitindo ao usu\u00e1rio "
                         "conhecer o banco de dados com o qual estava trabalhando. Al\u00e9m disso, recebeu a capacidade de executar consultas mais complexas, como <span style=\" font-weight:700;\">DML</span>, utilizando a linguagem <span style=\" font-weight:700;\">T-SQL</span>.</p><p>Com o decorrer do tempo, percebeu-se a necessidade de o TechTools se tornar a principal ferramenta de trabalho para t\u00e9cnicos de <span style=\" font-weight:700;\">T.I</span>. Assim, ele passou a oferecer uma ampla gama dos principais drivers de impressoras e os principais arquivos de instala\u00e7\u00e3o de programas usados por esses profissionais.</p><p>Atualmente, o TechTools \u00e9 uma ferramenta completa em seu contexto, mas est\u00e1 em constante atualiza\u00e7\u00e3o, com novas ferramentas sendo adicionadas ao programa com o objetivo de melhorar e facilitar os processos realizados por n\u00f3s, profissionais de T.I.</p><p><br/></p><p><span style=\" font-weight:700;\">Tech Tools v4.0.0 Copyright \u00a9 Todos os direitos reservados 2023-2024.</sp"
                         "an></p><p><span style=\" font-weight:700;\">Criador: Eduardo Ferreira</span></p><p><span style=\" font-weight:700;\">Colabora\u00e7\u00e3o: Design de imagens -  by M.R</span></p><p><span style=\" font-weight:700;\">E-mail: eduardoferreira_of@outlook.com</span></p></body></html>", None))
+        
         self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         # Defina a largura da barra de rolagem vertical
         self.scroll_bar = self.scroll_area.verticalScrollBar()

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'win_result.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.1
+## Created by: Qt User Interface Compiler version 6.6.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,35 +15,67 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHeaderView, QLabel,QFileDialog,
-    QMainWindow, QPushButton, QSizePolicy, QTableWidget,
-    QTableWidgetItem, QVBoxLayout, QWidget)
-import sys
+from PySide6.QtWidgets import (QApplication,QFileDialog, QFrame, QGridLayout, QHeaderView,
+    QLabel, QMainWindow, QPushButton, QSizePolicy,
+    QTableWidget, QTableWidgetItem, QWidget)
 from openpyxl import Workbook
 import csv
-import os
 import icons_rc
 
-class SQLWindow(QMainWindow,object):
+class SQLWindown(QMainWindow,object):
     def setupUi(self, SQLWindown):
         if not SQLWindown.objectName():
             SQLWindown.setObjectName(u"SQLWindown")
         SQLWindown.resize(1072, 638)
         SQLWindown.setCursor(QCursor(Qt.ArrowCursor))
         SQLWindown.setStyleSheet(u"background-color: rgb(38, 68, 149);")
-        appIcon = QIcon(u"img\\TECH NEW LOGO.png")
-        self.setWindowIcon(appIcon)
         self.centralwidget = QWidget(SQLWindown)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayout = QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.gridLayout = QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName(u"gridLayout")
         self.frame_2 = QFrame(self.centralwidget)
         self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setMaximumSize(QSize(16777215, 60))
         self.frame_2.setFrameShape(QFrame.Panel)
         self.frame_2.setFrameShadow(QFrame.Raised)
-        self.tableWidget_query = QTableWidget(self.frame_2)
-        self.tableWidget_query.setObjectName(u"tableWidget")
-        self.tableWidget_query.setGeometry(QRect(10, 10, 1031, 551))
+        self.gridLayout_2 = QGridLayout(self.frame_2)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.pushButton = QPushButton(self.frame_2)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.pushButton.setStyleSheet(u"QPushButton{\n"
+"	border:none;\n"
+"	color: rgb(0, 0, 127);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color:rgb(49,147,0)\n"
+"}")
+        icon = QIcon()
+        icon.addFile(u":/icons/image/folder.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton.setIcon(icon)
+        self.pushButton.setIconSize(QSize(40, 40))
+
+        self.gridLayout_2.addWidget(self.pushButton, 0, 3, 1, 1, Qt.AlignRight)
+
+        self.label = QLabel(self.frame_2)
+        self.label.setObjectName(u"label")
+
+        self.gridLayout_2.addWidget(self.label, 0, 2, 1, 1, Qt.AlignLeft)
+
+
+        self.gridLayout.addWidget(self.frame_2, 0, 0, 1, 1)
+
+        self.frame = QFrame(self.centralwidget)
+        self.frame.setObjectName(u"frame")
+        self.frame.setFrameShape(QFrame.Panel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.gridLayout_3 = QGridLayout(self.frame)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.tableWidget_query = QTableWidget(self.frame)
+        self.tableWidget_query.setObjectName(u"tableWidget_query")
         self.tableWidget_query.setStyleSheet(u"QHeaderView::section{\n"
 "background-color:rgb(148,148,148);\n"
 "	color:rgb(255,255,255);\n"
@@ -53,24 +85,12 @@ class SQLWindow(QMainWindow,object):
 "QTableWidget{\n"
 "	background-color:rgb(252,252,252);\n"
 "}")
-        self.pushButton = QPushButton(self.frame_2)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(960, 570, 81, 41))
-        self.pushButton.setStyleSheet(u"\n"
-"\n"
-"QPushButton:hover{\n"
-"	border:none;\n"
-"	background-color: rgb(251, 99, 4);\n"
-"}")
-        icon = QIcon()
-        icon.addFile(u":/icons/image/salvar.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton.setIcon(icon)
-        self.pushButton.setIconSize(QSize(30, 30))
-        self.label = QLabel(self.frame_2)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(850, 580, 101, 16))
+        self.tableWidget_query.verticalHeader().setVisible(False)
 
-        self.verticalLayout.addWidget(self.frame_2)
+        self.gridLayout_3.addWidget(self.tableWidget_query, 0, 0, 1, 1)
+
+
+        self.gridLayout.addWidget(self.frame, 1, 0, 1, 1)
 
         SQLWindown.setCentralWidget(self.centralwidget)
 
@@ -78,6 +98,8 @@ class SQLWindow(QMainWindow,object):
 
         QMetaObject.connectSlotsByName(SQLWindown)
     # setupUi
+
+
         self.pushButton.clicked.connect(self.save_data)
 
     def update_table_data(self, column_names, data):
@@ -145,14 +167,13 @@ class SQLWindow(QMainWindow,object):
             except Exception as e:
                 print(f"Erro ao salvar o arquivo: {e}")
 
+
     def retranslateUi(self, SQLWindown):
         SQLWindown.setWindowTitle(QCoreApplication.translate("SQLWindown", u"MainWindow", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton.setToolTip(QCoreApplication.translate("SQLWindown", u"<html><head/><body><p><span style=\" font-size:8pt; color:#00007f;\">Salvar em .csv</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton.setText("")
-        self.label.setText(QCoreApplication.translate("SQLWindown", u"<html><head/><body><p><span style=\" font-size:10pt; color:#ffffff;\">Salvar resultados</span></p></body></html>", None))
+        self.label.setText(QCoreApplication.translate("SQLWindown", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700; color:#ffffff;\">Dados retornados pela consulta.</span></p></body></html>", None))
     # retranslateUi
 
-if __name__ == "__main__":
-    app = QApplication([])
-    window = SQLWindow()
-    window.show()
-    app.exec_()
