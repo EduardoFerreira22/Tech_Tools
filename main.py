@@ -310,6 +310,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         self.tableWidget_user_login.clicked.connect(self.select_line_user_login)
 
         ##############PAGINA DE NCM########################################################################################
+        self.label_siscomex.setVisible(False)
         self.radioButton_list_ncm.setChecked(True)
         self.check_tb_ncm()
         self.radioButton_list_ncm.clicked.connect(self.check_tb_ncm)
@@ -1237,9 +1238,11 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             # Mostrar elementos quando radioButton_ncm_dataBases estiver selecionado
             self.comboBox_list_datas_ncm.setVisible(True)
             self.bt_buscarncm_database.setVisible(True)
+            self.label_siscomex.setVisible(True)
 
     #FAZ A COMPARAÇÃO DE TODOS OS OS PRODUTOS COM NCM'S INVÁLIDOS E MOSTRA A LISTA EM UMA TABELA
     def buscar_ncm_inDataBases(self):
+        from collections import defaultdict
         # INICIA A CONECÇÃO E EXECUTA A QUERY
         query1 = "SELECT CODIGO, DESCRICAO FROM NCM"
         query2 = """SELECT p.id_produto, p.nome, n.id_ncm 
@@ -1250,14 +1253,18 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
         select_data = self.comboBox_list_datas_ncm.currentText()
 
-        if select_data == 'Etrade':   
-            self.conn1.cursor.execute(query1)
-            ncm_bd = self.conn1.cursor.fetchall()
-            
+        if select_data == 'Etrade': 
+            try:  
+                self.conn1.cursor.execute(query1)
+                ncm_bd = self.conn1.cursor.fetchall()
+            except Exception as e:
+                self.show_error_popup("Erro!",f"Conexão não estabelecida com a Base de Dados!\n{e}")
         elif select_data == 'Hiper':
-            self.conn1.cursor.execute(query2)
-            ncm_bd = self.conn1.cursor.fetchall()
-            
+            try:
+                self.conn1.cursor.execute(query2)
+                ncm_bd = self.conn1.cursor.fetchall()
+            except Exception as e:
+                self.show_error_popup("Erro!",f"Conexão não estabelecida com a Base de Dados!\n{e}")
         else:
             ncm_bd = []
 
@@ -1269,14 +1276,29 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             with open('resource\\EXPIRED_NCM.json', 'r', encoding='utf-8') as f:
                 expired_ncms_data = json.load(f)
                 expired_ncms = expired_ncms_data.get('Nomenclaturas', [])
+                
+                # Transforma a lista de dicionários em um dicionário onde a chave é o código do NCM
+                ncm_dict = defaultdict(dict)
+                for ncm_data in expired_ncms:
+                    code = ncm_data['Codigo']
+                    if code in ncm_dict:
+                        current_end_date = datetime.strptime(ncm_dict[code]['Data_Fim'], '%d/%m/%Y').date()
+                        new_end_date = datetime.strptime(ncm_data['Data_Fim'], '%d/%m/%Y').date()
+                        if new_end_date > current_end_date:
+                            ncm_dict[code] = ncm_data
+                    else:
+                        ncm_dict[code] = ncm_data
+
+                # Converte o dicionário de volta para uma lista de dicionários
+                filtered_expired_ncms = list(ncm_dict.values())
         except FileNotFoundError:
             self.show_error_popup("Erro!", "Arquivo 'EXPIRED_NCM.json' não encontrado.")
-            expired_ncms = []
+            filtered_expired_ncms = []
 
         list_ncm_expired = []
         for ncm in ncm_bd:
-            for expired_ncm in expired_ncms:
-                if ncm[0] == expired_ncm.get('Codigo'):
+            for expired_ncm in filtered_expired_ncms:
+                if ncm[2] == expired_ncm.get('Codigo'):
                     data_expiracao = datetime.strptime(expired_ncm.get('Data_Fim'), '%d/%m/%Y').date()
                     if data_expiracao < data_atual:
                         list_ncm_expired.append({
@@ -1301,6 +1323,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
         # Atualiza os cabeçalhos da tabela
         self.tableWidget_ncm.setHorizontalHeaderLabels(['Codigo', 'Produto', 'NCM', 'Data_Fim'])
+
 
     #MOSTRA UM POPUP DE NOTIFICAÇÃO DE ERRO 
     def show_error_popup(self, title, message):

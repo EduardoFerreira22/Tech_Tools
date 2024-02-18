@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.1
+## Created by: Qt User Interface Compiler version 6.6.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -20,14 +20,14 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QFr
     QMainWindow, QPlainTextEdit, QPushButton, QRadioButton,
     QSizePolicy, QSpacerItem, QStackedWidget, QTableWidget,
     QTableWidgetItem, QToolBox, QVBoxLayout, QWidget)
-import icons_rc
+import icons__rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(673, 493)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
@@ -160,7 +160,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4.addWidget(self.bt_ncm_page)
 
-        self.verticalSpacer = QSpacerItem(20, 155, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 155, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_4.addItem(self.verticalSpacer)
 
@@ -932,8 +932,7 @@ class Ui_MainWindow(object):
         # Crie um QScrollArea e defina o QLabel como seu widget filho
         self.scroll_area = QScrollArea(self.pg_Sobre)
         self.scroll_area.setGeometry(10, 10, 491, 361)
-        self.scroll_area.setWidget(self.label_sobre)   
-        
+        self.scroll_area.setWidget(self.label_sobre)           
         self.pages.addWidget(self.pg_Sobre)
         self.pg_terms = QWidget()
         self.pg_terms.setObjectName(u"pg_terms")
@@ -1088,7 +1087,7 @@ class Ui_MainWindow(object):
         self.frame_13.setFrameShadow(QFrame.Raised)
         self.bt_buscarncm_database = QPushButton(self.frame_13)
         self.bt_buscarncm_database.setObjectName(u"bt_buscarncm_database")
-        self.bt_buscarncm_database.setGeometry(QRect(300, 40, 31, 21))
+        self.bt_buscarncm_database.setGeometry(QRect(170, 40, 31, 21))
         self.bt_buscarncm_database.setStyleSheet(u"QPushButton{\n"
 "	border:none;\n"
 "	color: rgb(255, 255, 255);\n"
@@ -1116,10 +1115,13 @@ class Ui_MainWindow(object):
         self.comboBox_list_datas_ncm.addItem("")
         self.comboBox_list_datas_ncm.addItem("")
         self.comboBox_list_datas_ncm.setObjectName(u"comboBox_list_datas_ncm")
-        self.comboBox_list_datas_ncm.setGeometry(QRect(140, 40, 141, 22))
+        self.comboBox_list_datas_ncm.setGeometry(QRect(10, 40, 141, 22))
         self.comboBox_list_datas_ncm.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(255, 85, 0);\n"
 "font: 700 9pt \"Segoe UI\";")
+        self.label_siscomex = QLabel(self.frame_13)
+        self.label_siscomex.setObjectName(u"label_siscomex")
+        self.label_siscomex.setGeometry(QRect(210, 50, 181, 16))
 
         self.verticalLayout_9.addWidget(self.frame_13)
 
@@ -1393,9 +1395,7 @@ class Ui_MainWindow(object):
         self.scroll_area.setWidgetResizable(True)
         # Defina a largura da barra de rolagem horizontal
         self.horizontal_scroll_bar = self.scroll_area.horizontalScrollBar()
-        self.horizontal_scroll_bar.setStyleSheet("QScrollBar:horizontal { height: 8px; }") 
-
-        
+        self.horizontal_scroll_bar.setStyleSheet("QScrollBar:horizontal { height: 8px; }")         
         self.plainTextEdit_3.setPlainText(QCoreApplication.translate("MainWindow", u"TERMOS DE USO DO PROGRAMA TECH TOOLS\n"
 "\n"
 "\n"
@@ -1472,6 +1472,7 @@ class Ui_MainWindow(object):
 
         self.comboBox_list_datas_ncm.setCurrentText("")
         self.comboBox_list_datas_ncm.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Etrade", None))
+        self.label_siscomex.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:7pt;\">Em caso de d\u00favidas acesse o site </span><a href=\"https://portalunico.siscomex.gov.br/classif/#/sumario?perfil=publico\"><span style=\" font-size:7pt; font-weight:700; text-decoration: underline; color:#00ff7f;\">Siscomex.</span></a></p></body></html>", None))
         ___qtablewidgetitem3 = self.tableWidget_ncm.horizontalHeaderItem(0)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"C\u00f3digo", None));
         ___qtablewidgetitem4 = self.tableWidget_ncm.horizontalHeaderItem(1)
@@ -1481,7 +1482,7 @@ class Ui_MainWindow(object):
         # Definir tamanho das colunas
         self.tableWidget_ncm.setColumnWidth(0, 80)
         self.tableWidget_ncm.setColumnWidth(1, 300)
-        self.tableWidget_ncm.setColumnWidth(2, 200)        
+        self.tableWidget_ncm.setColumnWidth(2, 200)
 #if QT_CONFIG(tooltip)
         self.bt_salvar_ncm.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:7pt;\">Salvar .csv</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
