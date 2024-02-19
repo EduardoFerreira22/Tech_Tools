@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>image/database-storage.png</file>
     <file>image/folder.png</file>
     <file>image/diskette.png</file>
     <file>image/direita-e-esquerda.png</file>

@@ -11,6 +11,7 @@ from openpyxl import Workbook
 import subprocess
 from datetime import datetime
 import sqlite3
+import pyodbc
 import bcrypt
 import json
 import csv
@@ -200,12 +201,14 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         appIcon = QIcon(u"img\\TECH NEW LOGO.png")
         self.setWindowIcon(appIcon)
         self.setFixedSize(673, 493)
+        #OBJETOS QUE INICIAM OCULTOS
         self.label_conectando.setVisible(False)
         self.label_conectado.setVisible(False)
         self.label_script_copiado.setVisible(False)
         self.radioButton_login.setChecked(True)
         self.bt_mostrar_tabelas.setVisible(False)
         self.tooltip_sqlite.setVisible(False)
+        self.bt_tela_bkp.setVisible(False)
 
         self.check_user_login()
         self.show_printers()
@@ -305,6 +308,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         self.bt_mostrar_tabelas.clicked.connect(lambda: self.pages.setCurrentWidget(self.pg_show_tables))
         self.bt_ncm_page.clicked.connect(lambda:self.pages.setCurrentWidget(self.pg_ncm))
         self.bt_executaveis.clicked.connect(lambda:self.pages.setCurrentWidget(self.pg_executaveis))
+        self.bt_tela_bkp.clicked.connect(lambda: self.pages.setCurrentWidget(self.pg_bkp_rest))
         ##################################################################################################
 
         self.bt_novo_user_login.clicked.connect(self.create_new_login_user)
@@ -324,6 +328,17 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         self.carregar_dados_ncm()
 
         self.bt_executar_exe.clicked.connect(self.executar_programa)
+        ###################PÁGINA BACKUP DATA BASES #######################################################################
+        self.radioButton_backup.setChecked(True)
+        self.lb_local_arquivo.setVisible(False)
+        self.txt_path_bkp_rest.setVisible(False)
+        self.pushButton_buscar_backup.setVisible(False)
+        self.bt_Restaurao.setVisible(False)
+        self.radioButton_backup.clicked.connect(self.select_bkp_rest)
+        self.radioButton_restaurar.clicked.connect(self.select_bkp_rest)
+        self.bt_Backup.clicked.connect(self.backup_database)
+        self.pushButton_buscar_backup.clicked.connect(self.buscar_backup)
+        self.bt_Restaurao.clicked.connect(self.restaure_database)
     
 
     
@@ -370,6 +385,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         if selected_data == 'FireBird':
             # Se for 'SQLite3', torna o botão visível
             self.bt_conectar_db_4.setVisible(True)
+            self.output_query.appendPlainText("IBExpert selecionado com sucesso!")
         else:
             # Caso contrário, torna o botão invisível
             self.bt_conectar_db_4.setVisible(False)
@@ -377,6 +393,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         # Verifica se a opção selecionada é 'Firebird'
         if selected_data == 'SQLite3':
             # Se for 'Firebird', torna os elementos visíveis
+            self.output_query.appendPlainText("Opção SQLite selecionado com sucesso!")
             self.tooltip_sqlite.setVisible(True)
             self.txt_server_db_2.clear()
             self.txt_server_db_2.setVisible(True)
@@ -422,6 +439,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         password = self.txt_pass_db.text()
         if server == '' and database == '' and user == '' and password == '':
             self.show_error_popup("Erro!","É necessário que todos os campos estejam preenchidos.")
+            self.output_query.appendPlainText(f"Erro! dados incompletos.")
         else:
             msg1 = "Conectado com Sucesso!"
             msg2 = f"Não foi possível se conectar ao banco de dados {database}"
@@ -430,7 +448,14 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             self.conn1 = conect.Conections_SQLServer()
             resp = self.conn1.conect_sqlserver(server, database, user, password)
             
+            if resp == 'OK':
+                self.output_query.appendPlainText(f"{msg1}")
+            elif resp == 'ERRO':
+                self.output_query.appendPlainText(f"Erro: {msg2}")
+
             self.msg_popup(resp,msg1,msg2)
+            
+            self.bt_tela_bkp.setVisible(True)
 
     #Conectando #############################################################################    
     def conectar_ao_MySQL(self):
@@ -439,7 +464,9 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             user = self.txt_user_db.text()
             password = self.txt_pass_db.text()
             if server == '' and database == '' and user == '':
+                self.output_query.appendPlainText(f"Erro! dados incompletos.")
                 self.show_error_popup("Erro!","É necessário que todos os campos estejam preenchidos.")
+            
             else:
                 msg1 = "Conectado com Sucesso!"
                 msg2 = f"Não foi possível se conectar ao banco de dados {database}"
@@ -447,6 +474,11 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 conn2 = conect.Conections_MySQL()
                 self.conn2 = conn2
                 resp = self.conn2.MYSQL(server, database, user, password)
+
+                if resp == 'OK':
+                    self.output_query.appendPlainText(f"{msg1}")
+                elif resp == 'ERRO':
+                    self.output_query.appendPlainText(f"Erro: {msg2}")                
                 self.msg_popup(resp,msg1,msg2)
 
     def buscar_db(self):
@@ -468,6 +500,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         caminho = self.txt_server_db_2.text()
         
         if caminho == '':
+            self.output_query.appendPlainText(f"Erro! dados incompletos.")
             self.show_error_popup("Erro!","Não foi possível identificar o caminho para o banco de dados\nConexão não realizada.")
         else:
             print(f"Caminho do Banco de Dados: {caminho}")  # Adicione esta linha para depurar
@@ -482,6 +515,10 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 self.label_conectando.setVisible(False)
                 self.label_conectado.setVisible(True)
                 self.msg_popup(resp, msg1, msg2)
+                if resp == 'OK':
+                    self.output_query.appendPlainText(f"{msg1}")
+                elif resp == 'ERRO':
+                    self.output_query.appendPlainText(f"Erro: {msg2}")   
             return self.conn3  # Retorna o objeto de conexão em vez da string 'OK'
 
    
@@ -491,6 +528,9 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             self.label_conectando.setVisible(True)
             self.conectar_ao_sql_server()
             self.bt_mostrar_tabelas.setVisible(True)
+            databases = self.list_DataBases()
+            self.combo_list_database.clear()
+            self.combo_list_database.addItems(databases)
             tables = self.tables_SqlServer()
             self.showTables_in_Table(tables)
         elif selected_data == 'MySQL':
@@ -505,6 +545,134 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             tables = self.tables_SQLite3()  # Obtém as tabelas do SQLite3
             self.showTables_in_Table(tables)
             self.bt_mostrar_tabelas.setVisible(True)
+
+    def list_DataBases(self):
+        try:
+            self.conn1.cursor.execute("SELECT name FROM sys.databases WHERE database_id > 4")
+            databases = [database[0] for database in self.conn1.cursor.fetchall()]
+            print(databases)
+            return databases
+        except pyodbc.Error as err:
+            print("Erro ao conectar ao SQL Server:", err)
+            return []
+
+    def select_bkp_rest(self):
+
+        if self.radioButton_backup.isChecked():
+            self.label_7.setVisible(True)
+            self.combo_list_database.setVisible(True)
+            self.bt_Backup.setVisible(True)
+            self.txt_path_bkp_rest.setVisible(False)
+            self.lb_local_arquivo.setVisible(False)
+            self.pushButton_buscar_backup.setVisible(False)
+            self.bt_Restaurao.setVisible(False)
+        elif self.radioButton_restaurar.isChecked():
+            self.label_7.setVisible(False)
+            self.combo_list_database.setVisible(False)
+            self.bt_Backup.setVisible(False)
+            self.lb_local_arquivo.setVisible(True)
+            self.txt_path_bkp_rest.setVisible(True)
+            self.pushButton_buscar_backup.setVisible(True)
+            self.bt_Restaurao.setVisible(True)
+    # BACKUPS DE DATABASES SQL SERVER
+    def backup_database(self):
+        tipo_banco = 'sqlserver'
+        server = self.txt_server_db.text()
+        nome_banco = self.combo_list_database.currentText()
+        user = self.txt_user_db.text()
+        password = self.txt_pass_db.text()
+
+        file_dialog = QFileDialog()
+        file_dialog.setAcceptMode(QFileDialog.AcceptSave)
+        file_dialog.setDefaultSuffix(".bak")
+        file_dialog.setNameFilter("Arquivos de backup (*.bak)")
+        file_dialog.setOption(QFileDialog.DontConfirmOverwrite, False)
+        directory, _ = file_dialog.getSaveFileName(self, "Salvar backup do banco de dados", f"{nome_banco}.bak", "Arquivos de backup (*.bak)")
+
+        if directory:  # directory contém o caminho do arquivo selecionado
+            try:
+                if tipo_banco.lower() == 'sqlserver':
+                    comando_backup = f'sqlcmd -S {server} -d {nome_banco} -U {user} -P {password} -Q "BACKUP DATABASE {nome_banco} TO DISK=\'{directory}\'"'
+                elif tipo_banco.lower() == 'mysql':
+                    comando_backup = f'mysqldump -u {user} -p{password} {nome_banco} > {directory}'
+                else:
+                    self.output_log_bkp_rest.appendPlainText("Tipo de banco de dados inválido")
+                    print("Tipo de banco de dados inválido.")
+                    return
+
+                try:
+                    # Captura a saída do subprocesso e exibe no output_log_bkp_rest
+                    output = subprocess.run(comando_backup, shell=True, check=True, capture_output=True, text=True)
+                    self.output_log_bkp_rest.appendPlainText(output.stdout)
+                    self.output_log_bkp_rest.appendPlainText(f"Arquivo selecionado para backup: {directory}")
+                    self.output_log_bkp_rest.appendPlainText("Backup realizado com sucesso!")
+                    
+                except subprocess.CalledProcessError as e:
+                    self.output_log_bkp_rest.appendPlainText(f"Erro ao realizar o backup: {e.stderr}")
+                except Exception as e:
+                    self.output_log_bkp_rest.appendPlainText(f"Erro inesperado: {e}")
+                    print(f"Erro inesperado: {e}")
+            except Exception as e:
+                pass
+            print(f"Arquivo selecionado para backup: {directory}")
+
+    # BUSCA O CAMINHO PARA 
+    def buscar_backup(self):
+        file_dialog = QFileDialog()
+        file_dialog.setAcceptMode(QFileDialog.AcceptOpen)
+        file_dialog.setNameFilter("Arquivos de backup (*.bak)")
+        file_dialog.setOption(QFileDialog.DontConfirmOverwrite, False)
+        file_dialog.setFileMode(QFileDialog.ExistingFile)
+        file_dialog.setWindowTitle("Selecionar arquivo de backup")
+        if file_dialog.exec():
+            selected_files = file_dialog.selectedFiles()[0]
+
+            self.txt_path_bkp_rest.clear()
+            self.txt_path_bkp_rest.setText(selected_files)
+
+
+    def restaure_database(self):
+        backup_file = self.txt_path_bkp_rest.text()
+        tipo_banco = 'sqlserver'  # Defina o tipo de banco de dados conforme necessário
+        server = self.txt_server_db.text()
+        user = self.txt_user_db.text()
+        password = self.txt_pass_db.text()
+        self.output_log_bkp_rest.appendPlainText(f"Iniciando...")
+        self.output_log_bkp_rest.appendPlainText(f"Caminho Data Base selecionado:\n{backup_file}")
+        if tipo_banco.lower() == 'sqlserver':
+            # Extrair o nome do arquivo sem a extensão
+            nome_banco = os.path.splitext(os.path.basename(backup_file))[0]
+            self.output_log_bkp_rest.appendPlainText(f"Data Base: {nome_banco}")
+            print(nome_banco)
+        else:
+            nome_banco = None
+
+        try:
+            if tipo_banco.lower() == 'sqlserver':
+                comando_restauracao = f'sqlcmd -S {server} -d master -U {user} -P {password} -Q "RESTORE DATABASE {nome_banco} FROM DISK=\'{backup_file}\'"'
+            elif tipo_banco.lower() == 'mysql':
+                comando_restauracao = f'mysql -u {user} -p{password} {nome_banco} < {backup_file}'
+            else:
+                self.output_log_bkp_rest.appendPlainText("Tipo de banco de dados inválido.")
+                print("Tipo de banco de dados inválido.")
+                return
+
+            try:
+                subprocess.run(comando_restauracao, shell=True, check=True)
+                print("Restauração realizada com sucesso!")
+
+                # Exibir os dados de saída no output de logs
+                output_log = f"Restauração realizada com sucesso!\n"
+                output_log += subprocess.check_output(comando_restauracao, shell=True, stderr=subprocess.STDOUT).decode("utf-8")
+                self.output_log_bkp_rest.appendPlainText(output_log)
+            except subprocess.CalledProcessError as e:
+                print(f"Erro ao realizar a restauração: {e}")
+            except Exception as e:
+                self.output_log_bkp_rest.appendPlainText(f"Erro inesperado: {e}")
+
+        except Exception as e:
+            self.output_log_bkp_rest.appendPlainText(f"Erro ao restaurar o banco de dados: {e}")
+
 
     def open_secondary_window(self):
         self.secondary_window = SQLWindown()  # Instanciando a tela secundária
@@ -534,41 +702,51 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             elif selected_data == 'SQLite3':
                 self.execute_sqlite_query(query_value)
             else:
+                self.output_query.appendPlainText("Banco de dados selecionado não suportado.")
                 print("Banco de dados selecionado não suportado.")
         except Exception as e:
             error.show_error_popup(str(e))
 
     def execute_sql_server_query(self, query):
-        self.conn1.cursor.execute(query)
-        if query.strip().upper().startswith('SELECT'):
-            resp = self.conn1.cursor.fetchall()
-            column_names = [column[0] for column in self.conn1.cursor.description]
-            self.display_query_results(column_names, resp)
-        else:
-            print("Comando SQL Server executado com sucesso.")
+        try:
+            self.conn1.cursor.execute(query)
+            if query.strip().upper().startswith('SELECT'):
+                resp = self.conn1.cursor.fetchall()
+                column_names = [column[0] for column in self.conn1.cursor.description]
+                self.display_query_results(column_names, resp)
+            else:
+                self.output_query.appendPlainText("Comando SQL Server executado com sucesso.")
+        except Exception as e:
+            self.output_query.appendPlainText("Erro ao executar o comando SQL Server: " + str(e))
 
     def execute_mysql_query(self, query):
-        self.conn2.cursor.execute(query)
-        if query.strip().upper().startswith('SELECT'):
-            resp = self.conn2.cursor.fetchall()
-            column_names = self.conn2.cursor.column_names
-            self.display_query_results(column_names, resp)
-        else:
-            print("Comando MySQL executado com sucesso.")
+        try:
+            self.conn2.cursor.execute(query)
+            if query.strip().upper().startswith('SELECT'):
+                resp = self.conn2.cursor.fetchall()
+                column_names = self.conn2.cursor.column_names
+                self.display_query_results(column_names, resp)
+            else:
+                self.output_query.appendPlainText("Comando MySQL executado com sucesso.")
+        except Exception as e:
+            self.output_query.appendPlainText("Erro ao executar o comando MySQL: " + str(e))
 
     def execute_sqlite_query(self, query):
-        cache = self.buscar_cache()
-        if cache:
-            self.conn3.conectar_sqlite3_db(cache)
-            self.conn3.cursor.execute(query)
-            if query.strip().upper().startswith('SELECT'):
-                res = self.conn3.cursor.fetchall()
-                column_names = [description[0] for description in self.conn3.cursor.description]
-                self.display_query_results(column_names, res)
+        try:
+            cache = self.buscar_cache()
+            if cache:
+                self.conn3.conectar_sqlite3_db(cache)
+                self.conn3.cursor.execute(query)
+                if query.strip().upper().startswith('SELECT'):
+                    res = self.conn3.cursor.fetchall()
+                    column_names = [description[0] for description in self.conn3.cursor.description]
+                    self.display_query_results(column_names, res)
+                else:
+                    self.output_query.appendPlainText("Comando SQLite executado com sucesso.")
             else:
-                print("Comando SQLite executado com sucesso.")
-        else:
-            print("Nenhum caminho de banco de dados SQLite encontrado no arquivo de cache.")
+                self.output_query.appendPlainText("Nenhum caminho de banco de dados SQLite encontrado no arquivo de cache.")
+        except Exception as e:
+            self.output_query.appendPlainText("Erro ao executar o comando SQLite: " + str(e))
 
     def display_query_results(self, column_names, data):
         self.open_secondary_window() 
@@ -577,57 +755,11 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         else:
             print("Tela secundária não foi inicializada corretamente.")
 
-    """
-    def query(self):
-        error = Erros()
-        query_value = self.plainTextEdit.toPlainText()
-        selected_data = self.comboBox_dataBases_db.currentText()
-        if selected_data == 'SQL Server':
-            try:
-                self.conn1.cursor.execute(query_value)
-                resp = self.conn1.cursor.fetchall()
-                # Recupera os nomes das colunas
-                column_names = [column[0] for column in self.conn1.cursor.description]
-                self.open_secondary_window() 
-                if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
-                    self.secondary_window.update_table_data(column_names,resp)  
-                else:
-                    print("Tela secundária não foi inicializada corretamente.")
-            except Exception as e:
-                error.show_error_popup(str(e))                
-        elif selected_data == 'MySQL':
-            try:
-                self.conn2.cursor.execute(query_value)
-                resp = self.conn2.cursor.fetchall()
-                # Recupera os nomes das colunas
-                column_names = self.conn2.cursor.column_names
-                self.open_secondary_window() 
-                if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
-                    self.secondary_window.update_table_data(column_names,resp)  
-                else:
-                    print("Tela secundária não foi inicializada corretamente.")
-            except Exception as e:
-                error.show_error_popup(str(e))
-        elif selected_data == 'SQLite3':
-            cache = self.buscar_cache()
-            try:
-                if cache:
-                    self.conn3.conectar_sqlite3_db(cache)
-                    self.conn3.cursor.execute(query_value)
-                    res = self.conn3.cursor.fetchall()
-                    # Recupera os nomes das colunas
-                    column_names = [description[0] for description in self.conn3.cursor.description]
-                    print(res)
-                    self.open_secondary_window() 
-                    if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
-                        self.secondary_window.update_table_data(column_names, res)
-                    else:
-                        print("Tela secundária não foi inicializada corretamente.")
-                else:
-                    print("Nenhum caminho de banco de dados SQLite encontrado no arquivo de cache.")
-            except Exception as e:
-                resp = e
-        """
+            # Mostrar a saída da consulta no QPlainTextEdit
+            self.output_query.appendPlainText("Resultado da consulta:")
+            for row in data:
+                self.output_query.appendPlainText(str(row))
+
     def tables_SqlServer(self):
         data = self.txt_dataBase_db.text()
         try:

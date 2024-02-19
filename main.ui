@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>673</width>
-    <height>493</height>
+    <height>491</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -107,7 +107,7 @@ QPushButton:hover{
                <x>0</x>
                <y>0</y>
                <width>93</width>
-               <height>393</height>
+               <height>391</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -360,7 +360,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <x>0</x>
                <y>0</y>
                <width>93</width>
-               <height>393</height>
+               <height>391</height>
               </rect>
              </property>
              <attribute name="label">
@@ -703,7 +703,7 @@ QPlainTextEdit{
            <widget class="QLabel" name="title_db">
             <property name="geometry">
              <rect>
-              <x>30</x>
+              <x>10</x>
               <y>10</y>
               <width>101</width>
               <height>20</height>
@@ -716,8 +716,8 @@ QPlainTextEdit{
            <widget class="QLineEdit" name="txt_server_db">
             <property name="geometry">
              <rect>
-              <x>30</x>
-              <y>40</y>
+              <x>10</x>
+              <y>30</y>
               <width>321</width>
               <height>21</height>
              </rect>
@@ -734,8 +734,8 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
            <widget class="QLineEdit" name="txt_dataBase_db">
             <property name="geometry">
              <rect>
-              <x>30</x>
-              <y>90</y>
+              <x>10</x>
+              <y>70</y>
               <width>101</width>
               <height>21</height>
              </rect>
@@ -752,8 +752,8 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
            <widget class="QLineEdit" name="txt_user_db">
             <property name="geometry">
              <rect>
-              <x>140</x>
-              <y>90</y>
+              <x>120</x>
+              <y>70</y>
               <width>101</width>
               <height>21</height>
              </rect>
@@ -770,8 +770,8 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
            <widget class="QLineEdit" name="txt_pass_db">
             <property name="geometry">
              <rect>
-              <x>250</x>
-              <y>90</y>
+              <x>230</x>
+              <y>70</y>
               <width>101</width>
               <height>21</height>
              </rect>
@@ -788,9 +788,9 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
            <widget class="QComboBox" name="comboBox_dataBases_db">
             <property name="geometry">
              <rect>
-              <x>370</x>
-              <y>40</y>
-              <width>101</width>
+              <x>350</x>
+              <y>30</y>
+              <width>91</width>
               <height>22</height>
              </rect>
             </property>
@@ -826,8 +826,8 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
            <widget class="QPushButton" name="bt_conectar_db">
             <property name="geometry">
              <rect>
-              <x>370</x>
-              <y>90</y>
+              <x>350</x>
+              <y>70</y>
               <width>91</width>
               <height>25</height>
              </rect>
@@ -863,8 +863,8 @@ QPushButton:hover{
             </property>
             <property name="geometry">
              <rect>
-              <x>30</x>
-              <y>140</y>
+              <x>10</x>
+              <y>120</y>
               <width>321</width>
               <height>21</height>
              </rect>
@@ -884,8 +884,8 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
             </property>
             <property name="geometry">
              <rect>
-              <x>370</x>
-              <y>140</y>
+              <x>350</x>
+              <y>120</y>
               <width>91</width>
               <height>25</height>
              </rect>
@@ -918,10 +918,10 @@ QPushButton:hover{
            <widget class="QFrame" name="frame_2">
             <property name="geometry">
              <rect>
-              <x>22</x>
-              <y>180</y>
-              <width>481</width>
-              <height>201</height>
+              <x>12</x>
+              <y>150</y>
+              <width>491</width>
+              <height>251</height>
              </rect>
             </property>
             <property name="frameShape">
@@ -933,10 +933,10 @@ QPushButton:hover{
             <widget class="QPlainTextEdit" name="plainTextEdit">
              <property name="geometry">
               <rect>
-               <x>10</x>
+               <x>0</x>
                <y>20</y>
                <width>471</width>
-               <height>141</height>
+               <height>131</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -951,7 +951,7 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
             <widget class="QLabel" name="label_4">
              <property name="geometry">
               <rect>
-               <x>10</x>
+               <x>0</x>
                <y>0</y>
                <width>111</width>
                <height>16</height>
@@ -964,10 +964,10 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
             <widget class="QPushButton" name="bt_conectar_db_3">
              <property name="geometry">
               <rect>
-               <x>10</x>
-               <y>170</y>
+               <x>0</x>
+               <y>220</y>
                <width>81</width>
-               <height>25</height>
+               <height>21</height>
               </rect>
              </property>
              <property name="font">
@@ -997,10 +997,10 @@ QPushButton:hover{
             <widget class="QPushButton" name="bt_mostrar_tabelas">
              <property name="geometry">
               <rect>
-               <x>110</x>
-               <y>170</y>
+               <x>100</x>
+               <y>220</y>
                <width>111</width>
-               <height>24</height>
+               <height>21</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -1019,12 +1019,30 @@ QPushButton:hover{
               <string>Mostrar tabelas</string>
              </property>
             </widget>
+            <widget class="QPlainTextEdit" name="output_query">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>150</y>
+               <width>471</width>
+               <height>61</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>MS Shell Dlg 2</family>
+               <pointsize>10</pointsize>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+            </widget>
            </widget>
            <widget class="QLabel" name="label_conectando">
             <property name="geometry">
              <rect>
-              <x>30</x>
-              <y>120</y>
+              <x>16</x>
+              <y>100</y>
               <width>111</width>
               <height>20</height>
              </rect>
@@ -1036,8 +1054,8 @@ QPushButton:hover{
            <widget class="QLabel" name="label_conectado">
             <property name="geometry">
              <rect>
-              <x>30</x>
-              <y>120</y>
+              <x>10</x>
+              <y>100</y>
               <width>111</width>
               <height>20</height>
              </rect>
@@ -1079,7 +1097,7 @@ QPushButton:hover{
             <property name="geometry">
              <rect>
               <x>480</x>
-              <y>150</y>
+              <y>130</y>
               <width>21</width>
               <height>16</height>
              </rect>
@@ -1097,10 +1115,10 @@ QPushButton:hover{
             </property>
             <property name="geometry">
              <rect>
-              <x>380</x>
-              <y>130</y>
+              <x>360</x>
+              <y>110</y>
               <width>81</width>
-              <height>61</height>
+              <height>51</height>
              </rect>
             </property>
             <property name="font">
@@ -1133,6 +1151,44 @@ QPushButton:hover{
              <size>
               <width>50</width>
               <height>50</height>
+             </size>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="bt_tela_bkp">
+            <property name="geometry">
+             <rect>
+              <x>460</x>
+              <y>30</y>
+              <width>31</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#00007f;&quot;&gt;Backup Data Base&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+	color:rgb(255,255,255);
+	border: none;
+}
+
+QPushButton:hover{
+	color:rgb(255,255,255);
+	
+	background-color: rgb(251, 99, 4);
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons_.qrc">
+              <normaloff>:/icons/image/database-storage.png</normaloff>:/icons/image/database-storage.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
              </size>
             </property>
            </widget>
@@ -3030,6 +3086,219 @@ QPushButton:hover{
           </property>
           <property name="text">
            <string>Executar</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="pg_bkp_rest">
+        <widget class="QFrame" name="frame_bkp">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>511</width>
+           <height>401</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Panel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QLineEdit" name="txt_path_bkp_rest">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>170</y>
+            <width>311</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_buscar_backup">
+          <property name="geometry">
+           <rect>
+            <x>330</x>
+            <y>170</y>
+            <width>75</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 127);
+}
+
+QPushButton:hover{
+	
+	color: rgb(255, 255, 255);
+	background-color:rgb(49,147,0)
+} </string>
+          </property>
+          <property name="text">
+           <string>Buscar</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="lb_local_arquivo">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>150</y>
+            <width>101</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+font: 700 9pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Local do arquivo</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="combo_list_database">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>70</y>
+            <width>111</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(255, 85, 0);
+font: 700 9pt &quot;Segoe UI&quot;;</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_7">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>50</y>
+            <width>321</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+font:9pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Escolha o banco de dados que deseja realizar o backup</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButton_backup">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>10</y>
+            <width>89</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+font: 700 9pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Backup</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButton_restaurar">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>10</y>
+            <width>89</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+font: 700 9pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Restaurar</string>
+          </property>
+         </widget>
+         <widget class="QPlainTextEdit" name="output_log_bkp_rest">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>240</y>
+            <width>481</width>
+            <height>151</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="lb_output">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>220</y>
+            <width>51</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+font: 700 9pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Output:</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="bt_Backup">
+          <property name="geometry">
+           <rect>
+            <x>150</x>
+            <y>70</y>
+            <width>75</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 127);
+}
+
+QPushButton:hover{
+	
+	color: rgb(255, 255, 255);
+	background-color:rgb(49,147,0)
+} </string>
+          </property>
+          <property name="text">
+           <string>Backup</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="bt_Restaurao">
+          <property name="geometry">
+           <rect>
+            <x>420</x>
+            <y>170</y>
+            <width>71</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 127);
+}
+
+QPushButton:hover{
+	
+	color: rgb(255, 255, 255);
+	background-color:rgb(49,147,0)
+} </string>
+          </property>
+          <property name="text">
+           <string>Restaurar</string>
           </property>
          </widget>
         </widget>

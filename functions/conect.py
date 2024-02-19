@@ -20,6 +20,7 @@ class Erros():
         msg.setInformativeText(error_message)
         msg.exec_()
 
+
 class Conections_SQLServer():
     def __init__(self):
 
