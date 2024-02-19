@@ -186,7 +186,10 @@ class Manger_Connect:
         except Exception as e:
             print(f"Erro ao deletar usuário: {e}")
             return "ERRO"
-        
+    
+    def sqlite3_version(self):
+
+        pass
  
 #A classe abaixo está herdando tudo das classes QMainWindow do Pyside6 e Ui_MainWindow que é a classe que contém a tela criada no QtDesigner
 class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
@@ -522,6 +525,63 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         error = Erros()
         query_value = self.plainTextEdit.toPlainText()
         selected_data = self.comboBox_dataBases_db.currentText()
+        
+        try:
+            if selected_data == 'SQL Server':
+                self.execute_sql_server_query(query_value)
+            elif selected_data == 'MySQL':
+                self.execute_mysql_query(query_value)
+            elif selected_data == 'SQLite3':
+                self.execute_sqlite_query(query_value)
+            else:
+                print("Banco de dados selecionado não suportado.")
+        except Exception as e:
+            error.show_error_popup(str(e))
+
+    def execute_sql_server_query(self, query):
+        self.conn1.cursor.execute(query)
+        if query.strip().upper().startswith('SELECT'):
+            resp = self.conn1.cursor.fetchall()
+            column_names = [column[0] for column in self.conn1.cursor.description]
+            self.display_query_results(column_names, resp)
+        else:
+            print("Comando SQL Server executado com sucesso.")
+
+    def execute_mysql_query(self, query):
+        self.conn2.cursor.execute(query)
+        if query.strip().upper().startswith('SELECT'):
+            resp = self.conn2.cursor.fetchall()
+            column_names = self.conn2.cursor.column_names
+            self.display_query_results(column_names, resp)
+        else:
+            print("Comando MySQL executado com sucesso.")
+
+    def execute_sqlite_query(self, query):
+        cache = self.buscar_cache()
+        if cache:
+            self.conn3.conectar_sqlite3_db(cache)
+            self.conn3.cursor.execute(query)
+            if query.strip().upper().startswith('SELECT'):
+                res = self.conn3.cursor.fetchall()
+                column_names = [description[0] for description in self.conn3.cursor.description]
+                self.display_query_results(column_names, res)
+            else:
+                print("Comando SQLite executado com sucesso.")
+        else:
+            print("Nenhum caminho de banco de dados SQLite encontrado no arquivo de cache.")
+
+    def display_query_results(self, column_names, data):
+        self.open_secondary_window() 
+        if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
+            self.secondary_window.update_table_data(column_names, data)
+        else:
+            print("Tela secundária não foi inicializada corretamente.")
+
+    """
+    def query(self):
+        error = Erros()
+        query_value = self.plainTextEdit.toPlainText()
+        selected_data = self.comboBox_dataBases_db.currentText()
         if selected_data == 'SQL Server':
             try:
                 self.conn1.cursor.execute(query_value)
@@ -567,7 +627,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     print("Nenhum caminho de banco de dados SQLite encontrado no arquivo de cache.")
             except Exception as e:
                 resp = e
-
+        """
     def tables_SqlServer(self):
         data = self.txt_dataBase_db.text()
         try:

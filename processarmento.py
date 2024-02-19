@@ -22,6 +22,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         self.setWindowIcon(appIcon)
 
     #######################  BOTÕES  ##############################################################################
+        self.comboBox_op_busca.currentIndexChanged.connect(self.combo_op_busca)
         self.bt_buscar_filecsv.clicked.connect(self.buscar_arquivo)
         self.bt_processar_arquivo_csv.clicked.connect(self.processar_csv)
         self.bt_buscar_opcoes.clicked.connect(self.combo_op_busca)
@@ -29,10 +30,25 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         #PROCESSAMENTO
         self.comboBox_op_processamentos.currentIndexChanged.connect(self.combo_op_processamento)
         self.bt_executar_process.clicked.connect(self.exetuc_process)
+        #VISIBILIDADE DOS BOTÕES ################################################################################
+        self.bt_executar_combo_process.setVisible(False)
+        self.bt_executar_process.setVisible(False)
+        self.bt_add_column_process.setVisible(False)
+        self.bt_remov_column_process.setVisible(False)
+        self.bt_setas_ncm.setVisible(False)
+        self.bt_setas_ncm_2.setVisible(False)
+        #VISIBILIDADE DOS ENTRYS ################################################################################
+        self.txt_buscar_ncm.setVisible(False)
         self.txt_alt_NCM1.setVisible(False)
         self.txt_alt_NCM2.setVisible(False)
-        self.bt_setas_ncm.setVisible(False)
-
+        self.txt_alt_NCM3.setVisible(False)
+        #VISIBILIDADE DOS ComboBox ################################################################################
+        self.combo_column1.setVisible(False)
+        self.combo_column2.setVisible(False)
+        self.combo_column3.setVisible(False)
+        #VISIBILIDADE DOS Label's ################################################################################
+        self.lb_atencao_substituir.setVisible(False)
+        self.lb_info_ncm_subst.setVisible(False)
 
     #MOSTRA UM POPUP DE NOTIFICAÇÃO DE ERRO 
     def show_error_popup(self, title, message):
@@ -119,8 +135,10 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             pass
 
         if opcoes == 'Buscar por NCM':
+            self.txt_buscar_ncm.setVisible(True)
             self.search_by_ncm()
         elif opcoes == "Buscar NCM's inválidos.":
+            self.txt_buscar_ncm.setVisible(False)
             self.search_invalid_ncm()
 
     def combo_op_processamento(self):
@@ -137,6 +155,8 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             self.txt_alt_NCM1.setVisible(True)
             self.txt_alt_NCM2.setVisible(True)
             self.bt_setas_ncm.setVisible(True)
+            self.bt_executar_process.setVisible(True)
+            self.lb_info_ncm_subst.setVisible(True)
             ncm1 = self.txt_alt_NCM1.text()
             ncm2 = self.txt_alt_NCM2.text()
             self.update_ncm(ncm1,ncm2)
@@ -158,7 +178,8 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             self.update_ncm(ncm1,ncm2)
 
     def search_by_ncm(self):
-        # Obtém o NCM digitado pelo usuário
+
+
         buscar_ncm = self.txt_buscar_ncm.text()
 
         # Carrega os NCMs expirados do arquivo JSON

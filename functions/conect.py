@@ -105,3 +105,5 @@ class Conections_SQLite3():
             return column_names,res
         except Exception as e:
           error.show_error_popup(str(e))
+
+
