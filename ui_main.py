@@ -34,6 +34,8 @@ class UI_LoginWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
+        self.frame.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"font: 700 7pt \"Segoe UI\";")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_2 = QVBoxLayout(self.frame)
@@ -108,11 +110,19 @@ class UI_LoginWindow(object):
         self.frame_3 = QFrame(self.frame)
         self.frame_3.setObjectName(u"frame_3")
         self.frame_3.setMaximumSize(QSize(16777215, 30))
+        self.frame_3.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"font: 700 7pt \"Segoe UI\";")
         self.frame_3.setFrameShape(QFrame.NoFrame)
         self.frame_3.setFrameShadow(QFrame.Plain)
         self.label_dados_tech = QLabel(self.frame_3)
         self.label_dados_tech.setObjectName(u"label_dados_tech")
-        self.label_dados_tech.setGeometry(QRect(50, 10, 261, 16))
+        self.label_dados_tech.setGeometry(QRect(40, 0, 51, 20))
+        self.lb_login_version = QLabel(self.frame_3)
+        self.lb_login_version.setObjectName(u"lb_login_version")
+        self.lb_login_version.setGeometry(QRect(90, 0, 31, 21))
+        self.lb_login_version_2 = QLabel(self.frame_3)
+        self.lb_login_version_2.setObjectName(u"lb_login_version_2")
+        self.lb_login_version_2.setGeometry(QRect(120, 0, 191, 21))
 
         self.verticalLayout_2.addWidget(self.frame_3)
 
@@ -134,8 +144,13 @@ class UI_LoginWindow(object):
         self.bt_login.setText(QCoreApplication.translate("MainWindow", u"Login", None))
         self.checkBox_lembrar_senha.setText(QCoreApplication.translate("MainWindow", u"Lembrar senha", None))
         self.bt_logo_techtools.setText("")
-        self.label_dados_tech.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:7pt; font-weight:700; color:#ffffff;\">Tech Tools v4.0.0 Copyright \u00a9 2023-2024, Eduardo Ferreira.</span></p></body></html>", None))
+        self.label_dados_tech.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">Tech Tools </span></p></body></html>", None))
+        self.lb_login_version.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><br/></p></body></html>", None))
+        self.lb_login_version_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">- Copyright \u00a9 2023-2024, Eduardo Ferreira.</span></p></body></html>", None))
     # retranslateUi
+
+
+
 
 
 if __name__ == "__main__":
@@ -290,9 +305,9 @@ class Ui_MainWindow(object):
         self.widget = QWidget()
         self.widget.setObjectName(u"widget")
         self.widget.setGeometry(QRect(0, 0, 93, 391))
-        self.label_2 = QLabel(self.widget)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(0, 250, 91, 111))
+        self.lb_info = QLabel(self.widget)
+        self.lb_info.setObjectName(u"lb_info")
+        self.lb_info.setGeometry(QRect(0, 280, 91, 81))
         self.bt_sobre = QPushButton(self.widget)
         self.bt_sobre.setObjectName(u"bt_sobre")
         self.bt_sobre.setGeometry(QRect(10, 20, 75, 24))
@@ -305,6 +320,9 @@ class Ui_MainWindow(object):
         self.bt_users.setObjectName(u"bt_users")
         self.bt_users.setGeometry(QRect(10, 360, 75, 24))
         self.bt_users.setCursor(QCursor(Qt.PointingHandCursor))
+        self.lb_version = QLabel(self.widget)
+        self.lb_version.setObjectName(u"lb_version")
+        self.lb_version.setGeometry(QRect(0, 261, 91, 20))
         self.toolBox.addItem(self.widget, u"Informa\u00e7\u00f5es")
 
         self.verticalLayout_3.addWidget(self.toolBox)
@@ -1538,10 +1556,11 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.bt_ncm_page.setText(QCoreApplication.translate("MainWindow", u"NCM", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.box_buttons), QCoreApplication.translate("MainWindow", u"Home", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:7pt; font-weight:700;\">vers\u00e3o: 4.0.0</span></p><p align=\"center\"><span style=\" font-size:7pt; font-weight:700;\">Copyright \u00a9 </span></p><p align=\"center\"><span style=\" font-size:7pt; font-weight:700;\">2023-2024</span></p><p align=\"center\"><span style=\" font-size:7pt; font-weight:700;\">TechTools.</span></p></body></html>", None))
+        self.lb_info.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:7pt; font-weight:700;\">Copyright \u00a9 </span></p><p align=\"center\"><span style=\" font-size:7pt; font-weight:700;\">2023-2024</span></p><p align=\"center\"><span style=\" font-size:7pt; font-weight:700;\">TechTools.</span></p></body></html>", None))
         self.bt_sobre.setText(QCoreApplication.translate("MainWindow", u"Sobre", None))
         self.bt_termos.setText(QCoreApplication.translate("MainWindow", u"Termos", None))
         self.bt_users.setText(QCoreApplication.translate("MainWindow", u"Users", None))
+        self.lb_version.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><br/></p></body></html>", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.widget), QCoreApplication.translate("MainWindow", u"Informa\u00e7\u00f5es", None))
         self.btn_tech_tools.setText("")
 #if QT_CONFIG(tooltip)
@@ -1629,7 +1648,8 @@ class Ui_MainWindow(object):
         self.scroll_area.setWidgetResizable(True)
         # Defina a largura da barra de rolagem horizontal
         self.horizontal_scroll_bar = self.scroll_area.horizontalScrollBar()
-        self.horizontal_scroll_bar.setStyleSheet("QScrollBar:horizontal { height: 8px; }")         
+        self.horizontal_scroll_bar.setStyleSheet("QScrollBar:horizontal { height: 8px; }") 
+        
         self.plainTextEdit_3.setPlainText(QCoreApplication.translate("MainWindow", u"TERMOS DE USO DO PROGRAMA TECH TOOLS\n"
 "\n"
 "\n"
@@ -1716,7 +1736,7 @@ class Ui_MainWindow(object):
         # Definir tamanho das colunas
         self.tableWidget_ncm.setColumnWidth(0, 80)
         self.tableWidget_ncm.setColumnWidth(1, 300)
-        self.tableWidget_ncm.setColumnWidth(2, 200)        
+        self.tableWidget_ncm.setColumnWidth(2, 200)
 #if QT_CONFIG(tooltip)
         self.bt_salvar_ncm.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:7pt;\">Salvar .csv</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)

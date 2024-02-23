@@ -18,41 +18,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1" rowspan="2">
-     <widget class="QFrame" name="frame">
-      <property name="maximumSize">
-       <size>
-        <width>200</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Panel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
-        <widget class="QPlainTextEdit" name="txt_output_logs">
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>7</pointsize>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);
-font: 8pt &quot;Segoe UI&quot;;
-font: 7pt &quot;Segoe UI&quot;;</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="1" column="0">
      <widget class="QFrame" name="frame_4">
       <property name="maximumSize">
@@ -98,8 +63,8 @@ font: 7pt &quot;Segoe UI&quot;;</string>
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>40</y>
-            <width>191</width>
+            <y>50</y>
+            <width>189</width>
             <height>20</height>
            </rect>
           </property>
@@ -132,16 +97,6 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
           </item>
           <item>
            <property name="text">
-            <string>Localizar caracteres especiais.</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Localizar Duplicados.</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
             <string>Tudo que contém.</string>
            </property>
           </item>
@@ -149,9 +104,9 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
          <widget class="QPushButton" name="bt_buscar_opcoes">
           <property name="geometry">
            <rect>
-            <x>220</x>
-            <y>40</y>
-            <width>91</width>
+            <x>232</x>
+            <y>48</y>
+            <width>75</width>
             <height>24</height>
            </rect>
           </property>
@@ -175,7 +130,7 @@ QPushButton:hover{
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>80</y>
+            <y>84</y>
             <width>191</width>
             <height>21</height>
            </rect>
@@ -193,7 +148,7 @@ font: 600 9pt &quot;Segoe UI&quot;;</string>
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>20</y>
+            <y>16</y>
             <width>98</width>
             <height>16</height>
            </rect>
@@ -252,8 +207,8 @@ font: 600 9pt &quot;Segoe UI&quot;;</string>
              <property name="geometry">
               <rect>
                <x>10</x>
-               <y>30</y>
-               <width>191</width>
+               <y>46</y>
+               <width>215</width>
                <height>20</height>
               </rect>
              </property>
@@ -276,27 +231,17 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
              </property>
              <item>
               <property name="text">
-               <string>Remover duplicados.</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
                <string>Substituir NCM.</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Substituir caracteres especiais.</string>
+               <string>Tudo que contém mude para</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Tudo que contém mude para...</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Se Coluna A tem, Coluna B Recebe...</string>
+               <string>P. X da Coluna A , Coluna B Recebe</string>
               </property>
              </item>
             </widget>
@@ -304,8 +249,8 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
              <property name="geometry">
               <rect>
                <x>10</x>
-               <y>10</y>
-               <width>161</width>
+               <y>15</y>
+               <width>151</width>
                <height>16</height>
               </rect>
              </property>
@@ -322,8 +267,8 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
             <widget class="QPushButton" name="bt_executar_combo_process">
              <property name="geometry">
               <rect>
-               <x>120</x>
-               <y>70</y>
+               <x>150</x>
+               <y>77</y>
                <width>75</width>
                <height>24</height>
               </rect>
@@ -357,9 +302,9 @@ QPushButton:hover{
             <widget class="QPushButton" name="bt_setas_ncm">
              <property name="geometry">
               <rect>
-               <x>120</x>
-               <y>90</y>
-               <width>41</width>
+               <x>160</x>
+               <y>60</y>
+               <width>31</width>
                <height>24</height>
               </rect>
              </property>
@@ -385,7 +330,7 @@ QPushButton:hover{
               <rect>
                <x>10</x>
                <y>90</y>
-               <width>113</width>
+               <width>151</width>
                <height>21</height>
               </rect>
              </property>
@@ -395,7 +340,7 @@ color: rgb(255, 85, 0);
 font: 600 9pt &quot;Segoe UI&quot;;</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignCenter</set>
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
              <property name="placeholderText">
               <string>De</string>
@@ -404,9 +349,9 @@ font: 600 9pt &quot;Segoe UI&quot;;</string>
             <widget class="QLineEdit" name="txt_alt_NCM2">
              <property name="geometry">
               <rect>
-               <x>160</x>
+               <x>190</x>
                <y>90</y>
-               <width>113</width>
+               <width>151</width>
                <height>21</height>
               </rect>
              </property>
@@ -416,7 +361,7 @@ color: rgb(255, 85, 0);
 font: 600 9pt &quot;Segoe UI&quot;;</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignCenter</set>
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
              <property name="placeholderText">
               <string>Para</string>
@@ -426,7 +371,7 @@ font: 600 9pt &quot;Segoe UI&quot;;</string>
              <property name="geometry">
               <rect>
                <x>440</x>
-               <y>90</y>
+               <y>0</y>
                <width>75</width>
                <height>24</height>
               </rect>
@@ -457,7 +402,7 @@ QPushButton:hover{
               </rect>
              </property>
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt; color:#ffffff;&quot;&gt;Atenção! Todos os NCM's do &lt;/span&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#ffffff;&quot;&gt;PRIMEIRO&lt;/span&gt;&lt;span style=&quot; font-size:7pt; color:#ffffff;&quot;&gt; quadroserão substituídospelo do&lt;/span&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#ffffff;&quot;&gt; SEGUNDO.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt; color:#ffffff;&quot;&gt;Atenção! Todos os dados do &lt;/span&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#ffffff;&quot;&gt;PRIMEIRO&lt;/span&gt;&lt;span style=&quot; font-size:7pt; color:#ffffff;&quot;&gt; quadro serão substituídos pelos dados do&lt;/span&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#ffffff;&quot;&gt; SEGUNDO.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
             <widget class="QComboBox" name="combo_column1">
@@ -465,7 +410,7 @@ QPushButton:hover{
               <rect>
                <x>10</x>
                <y>40</y>
-               <width>111</width>
+               <width>151</width>
                <height>22</height>
               </rect>
              </property>
@@ -478,9 +423,9 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
             <widget class="QComboBox" name="combo_column2">
              <property name="geometry">
               <rect>
-               <x>160</x>
+               <x>190</x>
                <y>40</y>
-               <width>111</width>
+               <width>151</width>
                <height>22</height>
               </rect>
              </property>
@@ -503,36 +448,11 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt; color:#ffffff;&quot;&gt;Para mudança de de &lt;/span&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#ffffff;&quot;&gt;NCM's&lt;/span&gt;&lt;span style=&quot; font-size:7pt; color:#ffffff;&quot;&gt; deve-se respeitar o formato &lt;/span&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#ffffff;&quot;&gt;0000.00.00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
-            <widget class="QPushButton" name="bt_add_column_process">
-             <property name="geometry">
-              <rect>
-               <x>440</x>
-               <y>40</y>
-               <width>75</width>
-               <height>24</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton{
-	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 127);
-}
-
-QPushButton:hover{
-	
-	color: rgb(255, 255, 255);
-	background-color:rgb(49,147,0)
-}</string>
-             </property>
-             <property name="text">
-              <string>Ad. Col.</string>
-             </property>
-            </widget>
             <widget class="QPushButton" name="bt_remov_column_process">
              <property name="geometry">
               <rect>
-               <x>440</x>
-               <y>40</y>
+               <x>360</x>
+               <y>0</y>
                <width>75</width>
                <height>24</height>
               </rect>
@@ -556,9 +476,9 @@ QPushButton:hover{
             <widget class="QComboBox" name="combo_column3">
              <property name="geometry">
               <rect>
-               <x>310</x>
+               <x>370</x>
                <y>40</y>
-               <width>111</width>
+               <width>151</width>
                <height>22</height>
               </rect>
              </property>
@@ -571,9 +491,9 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
             <widget class="QLineEdit" name="txt_alt_NCM3">
              <property name="geometry">
               <rect>
-               <x>310</x>
+               <x>370</x>
                <y>90</y>
-               <width>113</width>
+               <width>151</width>
                <height>21</height>
               </rect>
              </property>
@@ -583,7 +503,7 @@ color: rgb(255, 85, 0);
 font: 600 9pt &quot;Segoe UI&quot;;</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignCenter</set>
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
              <property name="placeholderText">
               <string>Para</string>
@@ -592,9 +512,9 @@ font: 600 9pt &quot;Segoe UI&quot;;</string>
             <widget class="QPushButton" name="bt_setas_ncm_2">
              <property name="geometry">
               <rect>
-               <x>270</x>
-               <y>90</y>
-               <width>41</width>
+               <x>340</x>
+               <y>60</y>
+               <width>31</width>
                <height>24</height>
               </rect>
              </property>
@@ -615,9 +535,69 @@ font: 600 9pt &quot;Segoe UI&quot;;</string>
               </size>
              </property>
             </widget>
+            <widget class="QPushButton" name="bt_add_column_process">
+             <property name="geometry">
+              <rect>
+               <x>360</x>
+               <y>0</y>
+               <width>75</width>
+               <height>24</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 127);
+}
+
+QPushButton:hover{
+	
+	color: rgb(255, 255, 255);
+	background-color:rgb(49,147,0)
+}</string>
+             </property>
+             <property name="text">
+              <string>Ad. Col.</string>
+             </property>
+            </widget>
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="1" rowspan="2">
+     <widget class="QFrame" name="frame">
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <widget class="QPlainTextEdit" name="txt_output_logs">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>7</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+font: 8pt &quot;Segoe UI&quot;;
+font: 7pt &quot;Segoe UI&quot;;</string>
+         </property>
         </widget>
        </item>
       </layout>
@@ -676,7 +656,7 @@ QTableWidget{
       <widget class="QLineEdit" name="txt_path_filecsv">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>620</x>
          <y>30</y>
          <width>351</width>
          <height>31</height>
@@ -694,7 +674,7 @@ font: 9pt &quot;Segoe UI&quot;;</string>
       <widget class="QPushButton" name="bt_buscar_filecsv">
        <property name="geometry">
         <rect>
-         <x>360</x>
+         <x>970</x>
          <y>30</y>
          <width>75</width>
          <height>31</height>
@@ -719,9 +699,9 @@ QPushButton:hover{
       <widget class="QPushButton" name="bt_processar_arquivo_csv">
        <property name="geometry">
         <rect>
-         <x>450</x>
+         <x>1060</x>
          <y>30</y>
-         <width>81</width>
+         <width>71</width>
          <height>31</height>
         </rect>
        </property>
@@ -747,7 +727,7 @@ QPushButton:hover{
       <widget class="QLabel" name="label">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>620</x>
          <y>6</y>
          <width>131</width>
          <height>16</height>
@@ -755,6 +735,32 @@ QPushButton:hover{
        </property>
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#ffffff;&quot;&gt;Selecione o arquivo:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>231</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="icons_.qrc">
+         <normaloff>:/icons/image/TECH TOOLS TITULO LOGO.png</normaloff>:/icons/image/TECH TOOLS TITULO LOGO.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>1500</width>
+         <height>45</height>
+        </size>
        </property>
       </widget>
      </widget>

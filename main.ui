@@ -366,17 +366,17 @@ li.checked::marker { content: &quot;\2612&quot;; }
              <attribute name="label">
               <string>Informações</string>
              </attribute>
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="lb_info">
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>250</y>
+                <y>280</y>
                 <width>91</width>
-                <height>111</height>
+                <height>81</height>
                </rect>
               </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:7pt; font-weight:700;&quot;&gt;versão: 4.0.0&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:7pt; font-weight:700;&quot;&gt;Copyright © &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:7pt; font-weight:700;&quot;&gt;2023-2024&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:7pt; font-weight:700;&quot;&gt;TechTools.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:7pt; font-weight:700;&quot;&gt;Copyright © &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:7pt; font-weight:700;&quot;&gt;2023-2024&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:7pt; font-weight:700;&quot;&gt;TechTools.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
              </widget>
              <widget class="QPushButton" name="bt_sobre">
@@ -425,6 +425,19 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </property>
               <property name="text">
                <string>Users</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="lb_version">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>261</y>
+                <width>91</width>
+                <height>20</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
              </widget>
             </widget>

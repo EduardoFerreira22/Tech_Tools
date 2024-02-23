@@ -66,7 +66,24 @@ class Manger_Connect:
             self.conn.close()
         except:
             pass
+    #CONECTA A DATABASE TECH_TOOLS E DEMAIS FUNÇÕES DESSE BANCO ####################################
+    def contect_techtools(self):
+        self.conn_tech = sqlite3.connect('venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db')
+        self.cursor_tech = self.conn_tech.cursor()
 
+
+    def version_sistem_tech(self):
+        try:
+            self.contect_techtools()
+            self.cursor_tech.execute('SELECT VERSION_SYSTEM FROM VERSION')
+            version = self.cursor_tech.fetchall()
+  
+            for v in version:
+                v = v[0]
+            return v
+        except Exception as e:
+            print(e)
+    ####################################################################################################
     def create_user(self,user,password,tipo):
         try:
             cursor = self.conn.cursor()
@@ -213,6 +230,10 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         self.check_user_login()
         self.show_printers()
         self.show_instadores()
+
+        version_sys = self.version_sistem_tech()
+        self.lb_version.setText(str(f'   Versão: {version_sys}'))
+        # self.lb_version.setVisible(bool(version_sys))
 
         chek = self.get_type_ac()
          # Chama a função para verificar o tipo de login
@@ -630,7 +651,6 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             self.txt_path_bkp_rest.clear()
             self.txt_path_bkp_rest.setText(selected_files)
 
-
     def restaure_database(self):
         backup_file = self.txt_path_bkp_rest.text()
         tipo_banco = 'sqlserver'  # Defina o tipo de banco de dados conforme necessário
@@ -672,7 +692,6 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
         except Exception as e:
             self.output_log_bkp_rest.appendPlainText(f"Erro ao restaurar o banco de dados: {e}")
-
 
     def open_secondary_window(self):
         self.secondary_window = SQLWindown()  # Instanciando a tela secundária
@@ -1436,8 +1455,8 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
     def buscar_ncm_inDataBases(self):
         from collections import defaultdict
         # INICIA A CONECÇÃO E EXECUTA A QUERY
-        query1 = "SELECT CODIGO, DESCRICAO FROM NCM"
-        query2 = """SELECT p.id_produto, p.nome, n.id_ncm 
+        query1 = "SELECT CODIGO,NCM, NOME FROM PRODUTO"
+        query2 = """SELECT p.id_produto, n.id_ncm, p.nome
                     FROM produto p
                     INNER JOIN ncm n
                     ON p.id_ncm = n.id_ncm
@@ -1445,10 +1464,13 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
         select_data = self.comboBox_list_datas_ncm.currentText()
 
+        ncm_bd = []
+
         if select_data == 'Etrade': 
             try:  
                 self.conn1.cursor.execute(query1)
                 ncm_bd = self.conn1.cursor.fetchall()
+                print(ncm_bd)
             except Exception as e:
                 self.show_error_popup("Erro!",f"Conexão não estabelecida com a Base de Dados!\n{e}")
         elif select_data == 'Hiper':
@@ -1457,6 +1479,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 ncm_bd = self.conn1.cursor.fetchall()
             except Exception as e:
                 self.show_error_popup("Erro!",f"Conexão não estabelecida com a Base de Dados!\n{e}")
+
         else:
             ncm_bd = []
 
@@ -1489,14 +1512,20 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
         list_ncm_expired = []
         for ncm in ncm_bd:
+            if select_data == 'Etrade':
+                ncm_without_dot = ncm[1].replace('.', '')  # Remove o ponto decimal apenas se for Etrade
+                formatted_ncm = '{:08}'.format(int(ncm_without_dot))  # Formata para ter oito dígitos
+                formatted_ncm = '{}.{}.{}'.format(formatted_ncm[:4], formatted_ncm[4:6], formatted_ncm[6:])  # Aplica a máscara
+            else:
+                formatted_ncm = ncm[0]  # Use o NCM sem alterações se for Hiper
             for expired_ncm in filtered_expired_ncms:
-                if ncm[2] == expired_ncm.get('Codigo'):
+                if formatted_ncm == expired_ncm.get('Codigo'):
                     data_expiracao = datetime.strptime(expired_ncm.get('Data_Fim'), '%d/%m/%Y').date()
                     if data_expiracao < data_atual:
                         list_ncm_expired.append({
                             'Codigo': ncm[0],
-                            'Produto': ncm[1],
-                            'NCM': ncm[2],
+                            'Produto': ncm[2],
+                            'NCM': formatted_ncm,  # Usar o NCM formatado ou não formatado conforme a opção selecionada
                             'Data_Fim': data_expiracao.strftime('%d/%m/%Y')
                         })
                         print(f"NCM expirado encontrado no banco de dados: {ncm}")
@@ -1516,7 +1545,6 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         # Atualiza os cabeçalhos da tabela
         self.tableWidget_ncm.setHorizontalHeaderLabels(['Codigo', 'Produto', 'NCM', 'Data_Fim'])
 
-
     #MOSTRA UM POPUP DE NOTIFICAÇÃO DE ERRO 
     def show_error_popup(self, title, message):
         msg = QMessageBox()
@@ -1524,7 +1552,6 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         msg.setText(message)
         msg.setIcon(QMessageBox.Warning)
         msg.exec()
-
 
     def save_data_ncm(self):
         options = QFileDialog.Options()
@@ -1555,7 +1582,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         # Mudar para a página de conexões
         self.pages.setCurrentWidget(self.pg_Data_base)
 
-class LoginWindow(QMainWindow, UI_LoginWindow):
+class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -1570,6 +1597,8 @@ class LoginWindow(QMainWindow, UI_LoginWindow):
         # Conectar o evento returnPressed dos line edits ao verificador de campos de login
         self.txt_username.returnPressed.connect(self.check_login_fields)
         self.txt_senha_login.returnPressed.connect(self.check_login_fields)
+        version_sys = self.version_sistem_tech()
+        self.lb_login_version.setText(str(f'v{version_sys}'))
 
     def check_login_fields(self):
         # Verificar se ambos os campos de entrada estão preenchidos
