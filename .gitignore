@@ -19,6 +19,8 @@ teste_login.ui
 teste_ncm.py
 ui_main_copy.py
 cep.py
-cep.jsons
+cep.json
+product_formatado.csv
+produto.csv
 .gitignore
-
+.gitattributes
