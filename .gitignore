@@ -19,6 +19,6 @@ teste_login.ui
 teste_ncm.py
 ui_main_copy.py
 cep.py
-cep.json
+cep.jsons
 .gitignore
 

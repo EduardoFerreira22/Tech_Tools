@@ -4,6 +4,7 @@ from PySide6 import QtCore
 from PySide6.QtWidgets import (QApplication,QMainWindow,QMessageBox,QTableWidgetItem,QFileDialog,QMenu, QWidgetAction,
                                QPlainTextEdit, QPushButton, QVBoxLayout, QWidget, QSystemTrayIcon, QMenu)
 from ui_main import Ui_MainWindow,UI_LoginWindow
+from processarmento import Processing_CSV
 from win_result import SQLWindown
 from functions.conect import Erros
 from functions.data import SQLite_Data
@@ -330,6 +331,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         self.bt_ncm_page.clicked.connect(lambda:self.pages.setCurrentWidget(self.pg_ncm))
         self.bt_executaveis.clicked.connect(lambda:self.pages.setCurrentWidget(self.pg_executaveis))
         self.bt_tela_bkp.clicked.connect(lambda: self.pages.setCurrentWidget(self.pg_bkp_rest))
+        self.bt_processar_planilha.clicked.connect(self.mostrar_janela_processamento_csv)
         ##################################################################################################
 
         self.bt_novo_user_login.clicked.connect(self.create_new_login_user)
@@ -832,7 +834,11 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
     def execut_i(self):
         path = 'resource\\ibexpert.exe'
         subprocess.run(path)
-    
+
+    def mostrar_janela_processamento_csv(self):
+        self.janela_processamento_csv = Processing_CSV()
+        self.janela_processamento_csv.show()
+
     def executar_programa(self):
         # Obtenha o nome do executável selecionado no combobox
         nome_executavel = self.comboBox_executaveis.currentText()

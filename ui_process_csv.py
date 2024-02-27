@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
-    QHeaderView, QLabel, QLineEdit, QMainWindow,
-    QPlainTextEdit, QPushButton, QSizePolicy, QTableWidget,
-    QTableWidgetItem, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QFrame,
+    QGridLayout, QHeaderView, QLabel, QLineEdit,
+    QMainWindow, QPlainTextEdit, QPushButton, QSizePolicy,
+    QTableWidget, QTableWidgetItem, QWidget)
 import icons_rc
 
 class Ui_ProcessCSV(object):
@@ -131,7 +131,7 @@ class Ui_ProcessCSV(object):
         self.frame_7.setFrameShadow(QFrame.Raised)
         self.bt_setas_ncm = QPushButton(self.frame_7)
         self.bt_setas_ncm.setObjectName(u"bt_setas_ncm")
-        self.bt_setas_ncm.setGeometry(QRect(160, 60, 31, 24))
+        self.bt_setas_ncm.setGeometry(QRect(190, 60, 31, 24))
         self.bt_setas_ncm.setStyleSheet(u"border:none;")
         icon = QIcon()
         icon.addFile(u":/icons/image/direita-e-esquerda.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -139,21 +139,21 @@ class Ui_ProcessCSV(object):
         self.bt_setas_ncm.setIconSize(QSize(20, 20))
         self.txt_alt_NCM1 = QLineEdit(self.frame_7)
         self.txt_alt_NCM1.setObjectName(u"txt_alt_NCM1")
-        self.txt_alt_NCM1.setGeometry(QRect(10, 90, 151, 21))
+        self.txt_alt_NCM1.setGeometry(QRect(10, 90, 181, 21))
         self.txt_alt_NCM1.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(255, 85, 0);\n"
 "font: 600 9pt \"Segoe UI\";")
         self.txt_alt_NCM1.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.txt_alt_NCM2 = QLineEdit(self.frame_7)
         self.txt_alt_NCM2.setObjectName(u"txt_alt_NCM2")
-        self.txt_alt_NCM2.setGeometry(QRect(190, 90, 151, 21))
+        self.txt_alt_NCM2.setGeometry(QRect(220, 90, 181, 21))
         self.txt_alt_NCM2.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(255, 85, 0);\n"
 "font: 600 9pt \"Segoe UI\";")
         self.txt_alt_NCM2.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.bt_executar_process = QPushButton(self.frame_7)
         self.bt_executar_process.setObjectName(u"bt_executar_process")
-        self.bt_executar_process.setGeometry(QRect(440, 0, 75, 24))
+        self.bt_executar_process.setGeometry(QRect(430, 90, 75, 24))
         self.bt_executar_process.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
 "	color: rgb(0, 0, 127);\n"
@@ -169,64 +169,19 @@ class Ui_ProcessCSV(object):
         self.lb_atencao_substituir.setGeometry(QRect(10, 10, 421, 16))
         self.combo_column1 = QComboBox(self.frame_7)
         self.combo_column1.setObjectName(u"combo_column1")
-        self.combo_column1.setGeometry(QRect(10, 40, 151, 22))
+        self.combo_column1.setGeometry(QRect(10, 40, 181, 22))
         self.combo_column1.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 85, 127);\n"
 "font:600 9pt \"Segoe UI\";")
         self.combo_column2 = QComboBox(self.frame_7)
         self.combo_column2.setObjectName(u"combo_column2")
-        self.combo_column2.setGeometry(QRect(190, 40, 151, 22))
+        self.combo_column2.setGeometry(QRect(220, 40, 180, 22))
         self.combo_column2.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 85, 127);\n"
 "font:600 9pt \"Segoe UI\";")
         self.lb_info_ncm_subst = QLabel(self.frame_7)
         self.lb_info_ncm_subst.setObjectName(u"lb_info_ncm_subst")
         self.lb_info_ncm_subst.setGeometry(QRect(10, 10, 421, 16))
-        self.bt_remov_column_process = QPushButton(self.frame_7)
-        self.bt_remov_column_process.setObjectName(u"bt_remov_column_process")
-        self.bt_remov_column_process.setGeometry(QRect(360, 0, 75, 24))
-        self.bt_remov_column_process.setStyleSheet(u"QPushButton{\n"
-"	background-color: rgb(255, 255, 255);\n"
-"	color: rgb(0, 0, 127);\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color:rgb(49,147,0)\n"
-"}")
-        self.combo_column3 = QComboBox(self.frame_7)
-        self.combo_column3.setObjectName(u"combo_column3")
-        self.combo_column3.setGeometry(QRect(370, 40, 151, 22))
-        self.combo_column3.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
-"color: rgb(0, 85, 127);\n"
-"font:600 9pt \"Segoe UI\";")
-        self.txt_alt_NCM3 = QLineEdit(self.frame_7)
-        self.txt_alt_NCM3.setObjectName(u"txt_alt_NCM3")
-        self.txt_alt_NCM3.setGeometry(QRect(370, 90, 151, 21))
-        self.txt_alt_NCM3.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
-"color: rgb(255, 85, 0);\n"
-"font: 600 9pt \"Segoe UI\";")
-        self.txt_alt_NCM3.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.bt_setas_ncm_2 = QPushButton(self.frame_7)
-        self.bt_setas_ncm_2.setObjectName(u"bt_setas_ncm_2")
-        self.bt_setas_ncm_2.setGeometry(QRect(340, 60, 31, 24))
-        self.bt_setas_ncm_2.setStyleSheet(u"border:none;")
-        self.bt_setas_ncm_2.setIcon(icon)
-        self.bt_setas_ncm_2.setIconSize(QSize(20, 20))
-        self.bt_add_column_process = QPushButton(self.frame_7)
-        self.bt_add_column_process.setObjectName(u"bt_add_column_process")
-        self.bt_add_column_process.setGeometry(QRect(360, 0, 75, 24))
-        self.bt_add_column_process.setStyleSheet(u"QPushButton{\n"
-"	background-color: rgb(255, 255, 255);\n"
-"	color: rgb(0, 0, 127);\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color:rgb(49,147,0)\n"
-"}")
 
         self.gridLayout_2.addWidget(self.frame_7, 0, 1, 1, 1)
 
@@ -248,12 +203,11 @@ class Ui_ProcessCSV(object):
         font = QFont()
         font.setFamilies([u"Segoe UI"])
         font.setPointSize(7)
-        font.setBold(False)
+        font.setBold(True)
         font.setItalic(False)
         self.txt_output_logs.setFont(font)
         self.txt_output_logs.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
-"font: 8pt \"Segoe UI\";\n"
-"font: 7pt \"Segoe UI\";")
+"font: 700 7pt \"Segoe UI\";")
 
         self.gridLayout_3.addWidget(self.txt_output_logs, 0, 0, 1, 1)
 
@@ -269,7 +223,7 @@ class Ui_ProcessCSV(object):
         self.tb_dados_csv = QTableWidget(self.frame_2)
         self.tb_dados_csv.setObjectName(u"tb_dados_csv")
         font1 = QFont()
-        font1.setFamilies([u"Arial"])
+        font1.setFamilies([u"Segoe UI"])
         font1.setPointSize(10)
         self.tb_dados_csv.setFont(font1)
         self.tb_dados_csv.setStyleSheet(u"QHeaderView::section{\n"
@@ -281,6 +235,13 @@ class Ui_ProcessCSV(object):
 "QTableWidget{\n"
 "	background-color:rgb(252,252,252);\n"
 "}")
+        self.tb_dados_csv.setEditTriggers(QAbstractItemView.AllEditTriggers)
+        self.tb_dados_csv.setDragEnabled(True)
+        self.tb_dados_csv.setDragDropMode(QAbstractItemView.InternalMove)
+        self.tb_dados_csv.setAlternatingRowColors(True)
+        self.tb_dados_csv.setSelectionMode(QAbstractItemView.ContiguousSelection)
+        self.tb_dados_csv.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.tb_dados_csv.setSortingEnabled(True)
         self.tb_dados_csv.verticalHeader().setVisible(False)
 
         self.gridLayout_5.addWidget(self.tb_dados_csv, 0, 0, 1, 1)
@@ -293,15 +254,49 @@ class Ui_ProcessCSV(object):
         self.frame_5.setMaximumSize(QSize(16777215, 65))
         self.frame_5.setFrameShape(QFrame.Panel)
         self.frame_5.setFrameShadow(QFrame.Raised)
-        self.txt_path_filecsv = QLineEdit(self.frame_5)
+        self.gridLayout_7 = QGridLayout(self.frame_5)
+        self.gridLayout_7.setObjectName(u"gridLayout_7")
+        self.frame_9 = QFrame(self.frame_5)
+        self.frame_9.setObjectName(u"frame_9")
+        self.frame_9.setMaximumSize(QSize(16777215, 16777215))
+        self.frame_9.setFrameShape(QFrame.StyledPanel)
+        self.frame_9.setFrameShadow(QFrame.Raised)
+        self.pushButton = QPushButton(self.frame_9)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(10, 0, 221, 51))
+        self.pushButton.setMinimumSize(QSize(221, 51))
+        self.pushButton.setStyleSheet(u"border:none;")
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/image/TECH TOOLS TITULO LOGO.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton.setIcon(icon1)
+        self.pushButton.setIconSize(QSize(1500, 45))
+
+        self.gridLayout_7.addWidget(self.frame_9, 0, 0, 1, 1)
+
+        self.frame_10 = QFrame(self.frame_5)
+        self.frame_10.setObjectName(u"frame_10")
+        self.frame_10.setMaximumSize(QSize(700, 65))
+        self.frame_10.setFrameShape(QFrame.NoFrame)
+        self.frame_10.setFrameShadow(QFrame.Raised)
+        self.gridLayout_6 = QGridLayout(self.frame_10)
+        self.gridLayout_6.setSpacing(2)
+        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.gridLayout_6.setContentsMargins(2, 2, 2, 2)
+        self.label = QLabel(self.frame_10)
+        self.label.setObjectName(u"label")
+
+        self.gridLayout_6.addWidget(self.label, 0, 0, 1, 1)
+
+        self.txt_path_filecsv = QLineEdit(self.frame_10)
         self.txt_path_filecsv.setObjectName(u"txt_path_filecsv")
-        self.txt_path_filecsv.setGeometry(QRect(620, 30, 351, 31))
         self.txt_path_filecsv.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(255, 85, 0);\n"
 "font: 9pt \"Segoe UI\";")
-        self.bt_buscar_filecsv = QPushButton(self.frame_5)
+
+        self.gridLayout_6.addWidget(self.txt_path_filecsv, 1, 0, 1, 1)
+
+        self.bt_buscar_filecsv = QPushButton(self.frame_10)
         self.bt_buscar_filecsv.setObjectName(u"bt_buscar_filecsv")
-        self.bt_buscar_filecsv.setGeometry(QRect(970, 30, 75, 31))
         self.bt_buscar_filecsv.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
 "	color: rgb(0, 0, 127);\n"
@@ -312,9 +307,11 @@ class Ui_ProcessCSV(object):
 "	color: rgb(255, 255, 255);\n"
 "	background-color:rgb(49,147,0)\n"
 "}")
-        self.bt_processar_arquivo_csv = QPushButton(self.frame_5)
+
+        self.gridLayout_6.addWidget(self.bt_buscar_filecsv, 1, 1, 1, 1)
+
+        self.bt_processar_arquivo_csv = QPushButton(self.frame_10)
         self.bt_processar_arquivo_csv.setObjectName(u"bt_processar_arquivo_csv")
-        self.bt_processar_arquivo_csv.setGeometry(QRect(1060, 30, 71, 31))
         self.bt_processar_arquivo_csv.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
 "	color: rgb(0, 0, 127);\n"
@@ -325,17 +322,12 @@ class Ui_ProcessCSV(object):
 "	color: rgb(255, 255, 255);\n"
 "	background-color:rgb(49,147,0)\n"
 "}")
-        self.label = QLabel(self.frame_5)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(620, 6, 131, 16))
-        self.pushButton = QPushButton(self.frame_5)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(0, 0, 231, 51))
-        self.pushButton.setStyleSheet(u"border:none;")
-        icon1 = QIcon()
-        icon1.addFile(u":/icons/image/TECH TOOLS TITULO LOGO.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton.setIcon(icon1)
-        self.pushButton.setIconSize(QSize(1500, 45))
+
+        self.gridLayout_6.addWidget(self.bt_processar_arquivo_csv, 1, 2, 1, 1)
+
+
+        self.gridLayout_7.addWidget(self.frame_10, 0, 1, 1, 1)
+
 
         self.gridLayout.addWidget(self.frame_5, 0, 0, 1, 1)
 
@@ -371,17 +363,13 @@ class Ui_ProcessCSV(object):
         self.bt_executar_process.setText(QCoreApplication.translate("ProcessCSV", u"Executar", None))
         self.lb_atencao_substituir.setText(QCoreApplication.translate("ProcessCSV", u"<html><head/><body><p><span style=\" font-size:7pt; color:#ffffff;\">Aten\u00e7\u00e3o! Todos os dados do </span><span style=\" font-size:7pt; font-weight:700; color:#ffffff;\">PRIMEIRO</span><span style=\" font-size:7pt; color:#ffffff;\"> quadro ser\u00e3o substitu\u00eddos pelos dados do</span><span style=\" font-size:7pt; font-weight:700; color:#ffffff;\"> SEGUNDO.</span></p></body></html>", None))
         self.lb_info_ncm_subst.setText(QCoreApplication.translate("ProcessCSV", u"<html><head/><body><p><span style=\" font-size:7pt; color:#ffffff;\">Para mudan\u00e7a de de </span><span style=\" font-size:7pt; font-weight:700; color:#ffffff;\">NCM's</span><span style=\" font-size:7pt; color:#ffffff;\"> deve-se respeitar o formato </span><span style=\" font-size:7pt; font-weight:700; color:#ffffff;\">0000.00.00</span></p></body></html>", None))
-        self.bt_remov_column_process.setText(QCoreApplication.translate("ProcessCSV", u"Remover", None))
-        self.txt_alt_NCM3.setPlaceholderText(QCoreApplication.translate("ProcessCSV", u"Para", None))
-        self.bt_setas_ncm_2.setText("")
-        self.bt_add_column_process.setText(QCoreApplication.translate("ProcessCSV", u"Ad. Col.", None))
+        self.pushButton.setText("")
+        self.label.setText(QCoreApplication.translate("ProcessCSV", u"<html><head/><body><p><span style=\" font-weight:700; color:#ffffff;\">Selecione o arquivo:</span></p></body></html>", None))
         self.txt_path_filecsv.setPlaceholderText(QCoreApplication.translate("ProcessCSV", u"C:\\Caminho\\para\\o\\Arquivo.csv", None))
         self.bt_buscar_filecsv.setText(QCoreApplication.translate("ProcessCSV", u"Buscar", None))
 #if QT_CONFIG(tooltip)
         self.bt_processar_arquivo_csv.setToolTip(QCoreApplication.translate("ProcessCSV", u"<html><head/><body><p><span style=\" font-size:8pt; color:#00007f;\">Processar arquivo</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.bt_processar_arquivo_csv.setText(QCoreApplication.translate("ProcessCSV", u"Processar", None))
-        self.label.setText(QCoreApplication.translate("ProcessCSV", u"<html><head/><body><p><span style=\" font-weight:700; color:#ffffff;\">Selecione o arquivo:</span></p></body></html>", None))
-        self.pushButton.setText("")
     # retranslateUi
 

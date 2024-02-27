@@ -302,7 +302,7 @@ QPushButton:hover{
             <widget class="QPushButton" name="bt_setas_ncm">
              <property name="geometry">
               <rect>
-               <x>160</x>
+               <x>190</x>
                <y>60</y>
                <width>31</width>
                <height>24</height>
@@ -330,7 +330,7 @@ QPushButton:hover{
               <rect>
                <x>10</x>
                <y>90</y>
-               <width>151</width>
+               <width>181</width>
                <height>21</height>
               </rect>
              </property>
@@ -349,9 +349,9 @@ font: 600 9pt &quot;Segoe UI&quot;;</string>
             <widget class="QLineEdit" name="txt_alt_NCM2">
              <property name="geometry">
               <rect>
-               <x>190</x>
+               <x>220</x>
                <y>90</y>
-               <width>151</width>
+               <width>181</width>
                <height>21</height>
               </rect>
              </property>
@@ -370,8 +370,8 @@ font: 600 9pt &quot;Segoe UI&quot;;</string>
             <widget class="QPushButton" name="bt_executar_process">
              <property name="geometry">
               <rect>
-               <x>440</x>
-               <y>0</y>
+               <x>430</x>
+               <y>90</y>
                <width>75</width>
                <height>24</height>
               </rect>
@@ -410,7 +410,7 @@ QPushButton:hover{
               <rect>
                <x>10</x>
                <y>40</y>
-               <width>151</width>
+               <width>181</width>
                <height>22</height>
               </rect>
              </property>
@@ -423,9 +423,9 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
             <widget class="QComboBox" name="combo_column2">
              <property name="geometry">
               <rect>
-               <x>190</x>
+               <x>220</x>
                <y>40</y>
-               <width>151</width>
+               <width>180</width>
                <height>22</height>
               </rect>
              </property>
@@ -446,118 +446,6 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
              </property>
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt; color:#ffffff;&quot;&gt;Para mudança de de &lt;/span&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#ffffff;&quot;&gt;NCM's&lt;/span&gt;&lt;span style=&quot; font-size:7pt; color:#ffffff;&quot;&gt; deve-se respeitar o formato &lt;/span&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#ffffff;&quot;&gt;0000.00.00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-            <widget class="QPushButton" name="bt_remov_column_process">
-             <property name="geometry">
-              <rect>
-               <x>360</x>
-               <y>0</y>
-               <width>75</width>
-               <height>24</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton{
-	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 127);
-}
-
-QPushButton:hover{
-	
-	color: rgb(255, 255, 255);
-	background-color:rgb(49,147,0)
-}</string>
-             </property>
-             <property name="text">
-              <string>Remover</string>
-             </property>
-            </widget>
-            <widget class="QComboBox" name="combo_column3">
-             <property name="geometry">
-              <rect>
-               <x>370</x>
-               <y>40</y>
-               <width>151</width>
-               <height>22</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 85, 127);
-font:600 9pt &quot;Segoe UI&quot;;</string>
-             </property>
-            </widget>
-            <widget class="QLineEdit" name="txt_alt_NCM3">
-             <property name="geometry">
-              <rect>
-               <x>370</x>
-               <y>90</y>
-               <width>151</width>
-               <height>21</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(255, 85, 0);
-font: 600 9pt &quot;Segoe UI&quot;;</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="placeholderText">
-              <string>Para</string>
-             </property>
-            </widget>
-            <widget class="QPushButton" name="bt_setas_ncm_2">
-             <property name="geometry">
-              <rect>
-               <x>340</x>
-               <y>60</y>
-               <width>31</width>
-               <height>24</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">border:none;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="icons_.qrc">
-               <normaloff>:/icons/image/direita-e-esquerda.png</normaloff>:/icons/image/direita-e-esquerda.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-            </widget>
-            <widget class="QPushButton" name="bt_add_column_process">
-             <property name="geometry">
-              <rect>
-               <x>360</x>
-               <y>0</y>
-               <width>75</width>
-               <height>24</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton{
-	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 127);
-}
-
-QPushButton:hover{
-	
-	color: rgb(255, 255, 255);
-	background-color:rgb(49,147,0)
-}</string>
-             </property>
-             <property name="text">
-              <string>Ad. Col.</string>
              </property>
             </widget>
            </widget>
@@ -590,13 +478,12 @@ QPushButton:hover{
            <family>Segoe UI</family>
            <pointsize>7</pointsize>
            <italic>false</italic>
-           <bold>false</bold>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);
-font: 8pt &quot;Segoe UI&quot;;
-font: 7pt &quot;Segoe UI&quot;;</string>
+font: 700 7pt &quot;Segoe UI&quot;;</string>
          </property>
         </widget>
        </item>
@@ -616,7 +503,7 @@ font: 7pt &quot;Segoe UI&quot;;</string>
         <widget class="QTableWidget" name="tb_dados_csv">
          <property name="font">
           <font>
-           <family>Arial</family>
+           <family>Segoe UI</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -630,6 +517,27 @@ background-color:rgb(148,148,148);
 QTableWidget{
 	background-color:rgb(252,252,252);
 }</string>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::AllEditTriggers</set>
+         </property>
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::InternalMove</enum>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::ContiguousSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="sortingEnabled">
+          <bool>true</bool>
          </property>
          <attribute name="verticalHeaderVisible">
           <bool>false</bool>
@@ -653,35 +561,108 @@ QTableWidget{
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QLineEdit" name="txt_path_filecsv">
-       <property name="geometry">
-        <rect>
-         <x>620</x>
-         <y>30</y>
-         <width>351</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);
+      <layout class="QGridLayout" name="gridLayout_7">
+       <item row="0" column="0">
+        <widget class="QFrame" name="frame_9">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QPushButton" name="pushButton">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>0</y>
+            <width>221</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>221</width>
+            <height>51</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border:none;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icons_.qrc">
+            <normaloff>:/icons/image/TECH TOOLS TITULO LOGO.png</normaloff>:/icons/image/TECH TOOLS TITULO LOGO.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>1500</width>
+            <height>45</height>
+           </size>
+          </property>
+         </widget>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QFrame" name="frame_10">
+         <property name="maximumSize">
+          <size>
+           <width>700</width>
+           <height>65</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#ffffff;&quot;&gt;Selecione o arquivo:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLineEdit" name="txt_path_filecsv">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(255, 85, 0);
 font: 9pt &quot;Segoe UI&quot;;</string>
-       </property>
-       <property name="placeholderText">
-        <string>C:\Caminho\para\o\Arquivo.csv</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="bt_buscar_filecsv">
-       <property name="geometry">
-        <rect>
-         <x>970</x>
-         <y>30</y>
-         <width>75</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton{
+            </property>
+            <property name="placeholderText">
+             <string>C:\Caminho\para\o\Arquivo.csv</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="bt_buscar_filecsv">
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
 	background-color: rgb(255, 255, 255);
 	color: rgb(0, 0, 127);
 }
@@ -691,25 +672,19 @@ QPushButton:hover{
 	color: rgb(255, 255, 255);
 	background-color:rgb(49,147,0)
 }</string>
-       </property>
-       <property name="text">
-        <string>Buscar</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="bt_processar_arquivo_csv">
-       <property name="geometry">
-        <rect>
-         <x>1060</x>
-         <y>30</y>
-         <width>71</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#00007f;&quot;&gt;Processar arquivo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton{
+            </property>
+            <property name="text">
+             <string>Buscar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="bt_processar_arquivo_csv">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#00007f;&quot;&gt;Processar arquivo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
 	background-color: rgb(255, 255, 255);
 	color: rgb(0, 0, 127);
 }
@@ -719,50 +694,16 @@ QPushButton:hover{
 	color: rgb(255, 255, 255);
 	background-color:rgb(49,147,0)
 }</string>
-       </property>
-       <property name="text">
-        <string>Processar</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label">
-       <property name="geometry">
-        <rect>
-         <x>620</x>
-         <y>6</y>
-         <width>131</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#ffffff;&quot;&gt;Selecione o arquivo:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>231</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border:none;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="icons_.qrc">
-         <normaloff>:/icons/image/TECH TOOLS TITULO LOGO.png</normaloff>:/icons/image/TECH TOOLS TITULO LOGO.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>1500</width>
-         <height>45</height>
-        </size>
-       </property>
-      </widget>
+            </property>
+            <property name="text">
+             <string>Processar</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
