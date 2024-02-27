@@ -540,64 +540,6 @@ QLabel{
             </size>
            </property>
           </widget>
-          <widget class="QPushButton" name="bt_atualizacoes">
-           <property name="geometry">
-            <rect>
-             <x>470</x>
-             <y>0</y>
-             <width>31</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>11</pointsize>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt; font-weight:700;&quot;&gt;Existem novas atualizações disponíveis&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt; font-weight:700;&quot;&gt;para esse programa.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton{
-	background-color: rgb(38, 68, 149);
-	
-	color: rgb(255, 85, 0);
-}
-
-QPushButton:hover{
-	
-	color: rgb(255, 255, 255);
-	
-}</string>
-           </property>
-           <property name="text">
-            <string>1</string>
-           </property>
-           <property name="icon">
-            <iconset resource="icons_.qrc">
-             <normaloff>:/icons/image/refresh-page-option(1).png</normaloff>:/icons/image/refresh-page-option(1).png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>17</width>
-             <height>17</height>
-            </size>
-           </property>
-           <property name="checkable">
-            <bool>false</bool>
-           </property>
-           <property name="autoDefault">
-            <bool>false</bool>
-           </property>
-          </widget>
          </widget>
         </item>
        </layout>

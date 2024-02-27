@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QFr
     QMainWindow, QPlainTextEdit, QPushButton, QRadioButton,
     QSizePolicy, QSpacerItem, QStackedWidget, QTableWidget,
     QTableWidgetItem, QToolBox, QVBoxLayout, QWidget)
-import icons__rc
+import icons_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -229,33 +229,6 @@ class Ui_MainWindow(object):
         icon8.addFile(u":/icons/image/TECH NEW LOGO - BRANCO.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_tech_tools.setIcon(icon8)
         self.btn_tech_tools.setIconSize(QSize(40, 40))
-        self.bt_atualizacoes = QPushButton(self.frame_19)
-        self.bt_atualizacoes.setObjectName(u"bt_atualizacoes")
-        self.bt_atualizacoes.setGeometry(QRect(470, 0, 31, 21))
-        font1 = QFont()
-        font1.setPointSize(11)
-        font1.setBold(True)
-        font1.setItalic(False)
-        self.bt_atualizacoes.setFont(font1)
-        self.bt_atualizacoes.setCursor(QCursor(Qt.PointingHandCursor))
-        self.bt_atualizacoes.setAutoFillBackground(False)
-        self.bt_atualizacoes.setStyleSheet(u"QPushButton{\n"
-"	background-color: rgb(38, 68, 149);\n"
-"	\n"
-"	color: rgb(255, 85, 0);\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	\n"
-"	color: rgb(255, 255, 255);\n"
-"	\n"
-"}")
-        icon9 = QIcon()
-        icon9.addFile(u":/icons/image/refresh-page-option(1).png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_atualizacoes.setIcon(icon9)
-        self.bt_atualizacoes.setIconSize(QSize(17, 17))
-        self.bt_atualizacoes.setCheckable(False)
-        self.bt_atualizacoes.setAutoDefault(False)
 
         self.horizontalLayout_2.addWidget(self.frame_19)
 
@@ -304,9 +277,9 @@ class Ui_MainWindow(object):
         self.pushButton_4.setObjectName(u"pushButton_4")
         self.pushButton_4.setGeometry(QRect(10, 10, 501, 381))
         self.pushButton_4.setStyleSheet(u"border:none;")
-        icon10 = QIcon()
-        icon10.addFile(u":/icons/image/LOGO BRANCO - TEXTO.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton_4.setIcon(icon10)
+        icon9 = QIcon()
+        icon9.addFile(u":/icons/image/LOGO BRANCO - TEXTO.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton_4.setIcon(icon9)
         self.pushButton_4.setIconSize(QSize(400, 500))
         self.pages.addWidget(self.pg_home)
         self.pg_Data_base = QWidget()
@@ -358,10 +331,10 @@ class Ui_MainWindow(object):
         self.bt_conectar_db = QPushButton(self.frame)
         self.bt_conectar_db.setObjectName(u"bt_conectar_db")
         self.bt_conectar_db.setGeometry(QRect(350, 70, 91, 25))
-        font2 = QFont()
-        font2.setFamilies([u"Arial"])
-        font2.setPointSize(9)
-        self.bt_conectar_db.setFont(font2)
+        font1 = QFont()
+        font1.setFamilies([u"Arial"])
+        font1.setPointSize(9)
+        self.bt_conectar_db.setFont(font1)
         self.bt_conectar_db.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_conectar_db.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -384,7 +357,7 @@ class Ui_MainWindow(object):
         self.bt_conectar_db_2.setObjectName(u"bt_conectar_db_2")
         self.bt_conectar_db_2.setEnabled(True)
         self.bt_conectar_db_2.setGeometry(QRect(350, 120, 91, 25))
-        self.bt_conectar_db_2.setFont(font2)
+        self.bt_conectar_db_2.setFont(font1)
         self.bt_conectar_db_2.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_conectar_db_2.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -413,9 +386,9 @@ class Ui_MainWindow(object):
         self.bt_conectar_db_3 = QPushButton(self.frame_2)
         self.bt_conectar_db_3.setObjectName(u"bt_conectar_db_3")
         self.bt_conectar_db_3.setGeometry(QRect(0, 220, 81, 21))
-        font3 = QFont()
-        font3.setFamilies([u"Arial"])
-        self.bt_conectar_db_3.setFont(font3)
+        font2 = QFont()
+        font2.setFamilies([u"Arial"])
+        self.bt_conectar_db_3.setFont(font2)
         self.bt_conectar_db_3.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_conectar_db_3.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -443,12 +416,12 @@ class Ui_MainWindow(object):
         self.output_query = QPlainTextEdit(self.frame_2)
         self.output_query.setObjectName(u"output_query")
         self.output_query.setGeometry(QRect(0, 150, 471, 61))
-        font4 = QFont()
-        font4.setFamilies([u"MS Shell Dlg 2"])
-        font4.setPointSize(10)
-        font4.setBold(False)
-        font4.setItalic(False)
-        self.output_query.setFont(font4)
+        font3 = QFont()
+        font3.setFamilies([u"MS Shell Dlg 2"])
+        font3.setPointSize(10)
+        font3.setBold(False)
+        font3.setItalic(False)
+        self.output_query.setFont(font3)
         self.label_conectando = QLabel(self.frame)
         self.label_conectando.setObjectName(u"label_conectando")
         self.label_conectando.setGeometry(QRect(16, 100, 111, 20))
@@ -468,7 +441,7 @@ class Ui_MainWindow(object):
         self.bt_conectar_db_4.setObjectName(u"bt_conectar_db_4")
         self.bt_conectar_db_4.setEnabled(True)
         self.bt_conectar_db_4.setGeometry(QRect(360, 110, 81, 51))
-        self.bt_conectar_db_4.setFont(font2)
+        self.bt_conectar_db_4.setFont(font1)
         self.bt_conectar_db_4.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_conectar_db_4.setStyleSheet(u"QPushButton{\n"
 "	border:none;\n"
@@ -478,9 +451,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "	background-color: rgb(251, 99, 4);\n"
 "}")
-        icon11 = QIcon()
-        icon11.addFile(u":/icons/image/ibExp.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_conectar_db_4.setIcon(icon11)
+        icon10 = QIcon()
+        icon10.addFile(u":/icons/image/ibExp.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_conectar_db_4.setIcon(icon10)
         self.bt_conectar_db_4.setIconSize(QSize(50, 50))
         self.bt_tela_bkp = QPushButton(self.frame)
         self.bt_tela_bkp.setObjectName(u"bt_tela_bkp")
@@ -495,9 +468,9 @@ class Ui_MainWindow(object):
 "	\n"
 "	background-color: rgb(251, 99, 4);\n"
 "}")
-        icon12 = QIcon()
-        icon12.addFile(u":/icons/image/database-storage.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_tela_bkp.setIcon(icon12)
+        icon11 = QIcon()
+        icon11.addFile(u":/icons/image/database-storage.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_tela_bkp.setIcon(icon11)
         self.bt_tela_bkp.setIconSize(QSize(25, 25))
 
         self.verticalLayout_2.addWidget(self.frame)
@@ -527,10 +500,10 @@ class Ui_MainWindow(object):
             self.tableWidget_show_tables.setColumnCount(1)
         brush = QBrush(QColor(0, 0, 0, 255))
         brush.setStyle(Qt.SolidPattern)
-        font5 = QFont()
-        font5.setBold(True)
+        font4 = QFont()
+        font4.setBold(True)
         __qtablewidgetitem = QTableWidgetItem()
-        __qtablewidgetitem.setFont(font5);
+        __qtablewidgetitem.setFont(font4);
         __qtablewidgetitem.setForeground(brush);
         self.tableWidget_show_tables.setHorizontalHeaderItem(0, __qtablewidgetitem)
         self.tableWidget_show_tables.setObjectName(u"tableWidget_show_tables")
@@ -622,10 +595,10 @@ class Ui_MainWindow(object):
         self.bt_novo_printers.setGeometry(QRect(40, 190, 120, 30))
         self.bt_novo_printers.setMinimumSize(QSize(0, 0))
         self.bt_novo_printers.setMaximumSize(QSize(16777215, 16777215))
-        font6 = QFont()
-        font6.setFamilies([u"Arial"])
-        font6.setPointSize(11)
-        self.bt_novo_printers.setFont(font6)
+        font5 = QFont()
+        font5.setFamilies([u"Arial"])
+        font5.setPointSize(11)
+        self.bt_novo_printers.setFont(font5)
         self.bt_novo_printers.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_novo_printers.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -642,7 +615,7 @@ class Ui_MainWindow(object):
         self.bt_alterar_printers.setGeometry(QRect(40, 230, 120, 30))
         self.bt_alterar_printers.setMinimumSize(QSize(120, 30))
         self.bt_alterar_printers.setMaximumSize(QSize(16777215, 16777215))
-        self.bt_alterar_printers.setFont(font6)
+        self.bt_alterar_printers.setFont(font5)
         self.bt_alterar_printers.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_alterar_printers.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -660,7 +633,7 @@ class Ui_MainWindow(object):
         self.bt_baixar_printers.setGeometry(QRect(40, 150, 120, 30))
         self.bt_baixar_printers.setMinimumSize(QSize(120, 30))
         self.bt_baixar_printers.setMaximumSize(QSize(16777215, 16777215))
-        self.bt_baixar_printers.setFont(font6)
+        self.bt_baixar_printers.setFont(font5)
         self.bt_baixar_printers.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_baixar_printers.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -675,10 +648,10 @@ class Ui_MainWindow(object):
         self.label_printer = QLabel(self.frame_6)
         self.label_printer.setObjectName(u"label_printer")
         self.label_printer.setGeometry(QRect(10, 10, 181, 16))
-        font7 = QFont()
-        font7.setFamilies([u"Arial Black"])
-        font7.setPointSize(10)
-        self.label_printer.setFont(font7)
+        font6 = QFont()
+        font6.setFamilies([u"Arial Black"])
+        font6.setPointSize(10)
+        self.label_printer.setFont(font6)
         self.txt_id_printer = QLineEdit(self.frame_6)
         self.txt_id_printer.setObjectName(u"txt_id_printer")
         self.txt_id_printer.setGeometry(QRect(10, 50, 41, 21))
@@ -733,7 +706,7 @@ class Ui_MainWindow(object):
         self.bt_novo_arquivo.setObjectName(u"bt_novo_arquivo")
         self.bt_novo_arquivo.setGeometry(QRect(40, 190, 120, 31))
         self.bt_novo_arquivo.setMinimumSize(QSize(120, 30))
-        self.bt_novo_arquivo.setFont(font6)
+        self.bt_novo_arquivo.setFont(font5)
         self.bt_novo_arquivo.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_novo_arquivo.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -748,7 +721,7 @@ class Ui_MainWindow(object):
         self.label_arquivos = QLabel(self.frame_4)
         self.label_arquivos.setObjectName(u"label_arquivos")
         self.label_arquivos.setGeometry(QRect(20, 10, 161, 16))
-        self.label_arquivos.setFont(font7)
+        self.label_arquivos.setFont(font6)
         self.txt_nome_arquivo = QLineEdit(self.frame_4)
         self.txt_nome_arquivo.setObjectName(u"txt_nome_arquivo")
         self.txt_nome_arquivo.setGeometry(QRect(10, 80, 191, 21))
@@ -759,7 +732,7 @@ class Ui_MainWindow(object):
         self.bt_baixar_arquivo.setObjectName(u"bt_baixar_arquivo")
         self.bt_baixar_arquivo.setGeometry(QRect(40, 150, 120, 30))
         self.bt_baixar_arquivo.setMinimumSize(QSize(120, 30))
-        self.bt_baixar_arquivo.setFont(font6)
+        self.bt_baixar_arquivo.setFont(font5)
         self.bt_baixar_arquivo.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_baixar_arquivo.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -775,7 +748,7 @@ class Ui_MainWindow(object):
         self.bt_alter_arquivo.setObjectName(u"bt_alter_arquivo")
         self.bt_alter_arquivo.setGeometry(QRect(40, 230, 120, 31))
         self.bt_alter_arquivo.setMinimumSize(QSize(120, 30))
-        self.bt_alter_arquivo.setFont(font6)
+        self.bt_alter_arquivo.setFont(font5)
         self.bt_alter_arquivo.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_alter_arquivo.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -828,10 +801,10 @@ class Ui_MainWindow(object):
         self.bt_new_scripts = QPushButton(self.frame_5)
         self.bt_new_scripts.setObjectName(u"bt_new_scripts")
         self.bt_new_scripts.setGeometry(QRect(390, 20, 75, 24))
-        font8 = QFont()
-        font8.setFamilies([u"Arial"])
-        font8.setPointSize(10)
-        self.bt_new_scripts.setFont(font8)
+        font7 = QFont()
+        font7.setFamilies([u"Arial"])
+        font7.setPointSize(10)
+        self.bt_new_scripts.setFont(font7)
         self.bt_new_scripts.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_new_scripts.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -846,7 +819,7 @@ class Ui_MainWindow(object):
         self.bt_alterar_script = QPushButton(self.frame_5)
         self.bt_alterar_script.setObjectName(u"bt_alterar_script")
         self.bt_alterar_script.setGeometry(QRect(390, 60, 75, 24))
-        self.bt_alterar_script.setFont(font8)
+        self.bt_alterar_script.setFont(font7)
         self.bt_alterar_script.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_alterar_script.setStyleSheet(u"QPushButton{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -883,7 +856,7 @@ class Ui_MainWindow(object):
         self.bt_excluirScript = QPushButton(self.frame_7)
         self.bt_excluirScript.setObjectName(u"bt_excluirScript")
         self.bt_excluirScript.setGeometry(QRect(430, 10, 75, 24))
-        self.bt_excluirScript.setFont(font8)
+        self.bt_excluirScript.setFont(font7)
         self.bt_excluirScript.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_excluirScript.setStyleSheet(u"QPushButton{\n"
 "	border:none;\n"
@@ -898,7 +871,7 @@ class Ui_MainWindow(object):
         self.bt_copiarScripts = QPushButton(self.frame_7)
         self.bt_copiarScripts.setObjectName(u"bt_copiarScripts")
         self.bt_copiarScripts.setGeometry(QRect(350, 10, 75, 24))
-        self.bt_copiarScripts.setFont(font8)
+        self.bt_copiarScripts.setFont(font7)
         self.bt_copiarScripts.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_copiarScripts.setStyleSheet(u"QPushButton{\n"
 "	border:none;\n"
@@ -940,13 +913,13 @@ class Ui_MainWindow(object):
         self.label_sobre.setGeometry(QRect(10, 10, 501, 401))
         sizePolicy.setHeightForWidth(self.label_sobre.sizePolicy().hasHeightForWidth())
         self.label_sobre.setSizePolicy(sizePolicy)
-        font9 = QFont()
-        font9.setBold(False)
-        font9.setItalic(True)
-        font9.setUnderline(False)
-        font9.setStrikeOut(False)
-        font9.setStyleStrategy(QFont.PreferDefault)
-        self.label_sobre.setFont(font9)
+        font8 = QFont()
+        font8.setBold(False)
+        font8.setItalic(True)
+        font8.setUnderline(False)
+        font8.setStrikeOut(False)
+        font8.setStyleStrategy(QFont.PreferDefault)
+        self.label_sobre.setFont(font8)
         self.label_sobre.setFocusPolicy(Qt.NoFocus)
         self.label_sobre.setAcceptDrops(False)
         self.label_sobre.setLayoutDirection(Qt.LeftToRight)
@@ -961,13 +934,18 @@ class Ui_MainWindow(object):
         self.label_sobre.setIndent(-30)
         self.label_sobre.setOpenExternalLinks(True)
         self.label_sobre.setTextInteractionFlags(Qt.LinksAccessibleByKeyboard|Qt.LinksAccessibleByMouse|Qt.TextBrowserInteraction|Qt.TextSelectableByKeyboard|Qt.TextSelectableByMouse)
+        # Crie um QScrollArea e defina o QLabel como seu widget filho
+        self.scroll_area = QScrollArea(self.pg_Sobre)
+        self.scroll_area.setGeometry(10, 10, 491, 361)
+        self.scroll_area.setWidget(self.label_sobre)          
+        
         self.pages.addWidget(self.pg_Sobre)
         self.pg_terms = QWidget()
         self.pg_terms.setObjectName(u"pg_terms")
         self.plainTextEdit_3 = QPlainTextEdit(self.pg_terms)
         self.plainTextEdit_3.setObjectName(u"plainTextEdit_3")
         self.plainTextEdit_3.setGeometry(QRect(10, 10, 511, 401))
-        self.plainTextEdit_3.setFont(font4)
+        self.plainTextEdit_3.setFont(font3)
         self.plainTextEdit_3.setStyleSheet(u"background-color: rgb(38, 68, 149);\n"
 "color: rgb(255, 255, 255);")
         self.plainTextEdit_3.setReadOnly(True)
@@ -1191,9 +1169,9 @@ class Ui_MainWindow(object):
 "	color: rgb(255, 255, 255);\n"
 "	background-color:rgb(49,147,0)\n"
 "}")
-        icon13 = QIcon()
-        icon13.addFile(u":/icons/image/salvar.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_salvar_ncm.setIcon(icon13)
+        icon12 = QIcon()
+        icon12.addFile(u":/icons/image/salvar.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_salvar_ncm.setIcon(icon12)
         self.bt_salvar_ncm.setIconSize(QSize(25, 25))
         self.txt_ncm = QLineEdit(self.frame_14)
         self.txt_ncm.setObjectName(u"txt_ncm")
@@ -1221,9 +1199,9 @@ class Ui_MainWindow(object):
         self.frame_15.setFrameShadow(QFrame.Raised)
         self.comboBox_executaveis = QComboBox(self.frame_15)
         self.comboBox_executaveis.addItem("")
-        icon14 = QIcon()
-        icon14.addFile(u":/icons/image/icons8-anydesk-32.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.comboBox_executaveis.addItem(icon14, "")
+        icon13 = QIcon()
+        icon13.addFile(u":/icons/image/icons8-anydesk-32.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.comboBox_executaveis.addItem(icon13, "")
         self.comboBox_executaveis.addItem("")
         self.comboBox_executaveis.addItem("")
         self.comboBox_executaveis.addItem("")
@@ -1422,10 +1400,6 @@ class Ui_MainWindow(object):
         self.lb_version.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><br/></p></body></html>", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.widget), QCoreApplication.translate("MainWindow", u"Informa\u00e7\u00f5es", None))
         self.btn_tech_tools.setText("")
-#if QT_CONFIG(tooltip)
-        self.bt_atualizacoes.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:7pt; font-weight:700;\">Existem novas atualiza\u00e7\u00f5es dispon\u00edveis</span></p><p><span style=\" font-size:7pt; font-weight:700;\">para esse programa.</span></p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.bt_atualizacoes.setText(QCoreApplication.translate("MainWindow", u"1", None))
         self.pushButton_4.setText("")
         self.title_db.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Servidores Ativos:</p></body></html>", None))
         self.txt_server_db.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Server\\Instance", None))
@@ -1497,6 +1471,17 @@ class Ui_MainWindow(object):
         self.label_sobre.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:11pt; font-weight:700;\">Como o TechTools surgiu?</span></p><p>O <span style=\" font-weight:700;\">TechTools</span> foi inicialmente projetado para estabelecer conex\u00e3o com o banco de dados SQL Server e executar consultas pr\u00e9-definidas dentro do c\u00f3digo do programa.</p><p>O projeto, inicialmente, visava agilizar o processo de migra\u00e7\u00e3o de dados entre sistemas de gest\u00e3o diferentes. Facilitava a conex\u00e3o e apresentava os dados formatados, economizando tempo para o t\u00e9cnico respons\u00e1vel pela tarefa.</p><p>Com o tempo, o <span style=\" font-weight:700;\">TechTools</span> recebeu novas vers\u00f5es e adquiriu a capacidade de se conectar com outros bancos de dados, como <span style=\" font-weight:700;\">MySQL</span> e <span style=\" font-weight:700;\">SQL Server</span>. Logo, passou a apresentar os dados em uma tela em formato de tabela e a exibir as tabelas existentes no banco de dados, permitindo ao usu\u00e1rio "
                         "conhecer o banco de dados com o qual estava trabalhando. Al\u00e9m disso, recebeu a capacidade de executar consultas mais complexas, como <span style=\" font-weight:700;\">DML</span>, utilizando a linguagem <span style=\" font-weight:700;\">T-SQL</span>.</p><p>Com o decorrer do tempo, percebeu-se a necessidade de o TechTools se tornar a principal ferramenta de trabalho para t\u00e9cnicos de <span style=\" font-weight:700;\">T.I</span>. Assim, ele passou a oferecer uma ampla gama dos principais drivers de impressoras e os principais arquivos de instala\u00e7\u00e3o de programas usados por esses profissionais.</p><p>Atualmente, o TechTools \u00e9 uma ferramenta completa em seu contexto, mas est\u00e1 em constante atualiza\u00e7\u00e3o, com novas ferramentas sendo adicionadas ao programa com o objetivo de melhorar e facilitar os processos realizados por n\u00f3s, profissionais de T.I.</p><p><br/></p><p><span style=\" font-weight:700;\">Tech Tools v4.0.0 Copyright \u00a9 Todos os direitos reservados 2023-2024.</sp"
                         "an></p><p><span style=\" font-weight:700;\">Criador: Eduardo Ferreira</span></p><p><span style=\" font-weight:700;\">Colabora\u00e7\u00e3o: Design de imagens -  by M.R</span></p><p><span style=\" font-weight:700;\">E-mail: eduardoferreira_of@outlook.com</span></p></body></html>", None))
+        self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        # Defina a largura da barra de rolagem vertical
+        self.scroll_bar = self.scroll_area.verticalScrollBar()
+        self.scroll_bar.setStyleSheet("QScrollBar:vertical { width: 8px; }")
+        # Defina a política de tamanho do QScrollArea para permitir a rolagem horizontal
+        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        # Permita que o widget filho redimensione a área de visualização
+        self.scroll_area.setWidgetResizable(True)
+        # Defina a largura da barra de rolagem horizontal
+        self.horizontal_scroll_bar = self.scroll_area.horizontalScrollBar()
+        self.horizontal_scroll_bar.setStyleSheet("QScrollBar:horizontal { height: 8px; }")         
         self.plainTextEdit_3.setPlainText(QCoreApplication.translate("MainWindow", u"TERMOS DE USO DO PROGRAMA TECH TOOLS\n"
 "\n"
 "\n"
@@ -1580,6 +1565,10 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Descri\u00e7\u00e3o", None));
         ___qtablewidgetitem5 = self.tableWidget_ncm.horizontalHeaderItem(2)
         ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Vencimento", None));
+        # Definir tamanho das colunas
+        self.tableWidget_ncm.setColumnWidth(0, 80)
+        self.tableWidget_ncm.setColumnWidth(1, 300)
+        self.tableWidget_ncm.setColumnWidth(2, 200)
 #if QT_CONFIG(tooltip)
         self.bt_salvar_ncm.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:7pt;\">Salvar .csv</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
