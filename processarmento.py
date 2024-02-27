@@ -79,7 +79,6 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             self.txt_output_logs.appendPlainText("Erro: Usuário tentou processar, sem ter selecionado um arquivo antes.")
             self.show_error_popup("Atenção!", "Não é possível processar antes do usuário selecionar o arquivo.csv")
         else:
-            self.txt_output_logs.appendPlainText("\nDados na tela.")
             self.txt_output_logs.appendPlainText(f"\nProcessando arquivo CSV")
             try:
                 encodings = ['utf-8', 'latin1']
@@ -143,8 +142,9 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         except Exception as e:
             self.show_error_popup("Erro!", "Arquivo csv não encontrado.")
     
-    #OPÇÕES DE BUSCA
+    # OPÇÕES DE BUSCA
     def combo_op_busca(self):
+        path_csv = self.txt_path_filecsv.text()
         opcoes = self.comboBox_op_busca.currentText()
         self.txt_output_logs.appendPlainText(f"\nOpção selecionada: {opcoes}")
         if opcoes == '':
@@ -152,61 +152,79 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")
         else:
             pass
-
-        if opcoes == 'Buscar por NCM':
-            self.bt_buscar_opcoes.setVisible(True)
-            self.txt_buscar_ncm.setVisible(True)
-            self.bt_buscar_opcoes.clicked.connect(self.search_by_ncm)
-        elif opcoes == "Buscar NCM's inválidos.":
-            self.txt_buscar_ncm.setVisible(False)
-            self.bt_buscar_opcoes.setVisible(False)
-            self.search_invalid_ncm()
-        elif opcoes == 'Tudo que contém.':
-            self.txt_buscar_ncm.setVisible(True)
-            self.bt_buscar_opcoes.setVisible(True)
-            self.bt_buscar_opcoes.clicked.connect(self.tudo_que_contem)
+        
+        if path_csv == '':
+            self.show_error_popup("Erro!", f"Não é possível usar essa funcionalidade sem antes ler o arquivo .csv")
+            self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")           
+        else:
+            if opcoes == 'Buscar por NCM':
+                self.bt_buscar_opcoes.setVisible(True)
+                self.txt_buscar_ncm.setVisible(True)
+                self.bt_buscar_opcoes.clicked.disconnect()  # Desconectar qualquer sinal anterior
+                self.bt_buscar_opcoes.clicked.connect(self.search_by_ncm)
+            elif opcoes == "Buscar NCM's inválidos.":
+                self.txt_buscar_ncm.setVisible(False)
+                self.bt_buscar_opcoes.setVisible(False)
+                self.search_invalid_ncm()
+            elif opcoes == 'Tudo que contém.':
+                self.txt_buscar_ncm.setVisible(True)
+                self.bt_buscar_opcoes.setVisible(True)
+                self.bt_buscar_opcoes.clicked.disconnect()  # Desconectar qualquer sinal anterior
+                self.bt_buscar_opcoes.clicked.connect(self.tudo_que_contem)
 
     # OPÇÕES DE PROCESSAMENTO 
     def combo_op_processamento(self):
+        path_csv = self.txt_path_filecsv.text()
         opcoes = self.comboBox_op_processamentos.currentText()
         self.txt_output_logs.appendPlainText(f"Opção selecionada: {opcoes}")
 
         if opcoes == '':
             self.show_error_popup("Erro!", f"É necessário selecionar uma das opções antes de realizar a busca.")
-            self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")
+            self.txt_output_logs.appendPlainText(f"Erro: não há um arquivo para buscar.")
         else:
             pass
 
         if opcoes == 'Substituir NCM.':
-            self.txt_alt_NCM1.setVisible(True)
-            self.txt_alt_NCM2.setVisible(True)
-            self.combo_column1.setVisible(False)
-            self.combo_column2.setVisible(False)
-            self.bt_setas_ncm.setVisible(True)
-            self.bt_executar_process.setVisible(True)
-            self.lb_info_ncm_subst.setVisible(True)
-
-
+            if path_csv == '':
+                self.show_error_popup("Erro!", f"Não é possível usar essa funcionalidade sem antes ler o arquivo .csv")
+                self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")           
+            else:
+                self.txt_alt_NCM1.setVisible(True)
+                self.txt_alt_NCM2.setVisible(True)
+                self.combo_column1.setVisible(False)
+                self.combo_column2.setVisible(False)
+                self.bt_setas_ncm.setVisible(True)
+                self.bt_executar_process.setVisible(True)
+                self.lb_info_ncm_subst.setVisible(True)
         elif opcoes == 'Tudo que contém mude para':
-            self.lb_atencao_substituir.setVisible(True)
-            self.txt_alt_NCM1.setVisible(True)
-            self.txt_alt_NCM2.setVisible(True)
-            self.bt_setas_ncm.setVisible(True)
-            self.combo_column1.setVisible(False)
-            self.combo_column2.setVisible(False)
-            self.bt_executar_process.setVisible(True)
-        
+            if path_csv == '':
+                self.show_error_popup("Erro!", f"Não é possível usar essa funcionalidade sem antes ler o arquivo .csv")
+                self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")           
+            else:
+                self.lb_atencao_substituir.setVisible(True)
+                self.txt_alt_NCM1.setVisible(True)
+                self.txt_alt_NCM2.setVisible(True)
+                self.bt_setas_ncm.setVisible(True)
+                self.combo_column1.setVisible(False)
+                self.combo_column2.setVisible(False)
+                self.bt_executar_process.setVisible(True)
         elif opcoes == 'P. X da Coluna A , Coluna B Recebe':
-            self.combo_column1.setVisible(True)
-            self.combo_column2.setVisible(True)
-            self.txt_alt_NCM1.setVisible(True)
-            self.txt_alt_NCM2.setVisible(True)
-            self.bt_setas_ncm.setVisible(True)
-            self.bt_executar_process.setVisible(True)
-            self.lb_atencao_substituir.setVisible(True)
-            print(opcoes)
+            if path_csv == '':
+                self.show_error_popup("Erro!", f"Não é possível usar essa funcionalidade sem antes ler o arquivo .csv")
+                self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")           
+            else:
+                self.combo_column1.setVisible(True)
+                self.combo_column2.setVisible(True)
+                self.txt_alt_NCM1.setVisible(True)
+                self.txt_alt_NCM2.setVisible(True)
+                self.bt_setas_ncm.setVisible(True)
+                self.bt_executar_process.setVisible(True)
+                self.lb_atencao_substituir.setVisible(True)
 
-            self.bt_executar_process.clicked.connect(self.column1_alter_column2)
+                    # Configurar a conexão do sinal do botão de execução do processo
+                self.bt_executar_process.clicked.disconnect()  # Desconectar qualquer sinal anterior
+                self.bt_executar_process.clicked.connect(self.column1_alter_column2)
+
     #COMBO OPTIONS
     def combo_Columns(self,head):
         self.combo_column1.addItems(head)

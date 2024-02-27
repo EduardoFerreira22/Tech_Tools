@@ -87,6 +87,11 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
           </property>
           <item>
            <property name="text">
+            <string>Selecione</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
             <string>Buscar NCM's inválidos.</string>
            </property>
           </item>
@@ -229,6 +234,11 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
              <property name="duplicatesEnabled">
               <bool>false</bool>
              </property>
+             <item>
+              <property name="text">
+               <string>Selecione</string>
+              </property>
+             </item>
              <item>
               <property name="text">
                <string>Substituir NCM.</string>

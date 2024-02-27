@@ -48,6 +48,7 @@ class Ui_ProcessCSV(object):
         self.comboBox_op_busca.addItem("")
         self.comboBox_op_busca.addItem("")
         self.comboBox_op_busca.addItem("")
+        self.comboBox_op_busca.addItem("")
         self.comboBox_op_busca.setObjectName(u"comboBox_op_busca")
         self.comboBox_op_busca.setGeometry(QRect(10, 50, 189, 20))
         self.comboBox_op_busca.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
@@ -95,6 +96,7 @@ class Ui_ProcessCSV(object):
         self.frame_8.setFrameShape(QFrame.Panel)
         self.frame_8.setFrameShadow(QFrame.Raised)
         self.comboBox_op_processamentos = QComboBox(self.frame_8)
+        self.comboBox_op_processamentos.addItem("")
         self.comboBox_op_processamentos.addItem("")
         self.comboBox_op_processamentos.addItem("")
         self.comboBox_op_processamentos.addItem("")
@@ -340,18 +342,20 @@ class Ui_ProcessCSV(object):
 
     def retranslateUi(self, ProcessCSV):
         ProcessCSV.setWindowTitle(QCoreApplication.translate("ProcessCSV", u"MainWindow", None))
-        self.comboBox_op_busca.setItemText(0, QCoreApplication.translate("ProcessCSV", u"Buscar NCM's inv\u00e1lidos.", None))
-        self.comboBox_op_busca.setItemText(1, QCoreApplication.translate("ProcessCSV", u"Buscar por NCM", None))
-        self.comboBox_op_busca.setItemText(2, QCoreApplication.translate("ProcessCSV", u"Tudo que cont\u00e9m.", None))
+        self.comboBox_op_busca.setItemText(0, QCoreApplication.translate("ProcessCSV", u"Selecione", None))
+        self.comboBox_op_busca.setItemText(1, QCoreApplication.translate("ProcessCSV", u"Buscar NCM's inv\u00e1lidos.", None))
+        self.comboBox_op_busca.setItemText(2, QCoreApplication.translate("ProcessCSV", u"Buscar por NCM", None))
+        self.comboBox_op_busca.setItemText(3, QCoreApplication.translate("ProcessCSV", u"Tudo que cont\u00e9m.", None))
 
         self.comboBox_op_busca.setCurrentText("")
         self.comboBox_op_busca.setPlaceholderText(QCoreApplication.translate("ProcessCSV", u"Op\u00e7\u00f5es de busca", None))
         self.bt_buscar_opcoes.setText(QCoreApplication.translate("ProcessCSV", u"Pesquisar", None))
         self.txt_buscar_ncm.setPlaceholderText(QCoreApplication.translate("ProcessCSV", u"Procurar por?", None))
         self.label_2.setText(QCoreApplication.translate("ProcessCSV", u"<html><head/><body><p><span style=\" font-weight:700; color:#ffffff;\">Op\u00e7\u00f5es de busca:</span></p></body></html>", None))
-        self.comboBox_op_processamentos.setItemText(0, QCoreApplication.translate("ProcessCSV", u"Substituir NCM.", None))
-        self.comboBox_op_processamentos.setItemText(1, QCoreApplication.translate("ProcessCSV", u"Tudo que cont\u00e9m mude para", None))
-        self.comboBox_op_processamentos.setItemText(2, QCoreApplication.translate("ProcessCSV", u"P. X da Coluna A , Coluna B Recebe", None))
+        self.comboBox_op_processamentos.setItemText(0, QCoreApplication.translate("ProcessCSV", u"Selecione", None))
+        self.comboBox_op_processamentos.setItemText(1, QCoreApplication.translate("ProcessCSV", u"Substituir NCM.", None))
+        self.comboBox_op_processamentos.setItemText(2, QCoreApplication.translate("ProcessCSV", u"Tudo que cont\u00e9m mude para", None))
+        self.comboBox_op_processamentos.setItemText(3, QCoreApplication.translate("ProcessCSV", u"P. X da Coluna A , Coluna B Recebe", None))
 
         self.comboBox_op_processamentos.setCurrentText("")
         self.comboBox_op_processamentos.setPlaceholderText(QCoreApplication.translate("ProcessCSV", u"Op\u00e7\u00f5es de busca", None))
