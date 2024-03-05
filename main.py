@@ -1597,15 +1597,101 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         self.setWindowIcon(appIcon)
         self.setFixedSize(600, 460)
         self.read_saved_data()
+        path_scripts_tables = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db.sql"
+        path_data = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db"
 
         # Connect signals
         self.bt_login.clicked.connect(self.login_user)
         # Conectar o evento returnPressed dos line edits ao verificador de campos de login
         self.txt_username.returnPressed.connect(self.check_login_fields)
         self.txt_senha_login.returnPressed.connect(self.check_login_fields)
+
+        self.verify_existence_data(path_scripts_tables,path_data)
+
         version_sys = self.version_sistem_tech()
         self.lb_login_version.setText(str(f'v{version_sys}'))
 
+    def verify_existence_data(self, path_scripts, name_data):
+        try:
+            if not os.path.exists(name_data):
+                # Cria o banco de dados caso não exista
+                self.create_dataBase(name_data)
+                self.execut_scripts_creation(path_scripts, name_data)
+            else:
+                # Verifica quais tabelas já existem no banco de dados
+                existing_tables = self.get_tables_existents(name_data)
+
+                # Executa os scripts para criar apenas as tabelas que ainda não existem
+                self.cria_tabelas_nao_existentes(path_scripts, name_data, existing_tables)
+        except Exception as e:
+            print(f"Erro!: {e}")
+
+    def create_dataBase(self,path_data):
+        try:
+            conn = sqlite3.connect(path_data)
+            conn.close()
+            print("Data base criada com sucesso!")
+        except Exception as e:
+            print(f"Erro ao criar a Data Base: {e}")
+
+
+    def execut_scripts_creation(self, path_scripts, name_data):
+        try:
+            with open(path_scripts, 'r',encoding='utf-8') as file:
+                scripts_sql = file.read()
+
+            conn = sqlite3.connect(name_data)
+            cursor = conn.cursor()
+            cursor.executescript(scripts_sql)
+            conn.commit()
+            conn.close()
+            print("Todos os Scripts foram executados com sucesso!")
+        except Exception as e:
+            print(f"Erro: {e}")
+
+    #Pega nomes das tabelas existente no banco de dados
+    def get_tables_existents(self,name_data):
+        try:
+            conn = sqlite3.connect(name_data)
+            cursor = conn.cursor()
+
+            #Recupera a lista com os nomes das tabelas da database
+            cursor.execute("SELECT name FROM sqlite_master WHERE TYPE = 'table'; ")
+            tables_existig = [table[0] for table in cursor.fetchall()]
+            #Fecha a conexão com o banco de dados
+            conn.close()
+            #Retorna lista  de tabelas
+            return tables_existig
+        except Exception as e:
+            print(f"Erro ao obter lista de tabelas:\n{e}")
+
+    def cria_tabelas_nao_existentes(self, path_scripts, name_data, existing_tables):
+        try:
+            # Lê o conteúdo do arquivo de scripts SQL com encoding UTF-8
+            with open(path_scripts, 'r', encoding='utf-8') as file:
+                scripts_sql = file.readlines()
+
+            # Conecta ao banco de dados
+            conn = sqlite3.connect(name_data)
+            cursor = conn.cursor()
+
+            # Itera pelas linhas dos scripts
+            for line in scripts_sql:
+                # Verifica se a linha contém um comando de criação de tabela
+                if line.startswith("CREATE TABLE IF NOT EXISTS"):
+                    # Extrai o nome da tabela
+                    table_name = line.split('"')[1]
+                    # Verifica se a tabela não está na lista de tabelas existentes
+                    if table_name not in existing_tables:
+                        cursor.execute(line)
+
+            # Commit das alterações e fechamento da conexão
+            conn.commit()
+            conn.close()
+
+            print("Scripts para tabelas inexistentes foram executados com sucesso!")
+        except Exception as e:
+            print(f"Erro ao executar scripts para tabelas inexistentes: {e}")
     def check_login_fields(self):
         # Verificar se ambos os campos de entrada estão preenchidos
         if self.txt_username.text() and self.txt_senha_login.text():
@@ -1628,6 +1714,9 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         with open(path, 'w') as w:
             w.write(f'User: {username}\ntipo: {tipo}')
 
+
+    def create_update_databases(self):
+        pass
 
     def on_login_clicked(self,username,password):
         remember_checked = self.checkBox_lembrar_senha.isChecked()
