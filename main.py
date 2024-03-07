@@ -1,7 +1,7 @@
 from PySide6.QtCore import QCoreApplication,QUrl,QTimer,Qt
 from PySide6.QtGui import QIcon,QFont,QColor,QDesktopServices
 from PySide6 import QtCore
-from PySide6.QtWidgets import (QApplication,QMainWindow,QMessageBox,QTableWidgetItem,QFileDialog,QMenu, QWidgetAction,
+from PySide6.QtWidgets import (QApplication,QMainWindow,QMessageBox,QProgressBar,QDialog, QVBoxLayout, QPushButton,QTableWidgetItem,QFileDialog,QMenu, QWidgetAction,
                                QPlainTextEdit, QPushButton, QVBoxLayout, QWidget, QSystemTrayIcon, QMenu)
 from ui_main import Ui_MainWindow,UI_LoginWindow
 from processarmento import Processing_CSV
@@ -14,6 +14,7 @@ from datetime import datetime
 import sqlite3
 import pyodbc
 import bcrypt
+import time
 import json
 import csv
 import sys
@@ -241,6 +242,8 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         if chek == 0:
             self.bt_users.setVisible(False)  
             self.bt_ncm_page.setVisible(False)
+            self.radioButton_restaurar.setVisible(False )
+            self.bt_processar_planilha.setVisible(False)
 
         # Defina o tamanho da coluna desejada
         column_index = 0  # Índice da coluna que você deseja redimensionar
@@ -1588,6 +1591,17 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         # Mudar para a página de conexões
         self.pages.setCurrentWidget(self.pg_Data_base)
 
+class ProgressDialog(QDialog):
+    def __init__(self,desk, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle(desk)
+        layout = QVBoxLayout(self)
+        self.progress_bar = QProgressBar()
+        layout.addWidget(self.progress_bar)
+        self.setModal(True)
+        self.progress_bar.setRange(0, 100)
+        self.show()
+
 class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
     def __init__(self):
         super().__init__()
@@ -1600,6 +1614,9 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         path_scripts_tables = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db.sql"
         path_data = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db"
         update = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\up.db.sql"
+        path_txt = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\version.txt"
+        path_user = "venv\\Lib\\site-packages\\_m\\file\\file\\u\\mu\\u.db"
+        
 
         # Connect signals
         self.bt_login.clicked.connect(self.login_user)
@@ -1607,13 +1624,26 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         self.txt_username.returnPressed.connect(self.check_login_fields)
         self.txt_senha_login.returnPressed.connect(self.check_login_fields)
 
-        self.verify_existence_data(path_scripts_tables,path_data,update)
-
+        self.verify_existence_data(path_scripts_tables,path_data,update,path_txt,path_user)
+        
         version_sys = self.version_sistem_tech()
         self.lb_login_version.setText(str(f'v{version_sys}'))
-    # with open('version.txt','r') as v:
-    #     self.version = v.read()
-    #     print(self.version)
+
+    
+    def version_txt(self,path_txt):
+        
+        try:
+            if os.path.exists(path_txt):
+                with open(path_txt, 'r') as r:
+                    line = r.readline()
+                    for line in r:
+                        if line.startswith("db_version:"):
+                            v_db = line[len("db_version: "):].strip()
+                            print(v_db)
+                            return v_db    
+        except Exception as e:
+            print(f"Erro:\n{e}")
+
     def versions(self,name_data):
         try:
 
@@ -1638,37 +1668,121 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             conn.commit()
             conn.close()
             print("Todos os Scripts foram executados com sucesso!")
+            try:
+                os.remove(update_scripts)
+                print("Arquivo removido com sucesso!")
+            except Exception as e:
+                    print(f"Erro ao tentar deletar arquivo:\n{e}")
         except Exception as e:
             print(f"Erro: {e}")        
 
-    def verify_existence_data(self, path_scripts, name_data,update):
+    def verify_existence_data(self, path_scripts, name_data, update, path_txt, path_user):
+
         try:
+            if not os.path.exists(path_user):
+                script_user = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\u.db.sql"
+                self.create_dataBase_user(path_user)
+                self.execut_scripts_creation_userDB(path_user=path_user,datascripts=script_user)
+
+
             if not os.path.exists(name_data):
-                # Cria o banco de dados caso não exista
-                self.create_dataBase(name_data)
+                # Exibir a barra de progresso em uma caixa de diálogo
+                progress_dialog = ProgressDialog("Criando o Banco de dados.")
+                self.create_dataBase(name_data, progress_dialog)
                 self.execut_scripts_creation(path_scripts, name_data)
-                self.execut_scripts(name_data,update)
+                progress_dialog.accept()  # Fechar a caixa de diálogo após a conclusão
             else:
                 # Verifica quais tabelas já existem no banco de dados
                 existing_tables = self.get_tables_existents(name_data)
                 vs = self.versions(name_data)
-                vs_db = '0.0.2' #Versão atual db
+                vs_db = self.version_txt(path_txt)
                 # Executa os scripts para criar apenas as tabelas que ainda não existem
-                self.cria_tabelas_nao_existentes(path_scripts,name_data, existing_tables)
-                if vs_db != vs[0][0] :
-                    self.execut_scripts(name_data,update)
+                self.cria_tabelas_nao_existentes(path_scripts, name_data, existing_tables)
+                if vs_db != vs[0][0]:
+                    reply = QMessageBox.question(None, "Atenção!", "Há uma nova versão do banco de dados disponível\ndeseja atualizar agora?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                    if reply == QMessageBox.Yes:
+                        # Exibir a barra de progresso em uma caixa de diálogo
+                        progress_dialog = ProgressDialog("Atualizando o banco de dados.")
+                        self.update_progress(progress_dialog, name_data, update)
+                        progress_dialog.exec_()
                 else:
                     pass
         except Exception as e:
             print(f"Erro!: {e}")
 
-    def create_dataBase(self,path_data):
+    def create_dataBase_user(self, path_user):
+        try:
+            conn = sqlite3.connect(path_user)
+            conn.close()
+            print("Data base user criada com sucesso!")
+        except Exception as e:
+            print(f"Erro ao criar a Data Base: {e}")
+
+
+    def create_dataBase(self, path_data, progress_dialog):
         try:
             conn = sqlite3.connect(path_data)
             conn.close()
             print("Data base criada com sucesso!")
+            progress_value = 0
+            while progress_value <= 100:
+                progress_dialog.progress_bar.setValue(progress_value)
+                QApplication.processEvents()  # Forçar a atualização da interface gráfica
+                progress_value += 1
+                time.sleep(0.1)  # Intervalo de 100 milissegundos entre atualizações
+            progress_dialog.progress_bar.setValue(100)
         except Exception as e:
             print(f"Erro ao criar a Data Base: {e}")
+
+    def update_progress(self, progress_dialog, name_data, update):
+        self.progress_value = 0
+        self.timer = QTimer()
+        self.timer.timeout.connect(lambda: self.update_progress_bar(progress_dialog, name_data, update))
+        self.timer.start(500)  # Atualiza a barra de progresso a cada 500 ms
+
+    def update_progress_bar(self, progress_dialog, name_data, update):
+        if self.progress_value <= 100:
+            progress_dialog.progress_bar.setValue(self.progress_value)
+            self.execut_scripts(name_data, update)  # Simula o processamento
+            self.progress_value += 1
+            QApplication.processEvents()  # Forçar a atualização da interface gráfica
+        else:
+            self.timer.stop()  # Interrompe o QTimer quando a barra de progresso atinge 100%
+            progress_dialog.accept()  # Fecha a caixa de diálogo
+
+    def execut_scripts_creation_userDB(self, path_user, datascripts):
+        user1 = 'techtools'
+        senha1 = 'techtadm'
+        user2 = 'admin'
+        senha2 = 'admin' 
+        try:
+            hash_pass1 = bcrypt.hashpw(senha1.encode('utf-8'), bcrypt.gensalt())
+            print(f'senha: {hash_pass1}')
+            hash_pass2 = bcrypt.hashpw(senha2.encode('utf-8'), bcrypt.gensalt())
+            print(f'senha: {hash_pass2}')
+
+            q1 = "INSERT INTO USERS (user, password, TYPE_US) VALUES (?, ?, ?)"
+            q2 = "INSERT INTO USERS (user, password, TYPE_US) VALUES (?, ?, ?)"
+
+            with open(datascripts, 'r', encoding='utf-8') as file:
+                scripts_sql = file.read()
+
+            conn = sqlite3.connect(path_user)
+            cursor = conn.cursor()
+            cursor.executescript(scripts_sql)
+            cursor.execute(q1, (user1, hash_pass1, 1))  # Aqui, hash_pass1 já é uma sequência de bytes
+            cursor.execute(q2, (user2, hash_pass2, 0))  # Aqui, hash_pass2 já é uma sequência de bytes
+            conn.commit()
+            conn.close()
+            try:
+                os.remove(datascripts)
+                print("Arquivo removido com sucesso!")
+            except Exception as e:
+                    print(f"Erro ao tentar deletar arquivo:\n{e}")
+            print("Todos os Scripts foram executados com sucesso!")
+        except Exception as e:
+            print(f"Erro: {e}")
+
 
 
     def execut_scripts_creation(self, path_scripts, name_data):
@@ -1682,6 +1796,11 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             conn.commit()
             conn.close()
             print("Todos os Scripts foram executados com sucesso!")
+            try:
+                os.remove(path_scripts)
+                print("Arquivo removido com sucesso!")
+            except Exception as e:
+                    print(f"Erro ao tentar deletar arquivo:\n{e}")
         except Exception as e:
             print(f"Erro: {e}")
 
@@ -1804,7 +1923,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         except FileNotFoundError:
             # Lógica para lidar com o arquivo não existente
             pass
-
+    """
     def login_user(self):
         # Obtém o usuário e a senha digitados pelo usuário
         username = self.txt_username.text()
@@ -1829,7 +1948,36 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             else:
                 self.show_error_popup("Erro de login", "Usuário ou senha incorretos.")
         else:
+            self.show_error_popup("Erro de login", "Usuário não encontrado.")"""
+
+    def login_user(self):
+        # Obtém o usuário e a senha digitados pelo usuário
+        username = self.txt_username.text()
+        password = self.txt_senha_login.text()
+        self.checkBox_lembrar_senha
+        # Consulta o banco de dados para obter as informações do usuário
+        conn = Manger_Connect()
+        conn.conect_db()
+        comando_user = "SELECT USER,PASSWORD,TYPE_US FROM USERS WHERE USER = ?"
+        user_data = (username,)
+        conn.cursor.execute(comando_user, user_data)
+        stored_user_data = conn.cursor.fetchall()
+
+        if stored_user_data:
+            stored_password_hash = stored_user_data[0][1]  # A senha hash está na segunda posição da tupla
+            # Convertendo stored_password_hash para uma string UTF-8
+            stored_password_hash_str = stored_password_hash.decode('utf-8')
+            self.cache_user(username)
+            if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash_str.encode('utf-8')):
+                print(f'Sucesso: {stored_password_hash}')
+                # Abra a tela MainWindow após o login bem-sucedido
+                self.open_main_window()
+                self.on_login_clicked(username,password)
+            else:
+                self.show_error_popup("Erro de login", "Usuário ou senha incorretos.")
+        else:
             self.show_error_popup("Erro de login", "Usuário não encontrado.")
+
 
 
     def open_main_window(self):
