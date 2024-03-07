@@ -1599,6 +1599,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         self.read_saved_data()
         path_scripts_tables = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db.sql"
         path_data = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db"
+        update = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\up.db.sql"
 
         # Connect signals
         self.bt_login.clicked.connect(self.login_user)
@@ -1606,23 +1607,58 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         self.txt_username.returnPressed.connect(self.check_login_fields)
         self.txt_senha_login.returnPressed.connect(self.check_login_fields)
 
-        self.verify_existence_data(path_scripts_tables,path_data)
+        self.verify_existence_data(path_scripts_tables,path_data,update)
 
         version_sys = self.version_sistem_tech()
         self.lb_login_version.setText(str(f'v{version_sys}'))
+    # with open('version.txt','r') as v:
+    #     self.version = v.read()
+    #     print(self.version)
+    def versions(self,name_data):
+        try:
 
-    def verify_existence_data(self, path_scripts, name_data):
+            conn = sqlite3.connect(name_data)
+            cursor = conn.cursor()
+            cursor.execute('SELECT VERSION_DB FROM VERSION')
+            version = cursor.fetchall()
+            conn.close()
+            print(f'{version}, uma atualização será necessária.')
+            return version
+            
+        except Exception as e:
+            print(f"Erro: {e}")        
+    def execut_scripts(self,name_data,update_scripts):
+        try:
+            with open(update_scripts, 'r',encoding='utf-8') as file:
+                scripts_up = file.read()
+
+            conn = sqlite3.connect(name_data)
+            cursor = conn.cursor()
+            cursor.executescript(scripts_up)
+            conn.commit()
+            conn.close()
+            print("Todos os Scripts foram executados com sucesso!")
+        except Exception as e:
+            print(f"Erro: {e}")        
+
+    def verify_existence_data(self, path_scripts, name_data,update):
         try:
             if not os.path.exists(name_data):
                 # Cria o banco de dados caso não exista
                 self.create_dataBase(name_data)
                 self.execut_scripts_creation(path_scripts, name_data)
+                self.execut_scripts(name_data,update)
             else:
                 # Verifica quais tabelas já existem no banco de dados
                 existing_tables = self.get_tables_existents(name_data)
-
+                vs = self.versions(name_data)
+                vs_db = '0.0.2' #Versão atual db
                 # Executa os scripts para criar apenas as tabelas que ainda não existem
-                self.cria_tabelas_nao_existentes(path_scripts, name_data, existing_tables)
+                self.cria_tabelas_nao_existentes(path_scripts,name_data, existing_tables)
+                if vs_db != vs[0][0] :
+                    self.execut_scripts(name_data,update)
+                else:
+                    pass
         except Exception as e:
             print(f"Erro!: {e}")
 
@@ -1658,6 +1694,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             #Recupera a lista com os nomes das tabelas da database
             cursor.execute("SELECT name FROM sqlite_master WHERE TYPE = 'table'; ")
             tables_existig = [table[0] for table in cursor.fetchall()]
+            print(tables_existig)
             #Fecha a conexão com o banco de dados
             conn.close()
             #Retorna lista  de tabelas
@@ -1665,25 +1702,31 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         except Exception as e:
             print(f"Erro ao obter lista de tabelas:\n{e}")
 
-    def cria_tabelas_nao_existentes(self, path_scripts, name_data, existing_tables):
+    def cria_tabelas_nao_existentes(self,path_scripts, name_data, existing_tables):
+        
         try:
             # Lê o conteúdo do arquivo de scripts SQL com encoding UTF-8
             with open(path_scripts, 'r', encoding='utf-8') as file:
-                scripts_sql = file.readlines()
+                scripts_sql = file.read()
+
+            # Divide o conteúdo do arquivo SQL em comandos individuais
+            commands = scripts_sql.split(';')
 
             # Conecta ao banco de dados
             conn = sqlite3.connect(name_data)
             cursor = conn.cursor()
 
-            # Itera pelas linhas dos scripts
-            for line in scripts_sql:
-                # Verifica se a linha contém um comando de criação de tabela
-                if line.startswith("CREATE TABLE IF NOT EXISTS"):
-                    # Extrai o nome da tabela
-                    table_name = line.split('"')[1]
-                    # Verifica se a tabela não está na lista de tabelas existentes
-                    if table_name not in existing_tables:
-                        cursor.execute(line)
+            # Itera sobre os comandos SQL
+            for command in commands:
+                # Remove espaços em branco extras e quebras de linha
+                command = command.strip()
+                if command:
+                    # Verifica se a linha contém um comando de criação de tabela
+                    if command.startswith("CREATE TABLE IF NOT EXISTS"):
+                        # Extrai o nome da tabela e remove espaços em branco
+                        table_name = command.split('"')[1].strip()
+                        if table_name not in existing_tables:
+                            cursor.execute(command)
 
             # Commit das alterações e fechamento da conexão
             conn.commit()
@@ -1692,6 +1735,8 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             print("Scripts para tabelas inexistentes foram executados com sucesso!")
         except Exception as e:
             print(f"Erro ao executar scripts para tabelas inexistentes: {e}")
+
+
     def check_login_fields(self):
         # Verificar se ambos os campos de entrada estão preenchidos
         if self.txt_username.text() and self.txt_senha_login.text():
