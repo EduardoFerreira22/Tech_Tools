@@ -1,0 +1,43 @@
+TERMOS DE USO DO PROGRAMA TECH TOOLS
+
+Última atualização: 22/08/2023
+
+1. Propriedade Intelectual
+
+O programa Tech Tools é um software de código aberto criado por Eduardo Ferreira ("Detentor da Propriedade Intelectual"). O Detentor da Propriedade Intelectual possui todos os direitos de propriedade intelectual relacionados ao Programa.
+
+2. Licença de Uso
+
+O Programa é disponibilizado para uso gratuito e é licenciado sob a licença GPL  para qualquer pessoa que deseje usá-lo e realizar alterações no mesmo, conforme os termos e condições desta licença.
+
+3. Uso Permitido
+
+3.1. Os usuários estão autorizados a usar o Programa para qualquer finalidade, incluindo o uso comercial e não comercial.
+
+3.2. Os usuários têm permissão para realizar alterações no Programa, incluindo a implementação de novas funcionalidades e modificações no código-fonte.
+
+3.3. Os usuários podem compartilhar o Programa, seja em sua forma original ou modificada, com terceiros, desde que os termos desta licença sejam mantidos.
+
+4. Restrições
+
+4.1. Não é permitido renomear o Programa, a menos que uma permissão expressa seja concedida pelo Detentor da Propriedade Intelectual.
+
+4.2. Os usuários não estão autorizados a reivindicar a propriedade do Programa original ou de suas modificações.
+
+5. Responsabilidades e Garantias
+
+5.1. O Programa é fornecido "no estado em que se encontra", sem garantias de qualquer tipo, expressas ou implícitas.
+
+5.2. O Detentor da Propriedade Intelectual não assume qualquer responsabilidade por danos ou problemas causados pelo uso ou modificação do Programa.
+
+6. Alterações dos Termos
+
+O Detentor da Propriedade Intelectual reserva o direito de atualizar ou modificar estes termos de uso a qualquer momento. Os usuários serão notificados sobre essas mudanças por meio do https://github.com/EduardoFerreira22/Tech_Tools.
+
+7. Aceitação dos Termos
+
+Ao usar o Programa, você concorda em cumprir estes termos de uso. Se você não concorda com os termos, não use o Programa.
+
+8. Contato
+
+Para entrar em contato com o Detentor da Propriedade Intelectual ou relatar violações destes termos, envie um e-mail para eduardoferreira_of@outlook.com.

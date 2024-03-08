@@ -418,24 +418,27 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         dado_entrada1 = self.txt_alt_NCM1.text()            # Dado digitado na entrada 1
         dado_entrada2 = self.txt_alt_NCM2.text()            # Dado digitado na entrada 2
 
-        load_data = self.processing_ncm_csv()
+        if ',' in dado_entrada1 or ',' in dado_entrada2:
+            self.show_error_popup("Atenção!", "Não é permitido o uso de vírgula.\nO formato aceitável exemplo: 0.0")
+        else:
+            load_data = self.processing_ncm_csv()
 
-        # Lista para armazenar os resultados
-        resultados = []
+            # Lista para armazenar os resultados
+            resultados = []
 
-        # Iterar sobre os dados do CSV
-        for linha in load_data:
-            # Verificar se o dado digitado na entrada 1 existe na coluna selecionada no combobox 1
-            if linha[coluna_combobox1].lower() == dado_entrada1.lower():
-                # Substituir o dado na coluna selecionada no combobox 2 pelo dado digitado na entrada 2
-                linha[coluna_combobox2] = dado_entrada2
-            # Adicionar a linha aos resultados, independentemente de ter sido modificada ou não
-            resultados.append(linha)
+            # Iterar sobre os dados do CSV
+            for linha in load_data:
+                # Verificar se o dado digitado na entrada 1 existe na coluna selecionada no combobox 1
+                if linha[coluna_combobox1].lower() == dado_entrada1.lower():
+                    # Substituir o dado na coluna selecionada no combobox 2 pelo dado digitado na entrada 2
+                    linha[coluna_combobox2] = dado_entrada2
+                # Adicionar a linha aos resultados, independentemente de ter sido modificada ou não
+                resultados.append(linha)
 
-        # Atualizar a tabela com os novos dados
-        self.update_table_process(resultados)
-        # Escrever os dados atualizados de volta para o arquivo CSV
-        self.write_to_csv(resultados)
+            # Atualizar a tabela com os novos dados
+            self.update_table_process(resultados)
+            # Escrever os dados atualizados de volta para o arquivo CSV
+            self.write_to_csv(resultados)
 
     def update_table_process(self, data):
         # Limpar a tabela antes de atualizá-la com os novos dados
