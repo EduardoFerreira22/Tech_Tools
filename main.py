@@ -1665,6 +1665,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             conn = sqlite3.connect(name_data)
             cursor = conn.cursor()
             cursor.executescript(scripts_up)
+            cursor.execute()
             conn.commit()
             conn.close()
             print("Todos os Scripts foram executados com sucesso!")
@@ -1688,8 +1689,8 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             if not os.path.exists(name_data):
                 # Exibir a barra de progresso em uma caixa de diálogo
                 progress_dialog = ProgressDialog("Criando o Banco de dados.")
-                self.create_dataBase(name_data, progress_dialog)
-                self.execut_scripts_creation(path_scripts, name_data)
+                self.create_dataBase(name_data, progress_dialog) #cria o banco de dados techtools
+                self.execut_scripts_creation(path_scripts, name_data)# executa os scripts de dados padrões do sistema
                 progress_dialog.accept()  # Fechar a caixa de diálogo após a conclusão
             else:
                 # Verifica quais tabelas já existem no banco de dados
@@ -1698,6 +1699,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
                 vs_db = self.version_txt(path_txt)
                 # Executa os scripts para criar apenas as tabelas que ainda não existem
                 self.cria_tabelas_nao_existentes(path_scripts, name_data, existing_tables)
+                self.insert_version(conect=name_data) # verifica se a versão do sistema já foi inserida, caso não, faz o insert com os dados da versão
                 if vs_db != vs[0][0]:
                     reply = QMessageBox.question(None, "Atenção!", "Há uma nova versão do banco de dados disponível\ndeseja atualizar agora?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
                     if reply == QMessageBox.Yes:
@@ -1705,10 +1707,34 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
                         progress_dialog = ProgressDialog("Atualizando o banco de dados.")
                         self.update_progress(progress_dialog, name_data, update)
                         progress_dialog.exec_()
+                        
                 else:
                     pass
         except Exception as e:
             print(f"Erro!: {e}")
+    
+    def insert_version(self, conect):
+        query = "SELECT version_db, version_system FROM version;"
+        try:
+            conn = sqlite3.connect(conect)
+            cursor = conn.cursor()
+            cursor.execute(query)
+            res = cursor.fetchall()
+            print(res)
+            
+            if not res:  # Verifica se res é vazio
+                # Se res for vazio, executa o INSERT
+                conn = sqlite3.connect(conect)
+                cursor = conn.cursor()
+                cursor.execute("INSERT INTO version (id, version_db, version_system) VALUES (1, '0.0.2', '4.0.2');")
+                conn.commit()
+                print("Dados da versão inseridos com sucesso!")
+            else:
+                print("Os dados da versão já existem.")
+
+        except Exception as e:
+            print(f"Erro: {e}")
+
 
     def create_dataBase_user(self, path_user):
         try:
@@ -1878,9 +1904,6 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         with open(path, 'w') as w:
             w.write(f'User: {username}\ntipo: {tipo}')
 
-
-    def create_update_databases(self):
-        pass
 
     def on_login_clicked(self,username,password):
         remember_checked = self.checkBox_lembrar_senha.isChecked()
