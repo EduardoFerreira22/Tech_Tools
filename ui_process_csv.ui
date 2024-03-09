@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1365</width>
+    <width>1367</width>
     <height>786</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1367</width>
+    <height>786</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -18,6 +24,199 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1" rowspan="2">
+     <widget class="QFrame" name="frame">
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <widget class="QPlainTextEdit" name="txt_output_logs">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>7</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+font: 700 7pt &quot;Segoe UI&quot;;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QFrame" name="frame_5">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>65</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_7">
+       <item row="0" column="0">
+        <widget class="QFrame" name="frame_9">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QPushButton" name="pushButton">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>0</y>
+            <width>221</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>221</width>
+            <height>51</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border:none;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icons_.qrc">
+            <normaloff>:/icons/image/TECH TOOLS TITULO LOGO.png</normaloff>:/icons/image/TECH TOOLS TITULO LOGO.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>1500</width>
+            <height>45</height>
+           </size>
+          </property>
+         </widget>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QFrame" name="frame_10">
+         <property name="maximumSize">
+          <size>
+           <width>700</width>
+           <height>65</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="bt_processar_arquivo_csv">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#00007f;&quot;&gt;Processar arquivo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 127);
+}
+
+QPushButton:hover{
+	
+	color: rgb(255, 255, 255);
+	background-color:rgb(49,147,0)
+}</string>
+            </property>
+            <property name="text">
+             <string>Processar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="bt_buscar_filecsv">
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 127);
+}
+
+QPushButton:hover{
+	
+	color: rgb(255, 255, 255);
+	background-color:rgb(49,147,0)
+}</string>
+            </property>
+            <property name="text">
+             <string>Buscar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLineEdit" name="txt_path_filecsv">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(38, 68, 149);
+font: 9pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="placeholderText">
+             <string>C:\Caminho\para\o\Arquivo.csv</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#ffffff;&quot;&gt;Selecione o arquivo:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="1" column="0">
      <widget class="QFrame" name="frame_4">
       <property name="maximumSize">
@@ -45,131 +244,6 @@
        <property name="bottomMargin">
         <number>2</number>
        </property>
-       <item row="0" column="0">
-        <widget class="QFrame" name="frame_3">
-         <property name="maximumSize">
-          <size>
-           <width>360</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Panel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <widget class="QComboBox" name="comboBox_op_busca">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>50</y>
-            <width>189</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(255, 0, 0);
-font:600 9pt &quot;Segoe UI&quot;;</string>
-          </property>
-          <property name="editable">
-           <bool>true</bool>
-          </property>
-          <property name="currentText">
-           <string/>
-          </property>
-          <property name="placeholderText">
-           <string>Opções de busca</string>
-          </property>
-          <property name="duplicatesEnabled">
-           <bool>false</bool>
-          </property>
-          <item>
-           <property name="text">
-            <string>Selecione</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Buscar NCM's inválidos.</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Buscar por NCM</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Tudo que contém.</string>
-           </property>
-          </item>
-         </widget>
-         <widget class="QPushButton" name="bt_buscar_opcoes">
-          <property name="geometry">
-           <rect>
-            <x>232</x>
-            <y>48</y>
-            <width>75</width>
-            <height>24</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 127);
-}
-
-QPushButton:hover{
-	
-	color: rgb(255, 255, 255);
-	background-color:rgb(49,147,0)
-}</string>
-          </property>
-          <property name="text">
-           <string>Pesquisar</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="txt_buscar_ncm">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>84</y>
-            <width>191</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(255, 85, 0);
-font: 600 9pt &quot;Segoe UI&quot;;</string>
-          </property>
-          <property name="placeholderText">
-           <string>Procurar por?</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_2">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>16</y>
-            <width>98</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#ffffff;&quot;&gt;Opções de busca:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </widget>
-       </item>
        <item row="0" column="1">
         <widget class="QFrame" name="frame_6">
          <property name="frameShape">
@@ -380,7 +454,7 @@ font: 600 9pt &quot;Segoe UI&quot;;</string>
             <widget class="QPushButton" name="bt_executar_process">
              <property name="geometry">
               <rect>
-               <x>430</x>
+               <x>440</x>
                <y>90</y>
                <width>75</width>
                <height>24</height>
@@ -463,15 +537,140 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
          </layout>
         </widget>
        </item>
+       <item row="0" column="0">
+        <widget class="QFrame" name="frame_3">
+         <property name="maximumSize">
+          <size>
+           <width>360</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Panel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QComboBox" name="comboBox_op_busca">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>50</y>
+            <width>189</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(255, 0, 0);
+font:600 9pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+          <property name="currentText">
+           <string/>
+          </property>
+          <property name="placeholderText">
+           <string>Opções de busca</string>
+          </property>
+          <property name="duplicatesEnabled">
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>Selecione</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Buscar NCM's inválidos.</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Buscar por NCM</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Tudo que contém.</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QPushButton" name="bt_buscar_opcoes">
+          <property name="geometry">
+           <rect>
+            <x>232</x>
+            <y>48</y>
+            <width>75</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 127);
+}
+
+QPushButton:hover{
+	
+	color: rgb(255, 255, 255);
+	background-color:rgb(49,147,0)
+}</string>
+          </property>
+          <property name="text">
+           <string>Pesquisar</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="txt_buscar_ncm">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>84</y>
+            <width>191</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(255, 85, 0);
+font: 600 9pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="placeholderText">
+           <string>Procurar por?</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_2">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>16</y>
+            <width>98</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#ffffff;&quot;&gt;Opções de busca:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
-    <item row="0" column="1" rowspan="2">
-     <widget class="QFrame" name="frame">
-      <property name="maximumSize">
+    <item row="2" column="0" colspan="2">
+     <widget class="QFrame" name="frame_11">
+      <property name="minimumSize">
        <size>
-        <width>200</width>
-        <height>16777215</height>
+        <width>0</width>
+        <height>35</height>
        </size>
       </property>
       <property name="frameShape">
@@ -480,27 +679,101 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
-        <widget class="QPlainTextEdit" name="txt_output_logs">
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>7</pointsize>
-           <italic>false</italic>
-           <bold>true</bold>
-          </font>
+      <layout class="QGridLayout" name="gridLayout_8">
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
+        <number>1</number>
+       </property>
+       <property name="spacing">
+        <number>1</number>
+       </property>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="bt_restore_op">
+         <property name="maximumSize">
+          <size>
+           <width>30</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#00007f;&quot;&gt;Desfazer ultima operação!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);
-font: 700 7pt &quot;Segoe UI&quot;;</string>
+          <string notr="true">QPushButton{
+	border:none;
+	background-color: rgb(38, 68, 149);
+	color: rgb(0, 0, 127);
+}
+QPushButton:hover{
+	
+	
+	background-color: rgb(235, 8, 0);
+}</string>
          </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="icons_.qrc">
+           <normaloff>:/icons/image/undo.png</normaloff>:/icons/image/undo.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QFrame" name="frame_12">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QPlainTextEdit" name="txt_lable_process">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>1331</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPlainTextEdit{
+	border:none;
+	background-color: rgb(38, 68, 149);
+	color: rgb(255, 255, 255);
+	font: 700 8pt &quot;Segoe UI&quot;;
+}</string>
+          </property>
+         </widget>
         </widget>
        </item>
       </layout>
      </widget>
     </item>
-    <item row="2" column="0" colspan="2">
+    <item row="3" column="0" colspan="2">
      <widget class="QFrame" name="frame_2">
       <property name="frameShape">
        <enum>QFrame::Panel</enum>
@@ -509,6 +782,18 @@ font: 700 7pt &quot;Segoe UI&quot;;</string>
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item row="0" column="0">
         <widget class="QTableWidget" name="tb_dados_csv">
          <property name="font">
@@ -552,165 +837,6 @@ QTableWidget{
          <attribute name="verticalHeaderVisible">
           <bool>false</bool>
          </attribute>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QFrame" name="frame_5">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>65</height>
-       </size>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Panel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_7">
-       <item row="0" column="0">
-        <widget class="QFrame" name="frame_9">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <widget class="QPushButton" name="pushButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>0</y>
-            <width>221</width>
-            <height>51</height>
-           </rect>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>221</width>
-            <height>51</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border:none;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="icons_.qrc">
-            <normaloff>:/icons/image/TECH TOOLS TITULO LOGO.png</normaloff>:/icons/image/TECH TOOLS TITULO LOGO.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>1500</width>
-            <height>45</height>
-           </size>
-          </property>
-         </widget>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QFrame" name="frame_10">
-         <property name="maximumSize">
-          <size>
-           <width>700</width>
-           <height>65</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_6">
-          <property name="leftMargin">
-           <number>2</number>
-          </property>
-          <property name="topMargin">
-           <number>2</number>
-          </property>
-          <property name="rightMargin">
-           <number>2</number>
-          </property>
-          <property name="bottomMargin">
-           <number>2</number>
-          </property>
-          <property name="spacing">
-           <number>2</number>
-          </property>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#ffffff;&quot;&gt;Selecione o arquivo:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLineEdit" name="txt_path_filecsv">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(255, 85, 0);
-font: 9pt &quot;Segoe UI&quot;;</string>
-            </property>
-            <property name="placeholderText">
-             <string>C:\Caminho\para\o\Arquivo.csv</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="bt_buscar_filecsv">
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
-	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 127);
-}
-
-QPushButton:hover{
-	
-	color: rgb(255, 255, 255);
-	background-color:rgb(49,147,0)
-}</string>
-            </property>
-            <property name="text">
-             <string>Buscar</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="bt_processar_arquivo_csv">
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#00007f;&quot;&gt;Processar arquivo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
-	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 127);
-}
-
-QPushButton:hover{
-	
-	color: rgb(255, 255, 255);
-	background-color:rgb(49,147,0)
-}</string>
-            </property>
-            <property name="text">
-             <string>Processar</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </widget>
        </item>
       </layout>

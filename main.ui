@@ -615,7 +615,7 @@ QPlainTextEdit{
         <enum>QFrame::Raised</enum>
        </property>
        <property name="currentIndex">
-        <number>11</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="pg_home">
         <widget class="QPushButton" name="pushButton_4">

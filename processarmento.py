@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (QApplication,QMainWindow,QInputDialog,QMessageBox
 from ui_process_csv import Ui_ProcessCSV
 from datetime import datetime
 from collections import defaultdict
+import shutil
 import sys
 import csv
 import json
@@ -20,6 +21,8 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         self.setWindowTitle("Processamento de planilhas.")
         appIcon = QIcon(u"img\\TECH NEW LOGO.png")
         self.setWindowIcon(appIcon)
+        self.backup_history = []
+        
 
     #######################  BOTÕES  ##############################################################################
         self.comboBox_op_busca.currentIndexChanged.connect(self.combo_op_busca)
@@ -30,6 +33,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         #PROCESSAMENTO
         self.comboBox_op_processamentos.currentIndexChanged.connect(self.combo_op_processamento)
         self.bt_executar_process.clicked.connect(self.exetuc_process)
+        self.bt_restore_op.clicked.connect(self.restore_backup)
         #VISIBILIDADE DOS BOTÕES ################################################################################
         self.bt_executar_combo_process.setVisible(False)
         self.bt_executar_process.setVisible(False)
@@ -103,6 +107,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                                 item = QTableWidgetItem(cell_data)
                                 self.tb_dados_csv.setItem(row_idx - 1, col_idx, item)  # Adiciona 1 ao índice de linha para começar da linha 2
                         self.txt_output_logs.appendPlainText("\nDados do arquivo CSV inseridos na tabela com sucesso.")
+                        self.txt_lable_process.appendPlainText(f"Dados do arquivo CSV inseridos na tabela com sucesso.")
                         self.combo_Columns(head=self.header)
                         break  # Para a execução se a leitura for bem-sucedida
                     except Exception as e:
@@ -112,8 +117,10 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 else:
                     # Se nenhuma codificação funcionar, mostra uma mensagem de erro
                     self.show_error_popup("Erro!", "Não foi possível abrir o arquivo CSV.")
+                    self.txt_lable_process.appendPlainText("Erro! Não foi possível abrir o arquivo CSV.")
             except Exception as e:
                 self.txt_output_logs.appendPlainText(f"Erro:\n{e}")
+                self.txt_lable_process.appendPlainText(f"Erro:\n{e}")
 
     #ABRE E PROCESSA O ARQUIVO JSON
     def processing_ncms_json(self):
@@ -160,7 +167,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             if opcoes == 'Buscar por NCM':
                 self.bt_buscar_opcoes.setVisible(True)
                 self.txt_buscar_ncm.setVisible(True)
-                self.bt_buscar_opcoes.clicked.disconnect()  # Desconectar qualquer sinal anterior
+                # self.bt_buscar_opcoes.clicked.disconnect()  # Desconectar qualquer sinal anterior
                 self.bt_buscar_opcoes.clicked.connect(self.search_by_ncm)
             elif opcoes == "Buscar NCM's inválidos.":
                 self.txt_buscar_ncm.setVisible(False)
@@ -169,7 +176,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             elif opcoes == 'Tudo que contém.':
                 self.txt_buscar_ncm.setVisible(True)
                 self.bt_buscar_opcoes.setVisible(True)
-                self.bt_buscar_opcoes.clicked.disconnect()  # Desconectar qualquer sinal anterior
+                # self.bt_buscar_opcoes.clicked.disconnect()  # Desconectar qualquer sinal anterior
                 self.bt_buscar_opcoes.clicked.connect(self.tudo_que_contem)
 
     # OPÇÕES DE PROCESSAMENTO 
@@ -211,7 +218,8 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         elif opcoes == 'P. X da Coluna A , Coluna B Recebe':
             if path_csv == '':
                 self.show_error_popup("Erro!", f"Não é possível usar essa funcionalidade sem antes ler o arquivo .csv")
-                self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")           
+                self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.") 
+                          
             else:
                 self.combo_column1.setVisible(True)
                 self.combo_column2.setVisible(True)
@@ -238,6 +246,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         if opcoes == '':
             self.show_error_popup("Erro!", f"É necessário selecionar uma das opções antes de realizar a busca.")
             self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")
+            self.txt_lable_process.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")
         else:
             pass
 
@@ -317,6 +326,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             self.tb_dados_csv.setRowCount(0)
             self.tb_dados_csv.setColumnCount(0)
             self.txt_output_logs.appendPlainText("\nNenhum dado encontrado. Tabela limpa.")
+            self.txt_lable_process.appendPlainText("Nenhum dado encontrado. Tabela limpa.")
             return
         
         num_rows = len(data)
@@ -336,110 +346,133 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                         item.setForeground(QColor(255, 0, 0))  # Define a cor do texto para vermelho
 
             self.txt_output_logs.appendPlainText("Tabela atualizada com NCMs expirados.")
+            self.txt_lable_process.appendPlainText("Tabela atualizada com NCMs expirados.")
         except Exception as e:
             self.txt_output_logs.appendPlainText(f"Erro ao atualizar tabela: {e}")
+            self.txt_lable_process.appendPlainText(f"Erro ao atualizar tabela: {e}")
             self.show_error_popup("Erro!", f"Erro ao atualizar tabela: {e}")
     # ATUALIZA A UM NCM POR OUTRO
     def update_ncm(self, ncm1, ncm2):
-        try:
-            encodings = ['utf-8', 'latin1']
-            for encoding in encodings:
-                try:
-                    # Carrega os dados da planilha CSV
-                    with open(self.path_csv, 'r', newline='', encoding=encoding) as file:
-                        reader = csv.reader(file, delimiter=';')
-                        csv_data = list(reader)
+        reply = QMessageBox.question(None, "Atenção!", "Tem certeza dessa alteração", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            try:
+                encodings = ['utf-8', 'latin1']
+                for encoding in encodings:
+                    try:
+                        # Carrega os dados da planilha CSV
+                        with open(self.path_csv, 'r', newline='', encoding=encoding) as file:
+                            reader = csv.reader(file, delimiter=';')
+                            csv_data = list(reader)
 
-                    # Procurar a coluna que contém o NCM
-                    possible_ncm_columns = ['NCM', 'ncm', 'Ncm', 'Codigo_ncm', 'Codigo_Ncm', 'CODIGO_NCM']
-                    col_ncm = None
-                    for i, header in enumerate(csv_data[0]):
-                        if header in possible_ncm_columns:
-                            col_ncm = i
-                            break
+                        # Procurar a coluna que contém o NCM
+                        possible_ncm_columns = ['NCM', 'ncm', 'Ncm', 'Codigo_ncm', 'Codigo_Ncm', 'CODIGO_NCM']
+                        col_ncm = None
+                        for i, header in enumerate(csv_data[0]):
+                            if header in possible_ncm_columns:
+                                col_ncm = i
+                                break
 
-                    if col_ncm is None:
-                        print("Nenhuma coluna de NCM encontrada no arquivo CSV.")
-                        self.txt_output_logs.appendPlainText("Nenhuma coluna de NCM encontrada no arquivo CSV.")
-                        return
+                        if col_ncm is None:
+                            print("Nenhuma coluna de NCM encontrada no arquivo CSV.")
+                            self.txt_output_logs.appendPlainText("Nenhuma coluna de NCM encontrada no arquivo CSV.")
 
-                    # Lista para armazenar os nomes das colunas
-                    headers = csv_data[0]
+                            return
 
-                    # Lista para armazenar as linhas modificadas
-                    linhas_modificadas = []
+                        # Lista para armazenar os nomes das colunas
+                        headers = csv_data[0]
 
-                    # Iterar sobre os dados do CSV
-                    for linha in csv_data:
-                        # Verificar se o NCM antigo existe na linha
-                        if linha[col_ncm] == ncm1:
-                            print(f"NCM antigo encontrado: {ncm1}")
-                            self.txt_output_logs.appendPlainText(f"NCM antigo encontrado: {ncm1}")
-                            # Substituir o NCM antigo pelo novo NCM
-                            linha[col_ncm] = ncm2
-                            linhas_modificadas.append(linha)
-                    self.txt_output_logs.appendPlainText(f"Novo NCM: {ncm2} gravado com sucesso!")
-                    # Escrever os dados atualizados de volta para o arquivo CSV
-                    with open(self.path_csv, 'w', newline='', encoding=encoding) as file:
-                        writer = csv.writer(file, delimiter=';')
-                        writer.writerows(csv_data)
+                        # Lista para armazenar as linhas modificadas
+                        linhas_modificadas = []
 
-                    # Limpar completamente a tabela antes de atualizá-la com as linhas modificadas
-                    self.tb_dados_csv.clear()
+                        # Iterar sobre os dados do CSV
+                        for linha in csv_data:
+                            # Verificar se o NCM antigo existe na linha
+                            if linha[col_ncm] == ncm1:
+                                print(f"NCM antigo encontrado: {ncm1}")
+                                self.txt_output_logs.appendPlainText(f"NCM antigo encontrado: {ncm1}")
+                                # Substituir o NCM antigo pelo novo NCM
+                                linha[col_ncm] = ncm2
+                                linhas_modificadas.append(linha)
+                        self.txt_output_logs.appendPlainText(f"Novo NCM: {ncm2} gravado com sucesso!")
+                        # Escrever os dados atualizados de volta para o arquivo CSV
+                        with open(self.path_csv, 'w', newline='', encoding=encoding) as file:
+                            writer = csv.writer(file, delimiter=';')
+                            writer.writerows(csv_data)
 
-                    # Definir os cabeçalhos da tabela
-                    self.tb_dados_csv.setColumnCount(len(headers))
-                    self.tb_dados_csv.setHorizontalHeaderLabels(headers)
+                        # Limpar completamente a tabela antes de atualizá-la com as linhas modificadas
+                        self.tb_dados_csv.clear()
 
-                    # Atualizar a tabela apenas com as linhas modificadas
-                    if linhas_modificadas:
-                        self.tb_dados_csv.setRowCount(len(linhas_modificadas))
-                        for row_idx, row_data in enumerate(linhas_modificadas):
-                            for col_idx, cell_data in enumerate(row_data):
-                                item = QTableWidgetItem(str(cell_data))
-                                self.tb_dados_csv.setItem(row_idx, col_idx, item)
-                    else:
-                        print("Nenhuma linha modificada encontrada.")
-                        self.txt_output_logs.appendPlainText("Nenhuma linha modificada encontrada.")
-                        
-                    # Saia do loop se os dados foram atualizados com sucesso
-                    break
-                except Exception as e:
-                    # Se ocorrer um erro, continue para tentar a próxima codificação
-                    continue
-        except Exception as e:
-            self.txt_output_logs.appendPlainText(f"Erro ao atualizar NCM: {e}")
-            print(f"Erro ao atualizar NCM: {e}")
+                        # Definir os cabeçalhos da tabela
+                        self.tb_dados_csv.setColumnCount(len(headers))
+                        self.tb_dados_csv.setHorizontalHeaderLabels(headers)
 
-    # SE COLUNA A EXISTE MUDE DADOS DA COLUNA B,C
+                        # Atualizar a tabela apenas com as linhas modificadas
+                        if linhas_modificadas:
+                            self.tb_dados_csv.setRowCount(len(linhas_modificadas))
+                            for row_idx, row_data in enumerate(linhas_modificadas):
+                                for col_idx, cell_data in enumerate(row_data):
+                                    item = QTableWidgetItem(str(cell_data))
+                                    self.tb_dados_csv.setItem(row_idx, col_idx, item)
+                        else:
+                            print("Nenhuma linha modificada encontrada.")
+                            self.txt_output_logs.appendPlainText("Nenhuma linha modificada encontrada.")
+                            
+                        # Saia do loop se os dados foram atualizados com sucesso
+                        break
+                    except Exception as e:
+                        # Se ocorrer um erro, continue para tentar a próxima codificação
+                        continue
+                self.backup_process_csv()
+            except Exception as e:
+                self.txt_output_logs.appendPlainText(f"Erro ao atualizar NCM: {e}")
+                self.txt_lable_process.appendPlainText(f"Erro ao atualizar NCM: {e}")
+                print(f"Erro ao atualizar NCM: {e}")
+
     def column1_alter_column2(self):
         coluna_combobox1 = self.combo_column1.currentIndex()  # Índice da coluna selecionada no combobox 1
         coluna_combobox2 = self.combo_column2.currentIndex()  # Índice da coluna selecionada no combobox 2
         dado_entrada1 = self.txt_alt_NCM1.text()            # Dado digitado na entrada 1
-        dado_entrada2 = self.txt_alt_NCM2.text()            # Dado digitado na entrada 2
+        dado_entrada2 = self.txt_alt_NCM2.text()  # Dado digitado na entrada 2
 
         if ',' in dado_entrada1 or ',' in dado_entrada2:
             self.show_error_popup("Atenção!", "Não é permitido o uso de vírgula.\nO formato aceitável exemplo: 0.0")
+            self.txt_lable_process.appendPlainText("Atenção! Não é permitido o uso de vírgula.\nO formato aceitável exemplo: 0.0")
         else:
-            load_data = self.processing_ncm_csv()
+            reply = QMessageBox.question(None, "Atenção!", "Tem certeza dessa alteração", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if reply == QMessageBox.Yes:
+                load_data = self.processing_ncm_csv()
 
-            # Lista para armazenar os resultados
-            resultados = []
+                # Lista para armazenar os resultados
+                resultados = []
 
-            # Iterar sobre os dados do CSV
-            for linha in load_data:
-                # Verificar se o dado digitado na entrada 1 existe na coluna selecionada no combobox 1
-                if linha[coluna_combobox1].lower() == dado_entrada1.lower():
-                    # Substituir o dado na coluna selecionada no combobox 2 pelo dado digitado na entrada 2
-                    linha[coluna_combobox2] = dado_entrada2
-                # Adicionar a linha aos resultados, independentemente de ter sido modificada ou não
-                resultados.append(linha)
+                # Verifica se houve alterações nos dados
+                alteracoes = False
 
-            # Atualizar a tabela com os novos dados
-            self.update_table_process(resultados)
-            # Escrever os dados atualizados de volta para o arquivo CSV
-            self.write_to_csv(resultados)
+                # Iterar sobre os dados do CSV
+                for linha in load_data:
+                    # Verificar se o dado digitado na entrada 1 existe na coluna selecionada no combobox 1
+                    if linha[coluna_combobox1].lower() == dado_entrada1.lower():
+                        # Substituir o dado na coluna selecionada no combobox 2 pelo dado digitado na entrada 2
+                        linha[coluna_combobox2] = dado_entrada2
+                        alteracoes = True  # Indica que houve alteração nos dados
+                    # Adicionar a linha aos resultados, independentemente de ter sido modificada ou não
+                    resultados.append(linha)
 
+                # Se houver alterações, faz o backup
+                if alteracoes:
+                    self.backup_process_csv()
+
+                # Escrever os dados atualizados de volta para o arquivo CSV
+                self.write_to_csv(resultados)
+                # Atualizar a tabela com os novos dados
+                self.update_table_process(resultados)
+            else:
+                pass
+    def update_label_info(self, new_info):
+        # Atualize o atributo de label com a nova informação
+        # self.label_info_process.(new_info)
+        pass
+            
     def update_table_process(self, data):
         # Limpar a tabela antes de atualizá-la com os novos dados
         self.tb_dados_csv.clearContents()
@@ -487,65 +520,141 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
     def process_tudo_que_contem(self):
         data1 = self.txt_alt_NCM1.text()
         data2 = self.txt_alt_NCM2.text()
-        # Lista para armazenar as linhas atualizadas
-        linhas_atualizadas = []
-        try:
-            encodings = ['utf-8', 'latin1']
-            for encoding in encodings:
-                try:
-                    # Abrir o arquivo CSV em modo de leitura e escrita
-                    with open(self.path_csv, 'r', newline='',encoding=encoding) as file:
-                        reader = csv.reader(file, delimiter=';')
+        self.backup_process_csv()
+        reply = QMessageBox.question(None, "Atenção!", "Tem certeza dessa alteração", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            # Lista para armazenar as linhas atualizadas
+            linhas_atualizadas = []
+            try:
+                encodings = ['utf-8', 'latin1']
+                for encoding in encodings:
+                    try:
+                        # Abrir o arquivo CSV em modo de leitura e escrita
+                        with open(self.path_csv, 'r', newline='',encoding=encoding) as file:
+                            reader = csv.reader(file, delimiter=';')
 
-                        # Percorrer as linhas do arquivo CSV
-                        for row in reader:
-                            # Substituir o dado a ser buscado pelo dado substituto em cada célula da linha
-                            nova_linha = [celula.replace(data1, data2) for celula in row]
-                            linhas_atualizadas.append(nova_linha)
+                            # Percorrer as linhas do arquivo CSV
+                            for row in reader:
+                                # Substituir o dado a ser buscado pelo dado substituto em cada célula da linha
+                                nova_linha = [celula.replace(data1, data2) for celula in row]
+                                linhas_atualizadas.append(nova_linha)
 
-                    # Reescrever o arquivo CSV com as linhas atualizadas
-                    with open(self.path_csv, 'w', newline='', encoding=encoding) as file:
-                        writer = csv.writer(file, delimiter=';')
-                        writer.writerows(linhas_atualizadas)
+                        # Reescrever o arquivo CSV com as linhas atualizadas
+                        with open(self.path_csv, 'w', newline='', encoding=encoding) as file:
+                            writer = csv.writer(file, delimiter=';')
+                            writer.writerows(linhas_atualizadas)
 
-                    self.update_table_process(linhas_atualizadas)
-                except Exception as e:
-                        # Se ocorrer um erro, continue para tentar a próxima codificação
-                    continue
-            
-        except Exception as e:
-            self.txt_output_logs.appendPlainText(f"Erro ao gravar dados no arquivo CSV: {e}")
-            print(f"Erro ao gravar dados no arquivo CSV: {e}")
+                        self.update_table_process(linhas_atualizadas)
+                    except Exception as e:
+                            # Se ocorrer um erro, continue para tentar a próxima codificação
+                        continue
+                
+            except Exception as e:
+                self.txt_output_logs.appendPlainText(f"Erro ao gravar dados no arquivo CSV: {e}")
+                print(f"Erro ao gravar dados no arquivo CSV: {e}")
 
     def write_to_csv(self, data):
         try:
-            encodings = ['utf-8', 'latin1']
-            for encoding in encodings:
-                try:
-                    # Ler os dados originais do CSV
-                    with open(self.path_csv, 'r', newline='', encoding=encoding) as file:
-                        reader = csv.reader(file)
-                        original_data = list(reader)
-                    
-                    # Atualizar apenas as linhas modificadas
-                    for i, linha in enumerate(original_data):
-                        if i < len(data):
-                            original_data[i] = data[i]
-
-                    # Escrever os dados atualizados de volta para o arquivo CSV
-                    with open(self.path_csv, 'w', newline='', encoding=encoding) as file:
-                        writer = csv.writer(file, delimiter=';')
-                        writer.writerows(original_data)
-                    
-                    print("Dados gravados com sucesso no arquivo CSV.")
-                    self.txt_output_logs.appendPlainText("Dados gravados com sucesso no arquivo CSV.")
-                except Exception as e:
-                        # Se ocorrer um erro, continue para tentar a próxima codificação
-                    continue
+            # Criar uma cópia dos dados atualizados
+            updated_data = data[:]
+            
+            # Reescrever todo o arquivo CSV com os dados atualizados
+            with open(self.path_csv, 'w', newline='', encoding='utf-8') as file:
+                writer = csv.writer(file, delimiter=';')
+                writer.writerows(updated_data)
+            
+            print("Dados gravados com sucesso no arquivo CSV.")
+            self.txt_output_logs.appendPlainText("Dados gravados com sucesso no arquivo CSV.")
+            self.txt_lable_process.appendPlainText(f"Dados gravados com sucesso no arquivo CSV.") 
+            
             
         except Exception as e:
             self.txt_output_logs.appendPlainText(f"Erro ao gravar dados no arquivo CSV: {e}")
+            self.txt_lable_process.appendPlainText(f"Erro ao gravar dados no arquivo CSV: {e}")
             print(f"Erro ao gravar dados no arquivo CSV: {e}")
+    
+    def update_table_restore(self, data):
+        # Limpa a tabela antes de atualizá-la com os novos dados
+        self.tb_dados_csv.clearContents()
+        self.tb_dados_csv.setRowCount(0)
+        self.tb_dados_csv.setColumnCount(0)
+
+        try:
+            encodings = ['utf-8', 'latin1']
+            for encoding in encodings:
+                try:
+                    with open(data, 'r', encoding='utf-8') as file:
+                        file_csv = csv.reader(file, delimiter=';')
+                        file_data = list(file_csv)  # Convertendo o iterador em uma lista
+
+                    if not file_data:
+                        self.txt_output_logs.appendPlainText("\nNenhum dado encontrado. Tabela limpa.")
+                        self.update_label_info("Nenhum dado encontrado. Tabela limpa.")
+                        return
+
+                    # Extrair cabeçalhos das colunas
+                    headers = file_data[0]
+
+                    # Remover a primeira linha (cabeçalhos) dos dados
+                    file_data = file_data[1:]
+
+                    num_rows = len(file_data)
+                    num_cols = len(file_data[0])
+
+                    self.tb_dados_csv.setRowCount(num_rows)
+                    self.tb_dados_csv.setColumnCount(num_cols)
+
+                    # Definir cabeçalhos da tabela
+                    self.tb_dados_csv.setHorizontalHeaderLabels(headers)
+
+                    for row_idx, row_data in enumerate(file_data):
+                        for col_idx, cell_data in enumerate(row_data):
+                            item = QTableWidgetItem(cell_data)
+                            self.tb_dados_csv.setItem(row_idx, col_idx, item)
+
+                    self.txt_output_logs.appendPlainText("Tabela atualizada com sucesso.")
+                    self.update_label_info("Tabela atualizada com sucesso.")
+                except Exception as e:
+                    self.txt_output_logs.appendPlainText(f"Erro: {e}")
+                    self.update_label_info(f"Erro: {e}")
+        except Exception as e:
+            self.txt_output_logs.appendPlainText(f"Erro: {e}")
+            self.update_label_info(f"Erro: {e}")
+
+
+    def backup_process_csv(self):
+        path_bkp = 'backup.csv'
+        try:
+            # Faça a cópia do arquivo original para o arquivo de backup
+            shutil.copyfile(self.path_csv, path_bkp)
+            print("Backup do arquivo CSV criado com sucesso.")
+            self.txt_output_logs.appendPlainText("Backup do arquivo CSV criado com sucesso.")
+            # Adicione o caminho do backup ao histórico
+            self.backup_history.append(path_bkp)
+            # Mantenha o histórico limitado a 5 backups
+            if len(self.backup_history) > 5:
+                del self.backup_history[0]
+        except Exception as e:
+            self.txt_output_logs.appendPlainText(f"Erro ao criar backup do arquivo CSV: {e}")
+            print(f"Erro ao criar backup do arquivo CSV: {e}")
+
+    def restore_backup(self):
+        if self.backup_history:
+            # Obtenha o último caminho do backup do histórico
+            backup_path = self.backup_history[-1]
+            # Restaura o arquivo CSV a partir do arquivo de backup
+            try:
+                shutil.copyfile(backup_path, self.path_csv)
+                self.txt_output_logs.appendPlainText("Arquivo CSV restaurado com sucesso.")
+                # Atualizar a tabela após restaurar o backup
+                self.update_table_restore(self.path_csv)
+                # Remove o caminho do backup do histórico
+                self.backup_history.pop()
+            except Exception as e:
+                self.txt_output_logs.appendPlainText(f"Erro ao restaurar arquivo CSV: {e}")
+        else:
+            self.txt_output_logs.appendPlainText("Não há backups para restaurar.")
+
 
 if __name__ == '__main__':
     
