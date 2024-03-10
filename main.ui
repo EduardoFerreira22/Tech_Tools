@@ -540,6 +540,38 @@ QLabel{
             </size>
            </property>
           </widget>
+          <widget class="QPushButton" name="bt_new_version">
+           <property name="geometry">
+            <rect>
+             <x>470</x>
+             <y>10</y>
+             <width>31</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#00007f;&quot;&gt;Uma nova versão desse programa está disponível&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="icons_.qrc">
+             <normaloff>:/icons/image/D_updatin.png</normaloff>:/icons/image/D_updatin.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -615,7 +647,7 @@ QPlainTextEdit{
         <enum>QFrame::Raised</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="pg_home">
         <widget class="QPushButton" name="pushButton_4">

@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>image/D_updatin.png</file>
     <file>image/undo.png</file>
     <file>image/restart.png</file>
     <file>image/database-storage.png</file>

@@ -32,6 +32,19 @@ class UI_LoginWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.bt_atualizacao_login = QPushButton(self.centralwidget)
+        self.bt_atualizacao_login.setObjectName(u"bt_atualizacao_login")
+        self.bt_atualizacao_login.setCursor(QCursor(Qt.PointingHandCursor))
+        self.bt_atualizacao_login.setStyleSheet(u"border:none;\n"
+"background-color: rgb(38, 68, 149);\n"
+"color: rgb(255, 255, 255);")
+        icon = QIcon()
+        icon.addFile(u":/icons/image/D_updatin.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_atualizacao_login.setIcon(icon)
+        self.bt_atualizacao_login.setIconSize(QSize(20, 20))
+
+        self.verticalLayout.addWidget(self.bt_atualizacao_login, 0, Qt.AlignRight)
+
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
         self.frame.setStyleSheet(u"color: rgb(255, 255, 255);\n"
@@ -56,7 +69,7 @@ class UI_LoginWindow(object):
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.txt_username = QLineEdit(self.frame_2)
         self.txt_username.setObjectName(u"txt_username")
-        self.txt_username.setGeometry(QRect(50, 90, 241, 31))
+        self.txt_username.setGeometry(QRect(50, 80, 241, 31))
         self.txt_username.setStyleSheet(u"border-radius:6px;\n"
 "border-style:outset;\n"
 "border-width:2px;\n"
@@ -65,7 +78,7 @@ class UI_LoginWindow(object):
 "font: 700 8pt \"Segoe UI\";")
         self.txt_senha_login = QLineEdit(self.frame_2)
         self.txt_senha_login.setObjectName(u"txt_senha_login")
-        self.txt_senha_login.setGeometry(QRect(50, 140, 241, 31))
+        self.txt_senha_login.setGeometry(QRect(50, 120, 241, 31))
         self.txt_senha_login.setFocusPolicy(Qt.StrongFocus)
         self.txt_senha_login.setStyleSheet(u"border-radius:6px;\n"
 "border-style:outset;\n"
@@ -77,7 +90,7 @@ class UI_LoginWindow(object):
         self.txt_senha_login.setEchoMode(QLineEdit.Password)
         self.bt_login = QPushButton(self.frame_2)
         self.bt_login.setObjectName(u"bt_login")
-        self.bt_login.setGeometry(QRect(120, 210, 101, 31))
+        self.bt_login.setGeometry(QRect(120, 190, 101, 31))
         self.bt_login.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_login.setStyleSheet(u"\n"
 "QPushButton{\n"
@@ -93,16 +106,16 @@ class UI_LoginWindow(object):
 "}")
         self.checkBox_lembrar_senha = QCheckBox(self.frame_2)
         self.checkBox_lembrar_senha.setObjectName(u"checkBox_lembrar_senha")
-        self.checkBox_lembrar_senha.setGeometry(QRect(50, 180, 111, 20))
+        self.checkBox_lembrar_senha.setGeometry(QRect(50, 160, 111, 20))
         self.checkBox_lembrar_senha.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "font: 700 9pt \"Segoe UI\";")
         self.bt_logo_techtools = QPushButton(self.frame_2)
         self.bt_logo_techtools.setObjectName(u"bt_logo_techtools")
         self.bt_logo_techtools.setGeometry(QRect(10, 10, 321, 61))
         self.bt_logo_techtools.setStyleSheet(u"border:none;")
-        icon = QIcon()
-        icon.addFile(u":/icons/image/TECH TOOLS TITULO LOGO.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_logo_techtools.setIcon(icon)
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/image/TECH TOOLS TITULO LOGO.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_logo_techtools.setIcon(icon1)
         self.bt_logo_techtools.setIconSize(QSize(280, 280))
 
         self.verticalLayout_2.addWidget(self.frame_2)
@@ -138,6 +151,10 @@ class UI_LoginWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+#if QT_CONFIG(tooltip)
+        self.bt_atualizacao_login.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:7pt; font-weight:700; color:#ffffff;\">Uma nova vers\u00e3o desse programa est\u00e1 dispon\u00edvel</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.bt_atualizacao_login.setText("")
         self.txt_username.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Username", None))
         self.txt_senha_login.setInputMask("")
         self.txt_senha_login.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Password", None))
@@ -148,8 +165,6 @@ class UI_LoginWindow(object):
         self.lb_login_version.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><br/></p></body></html>", None))
         self.lb_login_version_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">- Copyright \u00a9 2023-2024, Eduardo Ferreira.</span></p></body></html>", None))
     # retranslateUi
-
-
 
 
 
@@ -366,6 +381,15 @@ class Ui_MainWindow(object):
         icon8.addFile(u":/icons/image/TECH NEW LOGO - BRANCO.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_tech_tools.setIcon(icon8)
         self.btn_tech_tools.setIconSize(QSize(40, 40))
+        self.bt_new_version = QPushButton(self.frame_19)
+        self.bt_new_version.setObjectName(u"bt_new_version")
+        self.bt_new_version.setGeometry(QRect(470, 10, 31, 31))
+        self.bt_new_version.setCursor(QCursor(Qt.PointingHandCursor))
+        self.bt_new_version.setStyleSheet(u"color: rgb(255, 255, 255);")
+        icon9 = QIcon()
+        icon9.addFile(u":/icons/image/D_updatin.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_new_version.setIcon(icon9)
+        self.bt_new_version.setIconSize(QSize(20, 20))
 
         self.horizontalLayout_2.addWidget(self.frame_19)
 
@@ -414,9 +438,9 @@ class Ui_MainWindow(object):
         self.pushButton_4.setObjectName(u"pushButton_4")
         self.pushButton_4.setGeometry(QRect(10, 10, 501, 381))
         self.pushButton_4.setStyleSheet(u"border:none;")
-        icon9 = QIcon()
-        icon9.addFile(u":/icons/image/LOGO BRANCO - TEXTO.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton_4.setIcon(icon9)
+        icon10 = QIcon()
+        icon10.addFile(u":/icons/image/LOGO BRANCO - TEXTO.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton_4.setIcon(icon10)
         self.pushButton_4.setIconSize(QSize(400, 500))
         self.pages.addWidget(self.pg_home)
         self.pg_Data_base = QWidget()
@@ -588,9 +612,9 @@ class Ui_MainWindow(object):
 "QPushButton:hover{\n"
 "	background-color: rgb(251, 99, 4);\n"
 "}")
-        icon10 = QIcon()
-        icon10.addFile(u":/icons/image/ibExp.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_conectar_db_4.setIcon(icon10)
+        icon11 = QIcon()
+        icon11.addFile(u":/icons/image/ibExp.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_conectar_db_4.setIcon(icon11)
         self.bt_conectar_db_4.setIconSize(QSize(50, 50))
         self.bt_tela_bkp = QPushButton(self.frame)
         self.bt_tela_bkp.setObjectName(u"bt_tela_bkp")
@@ -605,9 +629,9 @@ class Ui_MainWindow(object):
 "	\n"
 "	background-color: rgb(251, 99, 4);\n"
 "}")
-        icon11 = QIcon()
-        icon11.addFile(u":/icons/image/database-storage.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_tela_bkp.setIcon(icon11)
+        icon12 = QIcon()
+        icon12.addFile(u":/icons/image/database-storage.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_tela_bkp.setIcon(icon12)
         self.bt_tela_bkp.setIconSize(QSize(25, 25))
 
         self.verticalLayout_2.addWidget(self.frame)
@@ -1074,8 +1098,7 @@ class Ui_MainWindow(object):
         # Crie um QScrollArea e defina o QLabel como seu widget filho
         self.scroll_area = QScrollArea(self.pg_Sobre)
         self.scroll_area.setGeometry(10, 10, 491, 361)
-        self.scroll_area.setWidget(self.label_sobre)          
-        
+        self.scroll_area.setWidget(self.label_sobre)
         self.pages.addWidget(self.pg_Sobre)
         self.pg_terms = QWidget()
         self.pg_terms.setObjectName(u"pg_terms")
@@ -1306,9 +1329,9 @@ class Ui_MainWindow(object):
 "	color: rgb(255, 255, 255);\n"
 "	background-color:rgb(49,147,0)\n"
 "}")
-        icon12 = QIcon()
-        icon12.addFile(u":/icons/image/salvar.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.bt_salvar_ncm.setIcon(icon12)
+        icon13 = QIcon()
+        icon13.addFile(u":/icons/image/salvar.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.bt_salvar_ncm.setIcon(icon13)
         self.bt_salvar_ncm.setIconSize(QSize(25, 25))
         self.txt_ncm = QLineEdit(self.frame_14)
         self.txt_ncm.setObjectName(u"txt_ncm")
@@ -1336,9 +1359,9 @@ class Ui_MainWindow(object):
         self.frame_15.setFrameShadow(QFrame.Raised)
         self.comboBox_executaveis = QComboBox(self.frame_15)
         self.comboBox_executaveis.addItem("")
-        icon13 = QIcon()
-        icon13.addFile(u":/icons/image/icons8-anydesk-32.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.comboBox_executaveis.addItem(icon13, "")
+        icon14 = QIcon()
+        icon14.addFile(u":/icons/image/icons8-anydesk-32.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.comboBox_executaveis.addItem(icon14, "")
         self.comboBox_executaveis.addItem("")
         self.comboBox_executaveis.addItem("")
         self.comboBox_executaveis.addItem("")
@@ -1537,6 +1560,10 @@ class Ui_MainWindow(object):
         self.lb_version.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><br/></p></body></html>", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.widget), QCoreApplication.translate("MainWindow", u"Informa\u00e7\u00f5es", None))
         self.btn_tech_tools.setText("")
+#if QT_CONFIG(tooltip)
+        self.bt_new_version.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:7pt; font-weight:700; color:#00007f;\">Uma nova vers\u00e3o desse programa est\u00e1 dispon\u00edvel</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.bt_new_version.setText("")
         self.pushButton_4.setText("")
         self.title_db.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Servidores Ativos:</p></body></html>", None))
         self.txt_server_db.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Server\\Instance", None))
@@ -1608,17 +1635,17 @@ class Ui_MainWindow(object):
         self.label_sobre.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:11pt; font-weight:700;\">Como o TechTools surgiu?</span></p><p>O <span style=\" font-weight:700;\">TechTools</span> foi inicialmente projetado para estabelecer conex\u00e3o com o banco de dados SQL Server e executar consultas pr\u00e9-definidas dentro do c\u00f3digo do programa.</p><p>O projeto, inicialmente, visava agilizar o processo de migra\u00e7\u00e3o de dados entre sistemas de gest\u00e3o diferentes. Facilitava a conex\u00e3o e apresentava os dados formatados, economizando tempo para o t\u00e9cnico respons\u00e1vel pela tarefa.</p><p>Com o tempo, o <span style=\" font-weight:700;\">TechTools</span> recebeu novas vers\u00f5es e adquiriu a capacidade de se conectar com outros bancos de dados, como <span style=\" font-weight:700;\">MySQL</span> e <span style=\" font-weight:700;\">SQL Server</span>. Logo, passou a apresentar os dados em uma tela em formato de tabela e a exibir as tabelas existentes no banco de dados, permitindo ao usu\u00e1rio "
                         "conhecer o banco de dados com o qual estava trabalhando. Al\u00e9m disso, recebeu a capacidade de executar consultas mais complexas, como <span style=\" font-weight:700;\">DML</span>, utilizando a linguagem <span style=\" font-weight:700;\">T-SQL</span>.</p><p>Com o decorrer do tempo, percebeu-se a necessidade de o TechTools se tornar a principal ferramenta de trabalho para t\u00e9cnicos de <span style=\" font-weight:700;\">T.I</span>. Assim, ele passou a oferecer uma ampla gama dos principais drivers de impressoras e os principais arquivos de instala\u00e7\u00e3o de programas usados por esses profissionais.</p><p>Atualmente, o TechTools \u00e9 uma ferramenta completa em seu contexto, mas est\u00e1 em constante atualiza\u00e7\u00e3o, com novas ferramentas sendo adicionadas ao programa com o objetivo de melhorar e facilitar os processos realizados por n\u00f3s, profissionais de T.I.</p><p><br/></p><p><span style=\" font-weight:700;\">Tech Tools v4.0.0 Copyright \u00a9 Todos os direitos reservados 2023-2024.</sp"
                         "an></p><p><span style=\" font-weight:700;\">Criador: Eduardo Ferreira</span></p><p><span style=\" font-weight:700;\">Colabora\u00e7\u00e3o: Design de imagens -  by M.R</span></p><p><span style=\" font-weight:700;\">E-mail: eduardoferreira_of@outlook.com</span></p></body></html>", None))
+        
         self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         # Defina a largura da barra de rolagem vertical
         self.scroll_bar = self.scroll_area.verticalScrollBar()
         self.scroll_bar.setStyleSheet("QScrollBar:vertical { width: 8px; }")
         # Defina a política de tamanho do QScrollArea para permitir a rolagem horizontal
         self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        # Permita que o widget filho redimensione a área de visualização
-        self.scroll_area.setWidgetResizable(True)
+
         # Defina a largura da barra de rolagem horizontal
         self.horizontal_scroll_bar = self.scroll_area.horizontalScrollBar()
-        self.horizontal_scroll_bar.setStyleSheet("QScrollBar:horizontal { height: 8px; }")         
+        self.horizontal_scroll_bar.setStyleSheet("QScrollBar:horizontal { height: 8px; }")
         self.plainTextEdit_3.setPlainText(QCoreApplication.translate("MainWindow", u"TERMOS DE USO DO PROGRAMA TECH TOOLS\n"
 "\n"
 "\n"

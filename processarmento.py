@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (QApplication,QMainWindow,QInputDialog,QMessageBox
 from ui_process_csv import Ui_ProcessCSV
 from datetime import datetime
 from collections import defaultdict
+import pandas as pd
 import shutil
 import sys
 import csv
@@ -29,16 +30,20 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         self.bt_buscar_filecsv.clicked.connect(self.buscar_arquivo)
         self.bt_processar_arquivo_csv.clicked.connect(self.processar_csv)
         # self.bt_buscar_opcoes.clicked.connect(self.combo_op_busca)
+        # self.bt_remover_duplicatas.clicked.connect()
 
         #PROCESSAMENTO
         self.comboBox_op_processamentos.currentIndexChanged.connect(self.combo_op_processamento)
         self.bt_executar_process.clicked.connect(self.exetuc_process)
         self.bt_restore_op.clicked.connect(self.restore_backup)
+        self.bt_salvar_filter_process.clicked.connect(self.salvar_dados_filtrados)
         #VISIBILIDADE DOS BOTÕES ################################################################################
         self.bt_executar_combo_process.setVisible(False)
         self.bt_executar_process.setVisible(False)
         self.bt_setas_ncm.setVisible(False)
         self.bt_buscar_opcoes.setVisible(False)
+        self.bt_salvar_filter_process.setVisible(False)
+        self.bt_remover_duplicatas.setVisible(False)
         #VISIBILIDADE DOS ENTRYS ################################################################################
         self.txt_buscar_ncm.setVisible(False)
         self.txt_alt_NCM1.setVisible(False)
@@ -57,6 +62,10 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         msg.setText(message)
         msg.setIcon(QMessageBox.Warning)
         msg.exec()
+
+    def update_label_info(self, new_info):
+        self.txt_lable_process.clear()
+        self.txt_lable_process.appendPlainText(new_info)
 
     def buscar_arquivo(self):
         self.txt_output_logs.appendPlainText("Buscando novo arquivo.")
@@ -81,6 +90,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
 
         if self.path_csv == '':
             self.txt_output_logs.appendPlainText("Erro: Usuário tentou processar, sem ter selecionado um arquivo antes.")
+            self.update_label_info("Erro: Usuário tentou processar, sem ter selecionado um arquivo antes.")
             self.show_error_popup("Atenção!", "Não é possível processar antes do usuário selecionar o arquivo.csv")
         else:
             self.txt_output_logs.appendPlainText(f"\nProcessando arquivo CSV")
@@ -107,7 +117,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                                 item = QTableWidgetItem(cell_data)
                                 self.tb_dados_csv.setItem(row_idx - 1, col_idx, item)  # Adiciona 1 ao índice de linha para começar da linha 2
                         self.txt_output_logs.appendPlainText("\nDados do arquivo CSV inseridos na tabela com sucesso.")
-                        self.txt_lable_process.appendPlainText(f"Dados do arquivo CSV inseridos na tabela com sucesso.")
+                        self.update_label_info(f"Dados do arquivo CSV inseridos na tabela com sucesso.")
                         self.combo_Columns(head=self.header)
                         break  # Para a execução se a leitura for bem-sucedida
                     except Exception as e:
@@ -117,10 +127,10 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 else:
                     # Se nenhuma codificação funcionar, mostra uma mensagem de erro
                     self.show_error_popup("Erro!", "Não foi possível abrir o arquivo CSV.")
-                    self.txt_lable_process.appendPlainText("Erro! Não foi possível abrir o arquivo CSV.")
+                    self.update_label_info("Erro! Não foi possível abrir o arquivo CSV.")
             except Exception as e:
                 self.txt_output_logs.appendPlainText(f"Erro:\n{e}")
-                self.txt_lable_process.appendPlainText(f"Erro:\n{e}")
+                self.update_label_info(f"Erro:\n{e}")
 
     #ABRE E PROCESSA O ARQUIVO JSON
     def processing_ncms_json(self):
@@ -131,6 +141,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 return expired_ncms
         except FileNotFoundError:
             self.show_error_popup("Erro!", "Arquivo 'EXPIRED_NCM.json' não encontrado.")
+            self.update_label_info("Erro!", "Arquivo 'EXPIRED_NCM.json' não encontrado.")
 
     def processing_ncm_csv(self):
         path_csv = self.txt_path_filecsv.text()
@@ -148,6 +159,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                     continue
         except Exception as e:
             self.show_error_popup("Erro!", "Arquivo csv não encontrado.")
+            self.update_label_info(f"Erro! Arquivo csv não encontrado. {e}")
     
     # OPÇÕES DE BUSCA
     def combo_op_busca(self):
@@ -178,6 +190,10 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.bt_buscar_opcoes.setVisible(True)
                 # self.bt_buscar_opcoes.clicked.disconnect()  # Desconectar qualquer sinal anterior
                 self.bt_buscar_opcoes.clicked.connect(self.tudo_que_contem)
+            elif opcoes == 'Dados duplicados':
+                self.bt_buscar_opcoes.setVisible(True)
+                # self.bt_buscar_opcoes.clicked.disconnect()  # Desconectar qualquer sinal anterior
+                self.bt_buscar_opcoes.clicked.connect(self.buscar_dados_duplicados)                
 
     # OPÇÕES DE PROCESSAMENTO 
     def combo_op_processamento(self):
@@ -203,6 +219,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.bt_setas_ncm.setVisible(True)
                 self.bt_executar_process.setVisible(True)
                 self.lb_info_ncm_subst.setVisible(True)
+                self.bt_salvar_filter_process.setVisible(False)
         elif opcoes == 'Tudo que contém mude para':
             if path_csv == '':
                 self.show_error_popup("Erro!", f"Não é possível usar essa funcionalidade sem antes ler o arquivo .csv")
@@ -215,6 +232,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.combo_column1.setVisible(False)
                 self.combo_column2.setVisible(False)
                 self.bt_executar_process.setVisible(True)
+                self.bt_salvar_filter_process.setVisible(False)
         elif opcoes == 'P. X da Coluna A , Coluna B Recebe':
             if path_csv == '':
                 self.show_error_popup("Erro!", f"Não é possível usar essa funcionalidade sem antes ler o arquivo .csv")
@@ -228,10 +246,21 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.bt_setas_ncm.setVisible(True)
                 self.bt_executar_process.setVisible(True)
                 self.lb_atencao_substituir.setVisible(True)
+                self.bt_salvar_filter_process.setVisible(False)
 
                     # Configurar a conexão do sinal do botão de execução do processo
                 self.bt_executar_process.clicked.disconnect()  # Desconectar qualquer sinal anterior
                 self.bt_executar_process.clicked.connect(self.column1_alter_column2)
+        elif opcoes == 'Copie P. Coluna todas as linhas que contém':
+            if path_csv == '':
+                self.show_error_popup("Erro!", f"Não é possível usar essa funcionalidade sem antes ler o arquivo .csv")
+                self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.") 
+            else:
+                self.combo_column1.setVisible(True)
+                column = self.comboBox_op_processamentos.currentText()
+                print(column)    
+                self.txt_alt_NCM1.setVisible(True)
+                self.bt_executar_process.setVisible(True)
 
     #COMBO OPTIONS
     def combo_Columns(self,head):
@@ -246,7 +275,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         if opcoes == '':
             self.show_error_popup("Erro!", f"É necessário selecionar uma das opções antes de realizar a busca.")
             self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")
-            self.txt_lable_process.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")
+            self.update_label_info(f"Erro: Nenhuma opção de busca selecionada.")
         else:
             pass
 
@@ -259,6 +288,12 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         elif opcoes == 'Tudo que contém mude para':
             self.process_tudo_que_contem()
 
+        elif opcoes == 'Copie P. Coluna todas as linhas que contém':                
+            self.filtrar_linhas_com()
+            self.bt_salvar_filter_process.setVisible(True)
+
+    
+    
     def search_by_ncm(self):
         buscar_ncm = self.txt_buscar_ncm.text()
 
@@ -346,10 +381,10 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                         item.setForeground(QColor(255, 0, 0))  # Define a cor do texto para vermelho
 
             self.txt_output_logs.appendPlainText("Tabela atualizada com NCMs expirados.")
-            self.txt_lable_process.appendPlainText("Tabela atualizada com NCMs expirados.")
+            self.update_label_info("Tabela atualizada com NCMs expirados.")
         except Exception as e:
             self.txt_output_logs.appendPlainText(f"Erro ao atualizar tabela: {e}")
-            self.txt_lable_process.appendPlainText(f"Erro ao atualizar tabela: {e}")
+            self.update_label_info(f"Erro ao atualizar tabela: {e}")
             self.show_error_popup("Erro!", f"Erro ao atualizar tabela: {e}")
     # ATUALIZA A UM NCM POR OUTRO
     def update_ncm(self, ncm1, ncm2):
@@ -425,7 +460,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.backup_process_csv()
             except Exception as e:
                 self.txt_output_logs.appendPlainText(f"Erro ao atualizar NCM: {e}")
-                self.txt_lable_process.appendPlainText(f"Erro ao atualizar NCM: {e}")
+                self.update_label_info(f"Erro ao atualizar NCM: {e}")
                 print(f"Erro ao atualizar NCM: {e}")
 
     def column1_alter_column2(self):
@@ -436,7 +471,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
 
         if ',' in dado_entrada1 or ',' in dado_entrada2:
             self.show_error_popup("Atenção!", "Não é permitido o uso de vírgula.\nO formato aceitável exemplo: 0.0")
-            self.txt_lable_process.appendPlainText("Atenção! Não é permitido o uso de vírgula.\nO formato aceitável exemplo: 0.0")
+            self.update_label_info("Atenção! Não é permitido o uso de vírgula. O formato aceitável exemplo: 0.0")
         else:
             reply = QMessageBox.question(None, "Atenção!", "Tem certeza dessa alteração", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if reply == QMessageBox.Yes:
@@ -468,10 +503,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.update_table_process(resultados)
             else:
                 pass
-    def update_label_info(self, new_info):
-        # Atualize o atributo de label com a nova informação
-        # self.label_info_process.(new_info)
-        pass
+
             
     def update_table_process(self, data):
         # Limpar a tabela antes de atualizá-la com os novos dados
@@ -553,6 +585,127 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.txt_output_logs.appendPlainText(f"Erro ao gravar dados no arquivo CSV: {e}")
                 print(f"Erro ao gravar dados no arquivo CSV: {e}")
 
+    #BUSCA TODOS OS DADOS DUPLICADOS
+    def buscar_dados_duplicados(self):
+        self.backup_process_csv()
+        # Ler o arquivo CSV original
+        df = pd.read_csv(self.path_csv, delimiter=';', encoding='latin1')
+        # Verifica se há duplicatas no DataFrame
+        duplicatas = df[df.duplicated(keep=False)]
+        self.update_table_duplicate_data(df)
+
+    #ATUALIZA A TABELA COM OS DADOS DUPLICADOS EM VERMELHO
+    def update_table_duplicate_data(self, df):
+        # Limpar a tabela
+        self.tb_dados_csv.clearContents()
+
+        # Conjunto para armazenar valores únicos da primeira coluna
+        valores_unicos = set()
+
+        # Preencher a tabela com os dados do DataFrame
+        for i, row in enumerate(df.itertuples(), start=0):
+            # Obter o valor da primeira coluna
+            valor_coluna = row[1]
+
+            # Verificar se o valor da primeira coluna é uma duplicata
+            if valor_coluna in valores_unicos:
+                # Destacar a linha em vermelho
+                for j, value in enumerate(row[1:], start=0):  # Começar do primeiro elemento para incluir todas as colunas
+                    item = QTableWidgetItem(str(value))
+                    item.setForeground(QColor(255, 0, 0))
+                    self.tb_dados_csv.setItem(i, j, item)
+            else:
+                # Preencher a tabela normalmente para linhas não duplicadas
+                for j, value in enumerate(row[1:], start=0):  # Começar do primeiro elemento para incluir todas as colunas
+                    item = QTableWidgetItem(str(value))
+                    self.tb_dados_csv.setItem(i, j, item)
+
+            # Adicionar o valor da primeira coluna ao conjunto de valores únicos
+            valores_unicos.add(valor_coluna)
+
+        self.bt_remover_duplicatas.setVisible(True)
+
+    def filtrar_linhas_com(self):
+        column = self.combo_column1.currentText()
+        dado1 = self.txt_alt_NCM1.text()
+
+        # Ler o arquivo CSV original
+        df = pd.read_csv(self.path_csv, delimiter=';', encoding='latin1')
+
+        # Converter os valores para string
+        df[column] = df[column].astype(str)
+
+        # Filtrar as linhas que começam com o dado fornecido na coluna selecionada
+        linhas_filtradas = df[df[column].str.startswith(dado1)]
+
+        # Atualizar a tabela com as linhas filtradas
+        self.update_table_filter(linhas_filtradas)
+
+
+    def update_table_filter(self, linhas_filtradas):
+        # Limpar a tabela atual
+        self.tb_dados_csv.setRowCount(0)
+
+        # Iterar sobre as linhas filtradas e adicionar à tabela
+        for index, row in linhas_filtradas.iterrows():
+            row_position = self.tb_dados_csv.rowCount()
+            self.tb_dados_csv.insertRow(row_position)
+            for column, value in enumerate(row):
+                item = QTableWidgetItem(str(value))
+                self.tb_dados_csv.setItem(row_position, column, item)
+
+
+    def salvar_dados_filtrados(self):
+        # Abre um diálogo de salvamento de arquivo
+        file_dialog = QFileDialog()
+        file_dialog.setAcceptMode(QFileDialog.AcceptSave)
+        file_dialog.setDefaultSuffix(".csv")
+        file_dialog.setNameFilter("CSV UTF-8 (*.csv);;CSV separado por vírgula (*.csv);;XLSX (*.xlsx)")
+
+        if file_dialog.exec():
+            # Obtém o caminho do arquivo selecionado
+            file_path = file_dialog.selectedFiles()[0]
+
+            # Obtém os dados da tabela
+            table_data = []
+            for row in range(self.tb_dados_csv.rowCount()):
+                row_data = []
+                for column in range(self.tb_dados_csv.columnCount()):
+                    item = self.tb_dados_csv.item(row, column)
+                    if item is not None:
+                        row_data.append(item.text())
+                    else:
+                        row_data.append("")
+                table_data.append(row_data)
+
+            # Obtém os nomes das colunas
+            column_names = [self.tb_dados_csv.horizontalHeaderItem(i).text() for i in range(self.tb_dados_csv.columnCount())]
+
+            # Salva os dados no arquivo selecionado
+            try:
+                selected_filter = file_dialog.selectedNameFilter()
+
+                if selected_filter == "CSV separado por vírgula (*.csv)":
+                    with open(file_path, mode='w', newline='', encoding='utf-8') as file:
+                        writer = csv.writer(file, delimiter=',')
+                        writer.writerow(column_names)
+                        writer.writerows(table_data)
+                        self.update_label_info(f"Dados salvos em: {file_path}")
+                elif selected_filter == "CSV UTF-8 (*.csv)":
+                    with open(file_path, mode='w', newline='', encoding='utf-8-sig') as file:
+                        writer = csv.writer(file,delimiter=';')
+                        writer.writerow(column_names)
+                        writer.writerows(table_data)
+                        self.update_label_info(f"Dados salvos em: {file_path}")
+                else:
+                    print("Formato de arquivo não suportado.")
+                    self.show_error_popup("Atenção!", "Formato de arquivo não suportado.")
+                    self.update_label_info("Atenção! Formato de arquivo não suportado.")
+            except Exception as e:
+                self.show_error_popup("Atenção!", f"Erro ao salvar o arquivo: {e}")
+                self.update_label_info(f"Erro ao salvar o arquivo:\n{e}")
+                print(f"Erro ao salvar o arquivo: {e}")
+
     def write_to_csv(self, data):
         try:
             # Criar uma cópia dos dados atualizados
@@ -565,12 +718,12 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             
             print("Dados gravados com sucesso no arquivo CSV.")
             self.txt_output_logs.appendPlainText("Dados gravados com sucesso no arquivo CSV.")
-            self.txt_lable_process.appendPlainText(f"Dados gravados com sucesso no arquivo CSV.") 
+            self.update_label_info(f"Dados gravados com sucesso no arquivo CSV.") 
             
             
         except Exception as e:
             self.txt_output_logs.appendPlainText(f"Erro ao gravar dados no arquivo CSV: {e}")
-            self.txt_lable_process.appendPlainText(f"Erro ao gravar dados no arquivo CSV: {e}")
+            self.update_label_info(f"Erro ao gravar dados no arquivo CSV: {e}")
             print(f"Erro ao gravar dados no arquivo CSV: {e}")
     
     def update_table_restore(self, data):

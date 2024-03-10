@@ -18,6 +18,34 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <item alignment="Qt::AlignRight">
+     <widget class="QPushButton" name="bt_atualizacao_login">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#ffffff;&quot;&gt;Uma nova versão desse programa está disponível&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:none;
+background-color: rgb(38, 68, 149);
+color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons_.qrc">
+        <normaloff>:/icons/image/D_updatin.png</normaloff>:/icons/image/D_updatin.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>20</width>
+        <height>20</height>
+       </size>
+      </property>
+     </widget>
+    </item>
     <item>
      <widget class="QFrame" name="frame">
       <property name="styleSheet">
@@ -75,7 +103,7 @@ font: 700 7pt &quot;Segoe UI&quot;;</string>
           <property name="geometry">
            <rect>
             <x>50</x>
-            <y>90</y>
+            <y>80</y>
             <width>241</width>
             <height>31</height>
            </rect>
@@ -96,7 +124,7 @@ font: 700 8pt &quot;Segoe UI&quot;;</string>
           <property name="geometry">
            <rect>
             <x>50</x>
-            <y>140</y>
+            <y>120</y>
             <width>241</width>
             <height>31</height>
            </rect>
@@ -129,7 +157,7 @@ font: 700 8pt &quot;Segoe UI&quot;;</string>
           <property name="geometry">
            <rect>
             <x>120</x>
-            <y>210</y>
+            <y>190</y>
             <width>101</width>
             <height>31</height>
            </rect>
@@ -159,7 +187,7 @@ QPushButton:hover{
           <property name="geometry">
            <rect>
             <x>50</x>
-            <y>180</y>
+            <y>160</y>
             <width>111</width>
             <height>20</height>
            </rect>
