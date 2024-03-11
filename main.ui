@@ -359,8 +359,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>93</width>
-               <height>391</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="label">
@@ -647,7 +647,7 @@ QPlainTextEdit{
         <enum>QFrame::Raised</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="pg_home">
         <widget class="QPushButton" name="pushButton_4">

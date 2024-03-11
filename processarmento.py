@@ -30,7 +30,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         self.bt_buscar_filecsv.clicked.connect(self.buscar_arquivo)
         self.bt_processar_arquivo_csv.clicked.connect(self.processar_csv)
         # self.bt_buscar_opcoes.clicked.connect(self.combo_op_busca)
-        # self.bt_remover_duplicatas.clicked.connect()
+        self.bt_remover_duplicatas.clicked.connect(self.remover_duplicatas_arquivo_csv)
 
         #PROCESSAMENTO
         self.comboBox_op_processamentos.currentIndexChanged.connect(self.combo_op_processamento)
@@ -192,6 +192,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.bt_buscar_opcoes.clicked.connect(self.tudo_que_contem)
             elif opcoes == 'Dados duplicados':
                 self.bt_buscar_opcoes.setVisible(True)
+
                 # self.bt_buscar_opcoes.clicked.disconnect()  # Desconectar qualquer sinal anterior
                 self.bt_buscar_opcoes.clicked.connect(self.buscar_dados_duplicados)                
 
@@ -257,6 +258,9 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.") 
             else:
                 self.combo_column1.setVisible(True)
+                self.combo_column2.setVisible(False)
+                self.txt_alt_NCM2.setVisible(False)
+                self.bt_setas_ncm.setVisible(False)
                 column = self.comboBox_op_processamentos.currentText()
                 print(column)    
                 self.txt_alt_NCM1.setVisible(True)
@@ -292,7 +296,6 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             self.filtrar_linhas_com()
             self.bt_salvar_filter_process.setVisible(True)
 
-    
     
     def search_by_ncm(self):
         buscar_ncm = self.txt_buscar_ncm.text()
@@ -503,8 +506,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.update_table_process(resultados)
             else:
                 pass
-
-            
+       
     def update_table_process(self, data):
         # Limpar a tabela antes de atualizá-la com os novos dados
         self.tb_dados_csv.clearContents()
@@ -587,44 +589,112 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
 
     #BUSCA TODOS OS DADOS DUPLICADOS
     def buscar_dados_duplicados(self):
+        self.update_label_info(f"Aguarde...")
         self.backup_process_csv()
-        # Ler o arquivo CSV original
-        df = pd.read_csv(self.path_csv, delimiter=';', encoding='latin1')
-        # Verifica se há duplicatas no DataFrame
-        duplicatas = df[df.duplicated(keep=False)]
-        self.update_table_duplicate_data(df)
 
-    #ATUALIZA A TABELA COM OS DADOS DUPLICADOS EM VERMELHO
+        try:
+            encodings = ['utf-8', 'latin1']
+            for encoding in encodings:
+                try:
+                    self.update_label_info(f"Aguarde...")
+                    # Ler o arquivo CSV original
+                    df = pd.read_csv(self.path_csv, delimiter=';', encoding=encoding)
+                    # Verifica se há duplicatas no DataFrame
+                    duplicatas = df[df.duplicated(keep=False)]
+                    self.update_table_duplicate_data(df)
+                except Exception as e:
+                    # Se ocorrer um erro, continue para tentar a próxima codificação
+                    continue
+        except Exception as e:
+            self.show_error_popup("Erro!", f"Erro ao ao tentar processar o arquivo. {e}")
+            self.update_label_info(f"Erro! Erro ao ao tentar processar o arquivo. {e}")
+            print(f"Erro ao ao tentar processar o arquivo. {e}")
+            return
+
     def update_table_duplicate_data(self, df):
         # Limpar a tabela
         self.tb_dados_csv.clearContents()
 
-        # Conjunto para armazenar valores únicos da primeira coluna
-        valores_unicos = set()
+        # Dicionário para rastrear a primeira ocorrência de cada valor na primeira coluna
+        primeira_ocorrencia = {}
 
         # Preencher a tabela com os dados do DataFrame
         for i, row in enumerate(df.itertuples(), start=0):
+            # Preencher a tabela com os dados do DataFrame
+            for j, value in enumerate(row[1:], start=0):
+                item = QTableWidgetItem(str(value))
+                self.tb_dados_csv.setItem(i, j, item)
+
             # Obter o valor da primeira coluna
             valor_coluna = row[1]
 
-            # Verificar se o valor da primeira coluna é uma duplicata
-            if valor_coluna in valores_unicos:
-                # Destacar a linha em vermelho
-                for j, value in enumerate(row[1:], start=0):  # Começar do primeiro elemento para incluir todas as colunas
-                    item = QTableWidgetItem(str(value))
-                    item.setForeground(QColor(255, 0, 0))
-                    self.tb_dados_csv.setItem(i, j, item)
+            # Verificar se é a primeira ocorrência do valor na primeira coluna
+            if valor_coluna not in primeira_ocorrencia:
+                primeira_ocorrencia[valor_coluna] = i
             else:
-                # Preencher a tabela normalmente para linhas não duplicadas
-                for j, value in enumerate(row[1:], start=0):  # Começar do primeiro elemento para incluir todas as colunas
-                    item = QTableWidgetItem(str(value))
-                    self.tb_dados_csv.setItem(i, j, item)
+                # Marcar a primeira ocorrência do valor na primeira coluna em vermelho
+                for j in range(len(row)-1):  # Iterar sobre todas as colunas
+                    item = self.tb_dados_csv.item(primeira_ocorrencia[valor_coluna], j)
+                    item.setForeground(QColor(255, 0, 0))  # Marcar em vermelho
 
-            # Adicionar o valor da primeira coluna ao conjunto de valores únicos
-            valores_unicos.add(valor_coluna)
-
+        self.update_label_info(f"Tabela Atualizada.")
         self.bt_remover_duplicatas.setVisible(True)
+    
+    def remover_duplicatas_arquivo_csv(self):
+            reply = QMessageBox.question(None, "Atenção!", "Tem certeza dessa alteração", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if reply == QMessageBox.Yes:
+                try:
+                    encodings = ['utf-8', 'latin1']
+                    for encoding in encodings:
+                        try:
+                                # Carregar o arquivo CSV com encoding latin1
+                                df = pd.read_csv(self.path_csv, sep=';', encoding=encoding)
+                                print("DataFrame carregado com sucesso:")
+                                print(df)
+                        except Exception as e:
+                            # Se ocorrer um erro, continue para tentar a próxima codificação
+                            continue
+                except Exception as e:
+                    self.show_error_popup("Erro!", f"Erro ao carregar o arquivo CSV: {e}")
+                    self.update_label_info(f"Erro! Erro ao carregar o arquivo CSV: {e}")
+                    print(f"Erro ao carregar o arquivo CSV: {e}")
+                    return
 
+                # Criar uma lista para armazenar os índices das linhas marcadas como duplicadas
+                indices_duplicados = []
+
+                # Verificar se a célula em cada linha da primeira coluna está marcada em vermelho na tabela
+                for i in range(self.tb_dados_csv.rowCount()):
+                    item = self.tb_dados_csv.item(i, 0)
+                    if item and item.foreground() == QColor(255, 0, 0):  # Checa se a cor do texto é vermelha
+                        indices_duplicados.append(i)
+
+                # Remover as linhas duplicadas identificadas na lista de índices
+                df = df.drop(df.index[indices_duplicados])
+
+                print("DataFrame após remoção de duplicatas:")
+                print(df)
+
+                # Salvar o DataFrame resultante de volta no arquivo CSV
+                try:
+                    encodings = ['utf-8', 'latin1']
+                    for encoding in encodings:
+                        try:
+                            df.to_csv(self.path_csv, index=False, sep=';', encoding=encoding)
+                            print("Arquivo CSV atualizado com sucesso.")
+                        except Exception as e:
+                            # Se ocorrer um erro, continue para tentar a próxima codificação
+                            continue
+
+                except Exception as e:
+                    self.update_label_info(f"Erro ao salvar o arquivo CSV: {e}")
+                    print(f"Erro ao salvar o arquivo CSV: {e}")
+                    return
+
+                # Atualizar a tabela com os novos dados sem as duplicatas
+                self.update_table_duplicate_data(df)
+
+    #filtra as linhas que com dados que iniciam com determinado dados
     def filtrar_linhas_com(self):
         column = self.combo_column1.currentText()
         dado1 = self.txt_alt_NCM1.text()
@@ -736,7 +806,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             encodings = ['utf-8', 'latin1']
             for encoding in encodings:
                 try:
-                    with open(data, 'r', encoding='utf-8') as file:
+                    with open(data, 'r', encoding=encoding) as file:
                         file_csv = csv.reader(file, delimiter=';')
                         file_data = list(file_csv)  # Convertendo o iterador em uma lista
 
