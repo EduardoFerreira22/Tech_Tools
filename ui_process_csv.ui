@@ -209,6 +209,11 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
                <string>Copie P. Coluna todas as linhas que contém</string>
               </property>
              </item>
+             <item>
+              <property name="text">
+               <string>Remover Linhas C. valores Negativos</string>
+              </property>
+             </item>
             </widget>
             <widget class="QLabel" name="label_3">
              <property name="geometry">
@@ -411,6 +416,19 @@ font:600 9pt &quot;Segoe UI&quot;;</string>
              </property>
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt; color:#ffffff;&quot;&gt;Para mudança de de &lt;/span&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#ffffff;&quot;&gt;NCM's&lt;/span&gt;&lt;span style=&quot; font-size:7pt; color:#ffffff;&quot;&gt; deve-se respeitar o formato &lt;/span&gt;&lt;span style=&quot; font-size:7pt; font-weight:700; color:#ffffff;&quot;&gt;0000.00.00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="lb_remover_negativos">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>10</y>
+               <width>331</width>
+               <height>16</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Escolha a coluna que os valores negativos se encontram.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </widget>

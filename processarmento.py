@@ -54,6 +54,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         #VISIBILIDADE DOS Label's ################################################################################
         self.lb_atencao_substituir.setVisible(False)
         self.lb_info_ncm_subst.setVisible(False)
+        self.lb_remover_negativos.setVisible(False)
 
     #MOSTRA UM POPUP DE NOTIFICAÇÃO DE ERRO 
     def show_error_popup(self, title, message):
@@ -220,6 +221,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.bt_setas_ncm.setVisible(True)
                 self.bt_executar_process.setVisible(True)
                 self.lb_info_ncm_subst.setVisible(True)
+                self.lb_remover_negativos.setVisible(False)
                 self.bt_salvar_filter_process.setVisible(False)
         elif opcoes == 'Tudo que contém mude para':
             if path_csv == '':
@@ -227,6 +229,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")           
             else:
                 self.lb_atencao_substituir.setVisible(True)
+                self.lb_remover_negativos.setVisible(False)
                 self.txt_alt_NCM1.setVisible(True)
                 self.txt_alt_NCM2.setVisible(True)
                 self.bt_setas_ncm.setVisible(True)
@@ -247,6 +250,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.bt_setas_ncm.setVisible(True)
                 self.bt_executar_process.setVisible(True)
                 self.lb_atencao_substituir.setVisible(True)
+                self.lb_remover_negativos.setVisible(False)
                 self.bt_salvar_filter_process.setVisible(False)
 
                     # Configurar a conexão do sinal do botão de execução do processo
@@ -261,9 +265,18 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.combo_column2.setVisible(False)
                 self.txt_alt_NCM2.setVisible(False)
                 self.bt_setas_ncm.setVisible(False)
+                self.lb_remover_negativos.setVisible(False)
                 column = self.comboBox_op_processamentos.currentText()
                 print(column)    
                 self.txt_alt_NCM1.setVisible(True)
+                self.bt_executar_process.setVisible(True)
+
+        elif opcoes == 'Remover Linhas C. valores Negativos':
+                self.combo_column1.setVisible(True)
+                self.combo_column2.setVisible(False)
+                self.txt_alt_NCM2.setVisible(False)
+                self.bt_setas_ncm.setVisible(False)
+                self.lb_remover_negativos.setVisible(True)
                 self.bt_executar_process.setVisible(True)
 
     #COMBO OPTIONS
@@ -295,6 +308,10 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         elif opcoes == 'Copie P. Coluna todas as linhas que contém':                
             self.filtrar_linhas_com()
             self.bt_salvar_filter_process.setVisible(True)
+
+        elif opcoes == 'Remover Linhas C. valores Negativos':
+            self.valores_negativos()
+            
 
     
     def search_by_ncm(self):
@@ -711,6 +728,21 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         # Atualizar a tabela com as linhas filtradas
         self.update_table_filter(linhas_filtradas)
 
+    def valores_negativos(self):
+        coluna = self.combo_column1.currentText()
+        try:
+            df = pd.read_csv(self.path_csv, delimiter=';', encoding='latin1')
+
+            # Identificar e alterar os valores negativos para 0
+            df.loc[df[coluna] < 0, coluna] = 0
+
+            df.to_csv(self.path_csv,index=False, sep=';', encoding='latin1')
+            print("Valores negativos substituídos por 0 com sucesso.")
+            self.update_label_info("Todos os dados negativos foram removidos com sucesso!")
+            self.processar_csv()
+        except Exception as e:
+            self.update_label_info(f"Erro ao tentar remover os dados negativos: {e}")
+            print(f"Erro: {e}")
 
     def update_table_filter(self, linhas_filtradas):
         # Limpar a tabela atual

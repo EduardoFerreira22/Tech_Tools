@@ -1,20 +1,21 @@
-import fdb
+import pandas as pd
+import csv
 
-# Defina os parâmetros de conexão
-hostname = 'localhost'
-database = 'E:\\Backup main\\Documentos\\Perseu\\server\\BD\\BASE.FDB'
-user = 'SYSDBA'
-password = 'masterkey'
+def valores_negativos_e_alterar(coluna, path):
+    try:
+        df = pd.read_csv(path, delimiter=';', encoding='utf-8')
 
-# Tente se conectar ao banco de dados
-try:
-    conn = fdb.connect(host=hostname, database=database, user=user, password=password)
-    print("Conexão bem-sucedida!")
-    
-    # Execute consultas ou operações no banco de dados aqui
-    
-    # Não se esqueça de fechar a conexão quando terminar
-    conn.close()
-    
-except fdb.Error as e:
-    print("Erro ao conectar ao banco de dados:", e)
+        # Identificar e alterar os valores negativos para 0
+        df.loc[df[coluna] < 0, coluna] = 0
+
+        df.to_csv(path,index=False, sep=';', encoding='utf-8')
+        print("Valores negativos substituídos por 0 com sucesso.")
+
+        print(df)
+                    
+    except Exception as e:
+        print(f"Erro: {e}")
+
+caminho = 'produtos02.csv'
+coluna = 'Estoque'
+valores_negativos_e_alterar(coluna, caminho)

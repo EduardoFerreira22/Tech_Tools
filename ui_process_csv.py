@@ -95,6 +95,7 @@ class Ui_ProcessCSV(object):
         self.comboBox_op_processamentos.addItem("")
         self.comboBox_op_processamentos.addItem("")
         self.comboBox_op_processamentos.addItem("")
+        self.comboBox_op_processamentos.addItem("")
         self.comboBox_op_processamentos.setObjectName(u"comboBox_op_processamentos")
         self.comboBox_op_processamentos.setGeometry(QRect(10, 46, 215, 20))
         self.comboBox_op_processamentos.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
@@ -179,6 +180,9 @@ class Ui_ProcessCSV(object):
         self.lb_info_ncm_subst = QLabel(self.frame_7)
         self.lb_info_ncm_subst.setObjectName(u"lb_info_ncm_subst")
         self.lb_info_ncm_subst.setGeometry(QRect(10, 10, 421, 16))
+        self.lb_remover_negativos = QLabel(self.frame_7)
+        self.lb_remover_negativos.setObjectName(u"lb_remover_negativos")
+        self.lb_remover_negativos.setGeometry(QRect(10, 10, 331, 16))
 
         self.gridLayout_2.addWidget(self.frame_7, 0, 1, 1, 1)
 
@@ -433,6 +437,7 @@ class Ui_ProcessCSV(object):
         self.comboBox_op_processamentos.setItemText(2, QCoreApplication.translate("ProcessCSV", u"Tudo que cont\u00e9m mude para", None))
         self.comboBox_op_processamentos.setItemText(3, QCoreApplication.translate("ProcessCSV", u"P. X da Coluna A , Coluna B Recebe", None))
         self.comboBox_op_processamentos.setItemText(4, QCoreApplication.translate("ProcessCSV", u"Copie P. Coluna todas as linhas que cont\u00e9m", None))
+        self.comboBox_op_processamentos.setItemText(5, QCoreApplication.translate("ProcessCSV", u"Remover Linhas C. valores Negativos", None))
 
         self.comboBox_op_processamentos.setCurrentText("")
         self.comboBox_op_processamentos.setPlaceholderText(QCoreApplication.translate("ProcessCSV", u"Op\u00e7\u00f5es de busca", None))
@@ -444,6 +449,7 @@ class Ui_ProcessCSV(object):
         self.bt_executar_process.setText(QCoreApplication.translate("ProcessCSV", u"Executar", None))
         self.lb_atencao_substituir.setText(QCoreApplication.translate("ProcessCSV", u"<html><head/><body><p><span style=\" font-size:7pt; color:#ffffff;\">Aten\u00e7\u00e3o! Todos os dados do </span><span style=\" font-size:7pt; font-weight:700; color:#ffffff;\">PRIMEIRO</span><span style=\" font-size:7pt; color:#ffffff;\"> quadro ser\u00e3o substitu\u00eddos pelos dados do</span><span style=\" font-size:7pt; font-weight:700; color:#ffffff;\"> SEGUNDO.</span></p></body></html>", None))
         self.lb_info_ncm_subst.setText(QCoreApplication.translate("ProcessCSV", u"<html><head/><body><p><span style=\" font-size:7pt; color:#ffffff;\">Para mudan\u00e7a de de </span><span style=\" font-size:7pt; font-weight:700; color:#ffffff;\">NCM's</span><span style=\" font-size:7pt; color:#ffffff;\"> deve-se respeitar o formato </span><span style=\" font-size:7pt; font-weight:700; color:#ffffff;\">0000.00.00</span></p></body></html>", None))
+        self.lb_remover_negativos.setText(QCoreApplication.translate("ProcessCSV", u"<html><head/><body><p><span style=\" color:#ffffff;\">Escolha a coluna que os valores negativos se encontram.</span></p></body></html>", None))
         self.comboBox_op_busca.setItemText(0, QCoreApplication.translate("ProcessCSV", u"Selecione", None))
         self.comboBox_op_busca.setItemText(1, QCoreApplication.translate("ProcessCSV", u"Buscar NCM's inv\u00e1lidos.", None))
         self.comboBox_op_busca.setItemText(2, QCoreApplication.translate("ProcessCSV", u"Buscar por NCM", None))
