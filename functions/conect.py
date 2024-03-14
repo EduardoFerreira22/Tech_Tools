@@ -2,6 +2,7 @@ try:
     import pyodbc
     import mysql.connector
     import sqlite3
+    import psycopg2
     from PySide6.QtCore import QCoreApplication
     from PySide6.QtGui import QIcon,QFont,QColor
     from PySide6 import QtCore
@@ -48,13 +49,14 @@ class Conections_MySQL():
         self.conn = None
         self.cursor = None
 
-    def MYSQL(self, host, database, username, password):
+    def MYSQL(self, host, database, username, password, port):
         try:
             # estabelece a conexão
             self.conn = mysql.connector.connect(
                 user=username,
                 password=password,
                 host=host,
+                port=port,
                 database=database
             )
 
@@ -108,3 +110,22 @@ class Conections_SQLite3():
           error.show_error_popup(str(e))
 
 
+class Conections_PostgreSQL():
+    def __init__(self):
+        self.cursor = None
+        self.conn = None
+
+    def postgresql_conect(self, host, database, username, password, port):
+        
+        try:
+            self.conn = psycopg2.connect(dbname=database, user=username, password=password, host=host,port=port)
+            self.cursor = self.conn.cursor()
+            # abre a conexão com o banco de dados
+            self.cursor = self.conn.cursor()
+            
+            if self.cursor:
+                return "OK"
+
+        except Exception as e:
+            print(f"Erro de conexão: {str(e)}")
+            return "ERRO"

@@ -456,25 +456,25 @@ class Ui_MainWindow(object):
         self.title_db.setGeometry(QRect(10, 10, 101, 20))
         self.txt_server_db = QLineEdit(self.frame)
         self.txt_server_db.setObjectName(u"txt_server_db")
-        self.txt_server_db.setGeometry(QRect(10, 30, 321, 21))
+        self.txt_server_db.setGeometry(QRect(10, 30, 271, 21))
         self.txt_server_db.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(255, 85, 0);\n"
 "font: 700 9pt \"Segoe UI\";")
         self.txt_dataBase_db = QLineEdit(self.frame)
         self.txt_dataBase_db.setObjectName(u"txt_dataBase_db")
-        self.txt_dataBase_db.setGeometry(QRect(10, 70, 101, 21))
+        self.txt_dataBase_db.setGeometry(QRect(10, 60, 81, 21))
         self.txt_dataBase_db.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(255, 85, 0);\n"
 "font: 700 9pt \"Segoe UI\";")
         self.txt_user_db = QLineEdit(self.frame)
         self.txt_user_db.setObjectName(u"txt_user_db")
-        self.txt_user_db.setGeometry(QRect(120, 70, 101, 21))
+        self.txt_user_db.setGeometry(QRect(100, 60, 91, 21))
         self.txt_user_db.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(255, 85, 0);\n"
 "font: 700 9pt \"Segoe UI\";")
         self.txt_pass_db = QLineEdit(self.frame)
         self.txt_pass_db.setObjectName(u"txt_pass_db")
-        self.txt_pass_db.setGeometry(QRect(230, 70, 101, 21))
+        self.txt_pass_db.setGeometry(QRect(200, 60, 81, 21))
         self.txt_pass_db.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(38, 68, 149);color: rgb(255, 85, 0);\n"
 "font: 700 9pt \"Segoe UI\";")
@@ -483,15 +483,16 @@ class Ui_MainWindow(object):
         self.comboBox_dataBases_db.addItem("")
         self.comboBox_dataBases_db.addItem("")
         self.comboBox_dataBases_db.addItem("")
+        self.comboBox_dataBases_db.addItem("")
         self.comboBox_dataBases_db.setObjectName(u"comboBox_dataBases_db")
-        self.comboBox_dataBases_db.setGeometry(QRect(350, 30, 91, 22))
+        self.comboBox_dataBases_db.setGeometry(QRect(290, 30, 81, 22))
         self.comboBox_dataBases_db.setCursor(QCursor(Qt.ArrowCursor))
         self.comboBox_dataBases_db.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "color: rgb(255, 85, 0);\n"
 "font: 700 9pt \"Segoe UI\";")
         self.bt_conectar_db = QPushButton(self.frame)
         self.bt_conectar_db.setObjectName(u"bt_conectar_db")
-        self.bt_conectar_db.setGeometry(QRect(350, 70, 91, 25))
+        self.bt_conectar_db.setGeometry(QRect(390, 30, 71, 25))
         font1 = QFont()
         font1.setFamilies([u"Arial"])
         font1.setPointSize(9)
@@ -594,7 +595,7 @@ class Ui_MainWindow(object):
         self.label_servidores.setGeometry(QRect(130, 10, 301, 20))
         self.tooltip_sql_server = QLabel(self.frame)
         self.tooltip_sql_server.setObjectName(u"tooltip_sql_server")
-        self.tooltip_sql_server.setGeometry(QRect(480, 10, 21, 16))
+        self.tooltip_sql_server.setGeometry(QRect(480, 0, 21, 16))
         self.tooltip_sqlite = QLabel(self.frame)
         self.tooltip_sqlite.setObjectName(u"tooltip_sqlite")
         self.tooltip_sqlite.setGeometry(QRect(480, 130, 21, 16))
@@ -618,7 +619,7 @@ class Ui_MainWindow(object):
         self.bt_conectar_db_4.setIconSize(QSize(50, 50))
         self.bt_tela_bkp = QPushButton(self.frame)
         self.bt_tela_bkp.setObjectName(u"bt_tela_bkp")
-        self.bt_tela_bkp.setGeometry(QRect(460, 30, 31, 31))
+        self.bt_tela_bkp.setGeometry(QRect(480, 30, 31, 31))
         self.bt_tela_bkp.setStyleSheet(u"QPushButton{\n"
 "	color:rgb(255,255,255);\n"
 "	border: none;\n"
@@ -633,6 +634,12 @@ class Ui_MainWindow(object):
         icon12.addFile(u":/icons/image/database-storage.png", QSize(), QIcon.Normal, QIcon.Off)
         self.bt_tela_bkp.setIcon(icon12)
         self.bt_tela_bkp.setIconSize(QSize(25, 25))
+        self.txt_port_db = QLineEdit(self.frame)
+        self.txt_port_db.setObjectName(u"txt_port_db")
+        self.txt_port_db.setGeometry(QRect(290, 60, 81, 21))
+        self.txt_port_db.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"color: rgb(38, 68, 149);color: rgb(255, 85, 0);\n"
+"font: 700 9pt \"Segoe UI\";")
 
         self.verticalLayout_2.addWidget(self.frame)
 
@@ -1098,7 +1105,7 @@ class Ui_MainWindow(object):
         # Crie um QScrollArea e defina o QLabel como seu widget filho
         self.scroll_area = QScrollArea(self.pg_Sobre)
         self.scroll_area.setGeometry(10, 10, 491, 361)
-        self.scroll_area.setWidget(self.label_sobre)
+        self.scroll_area.setWidget(self.label_sobre)        
         self.pages.addWidget(self.pg_Sobre)
         self.pg_terms = QWidget()
         self.pg_terms.setObjectName(u"pg_terms")
@@ -1571,9 +1578,10 @@ class Ui_MainWindow(object):
         self.txt_user_db.setPlaceholderText(QCoreApplication.translate("MainWindow", u"User", None))
         self.txt_pass_db.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Pass", None))
         self.comboBox_dataBases_db.setItemText(0, QCoreApplication.translate("MainWindow", u"SQL Server", None))
-        self.comboBox_dataBases_db.setItemText(1, QCoreApplication.translate("MainWindow", u"MySQL", None))
-        self.comboBox_dataBases_db.setItemText(2, QCoreApplication.translate("MainWindow", u"SQLite3", None))
-        self.comboBox_dataBases_db.setItemText(3, QCoreApplication.translate("MainWindow", u"FireBird", None))
+        self.comboBox_dataBases_db.setItemText(1, QCoreApplication.translate("MainWindow", u"PostgreSQL", None))
+        self.comboBox_dataBases_db.setItemText(2, QCoreApplication.translate("MainWindow", u"MySQL", None))
+        self.comboBox_dataBases_db.setItemText(3, QCoreApplication.translate("MainWindow", u"SQLite3", None))
+        self.comboBox_dataBases_db.setItemText(4, QCoreApplication.translate("MainWindow", u"FireBird", None))
 
         self.bt_conectar_db.setText(QCoreApplication.translate("MainWindow", u"Conectar", None))
         self.txt_server_db_2.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Caminho para o .db", None))
@@ -1598,6 +1606,7 @@ class Ui_MainWindow(object):
         self.bt_tela_bkp.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:8pt; color:#00007f;\">Backup Data Base</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.bt_tela_bkp.setText("")
+        self.txt_port_db.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Port", None))
         self.label_tabelas.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:700;\">Tabelas existentes no banco de dados</span></p></body></html>", None))
         ___qtablewidgetitem = self.tableWidget_show_tables.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Tabelas", None));
@@ -1646,6 +1655,7 @@ class Ui_MainWindow(object):
         # Defina a largura da barra de rolagem horizontal
         self.horizontal_scroll_bar = self.scroll_area.horizontalScrollBar()
         self.horizontal_scroll_bar.setStyleSheet("QScrollBar:horizontal { height: 8px; }")
+        
         self.plainTextEdit_3.setPlainText(QCoreApplication.translate("MainWindow", u"TERMOS DE USO DO PROGRAMA TECH TOOLS\n"
 "\n"
 "\n"
@@ -1729,10 +1739,11 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Descri\u00e7\u00e3o", None));
         ___qtablewidgetitem5 = self.tableWidget_ncm.horizontalHeaderItem(2)
         ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Vencimento", None));
+
         # Definir tamanho das colunas
         self.tableWidget_ncm.setColumnWidth(0, 80)
         self.tableWidget_ncm.setColumnWidth(1, 300)
-        self.tableWidget_ncm.setColumnWidth(2, 200)
+        self.tableWidget_ncm.setColumnWidth(2, 200)        
 #if QT_CONFIG(tooltip)
         self.bt_salvar_ncm.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:7pt;\">Salvar .csv</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)

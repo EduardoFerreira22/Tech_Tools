@@ -8,10 +8,12 @@ from processarmento import Processing_CSV
 from win_result import SQLWindown
 from functions.conect import Erros
 from functions.data import SQLite_Data
+from functions import conect
 from openpyxl import Workbook
 import subprocess
 from datetime import datetime
 import sqlite3
+import psycopg2
 import zipfile
 import requests
 from tqdm import tqdm
@@ -281,6 +283,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         self.bt_conectar_db_4.setVisible(False)
         self.txt_server_db_2.setVisible(False)
         self.bt_conectar_db_2.setVisible(False)
+        self.txt_port_db.setVisible(False)
         self.comboBox_dataBases_db.currentIndexChanged.connect(self.select_datas)
         # Conectar o método ao botão bt_conectar_db
         # Conectar os sinais aos slots
@@ -464,6 +467,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             # Se for 'SQLite3', torna o botão visível
             self.bt_conectar_db_4.setVisible(True)
             self.output_query.appendPlainText("IBExpert selecionado com sucesso!")
+            self.txt_port_db.setVisible(False)
         else:
             # Caso contrário, torna o botão invisível
             self.bt_conectar_db_4.setVisible(False)
@@ -480,10 +484,19 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             self.txt_dataBase_db.clear()
             self.txt_user_db.clear()
             self.txt_pass_db.clear()
+            self.txt_port_db.setVisible(False)
         else:
             # Caso contrário, torna os elementos invisíveis
             self.txt_server_db_2.setVisible(False)
             self.bt_conectar_db_2.setVisible(False)
+
+        if selected_data == 'PostgreSQL':
+            self.txt_port_db.setVisible(True)
+        elif selected_data == 'MySQL':
+            self.txt_port_db.setVisible(True)
+        elif selected_data == 'SQL Server':
+            self.txt_port_db.setVisible(False)
+
     
     def check_cache(self):
         path = "venv\\Lib\\site-packages\\_m\\file\\file\\u\\mu\\users.txt"
@@ -541,6 +554,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             database = self.txt_dataBase_db.text()
             user = self.txt_user_db.text()
             password = self.txt_pass_db.text()
+            port = self.txt_port_db.text()
             if server == '' and database == '' and user == '':
                 self.output_query.appendPlainText(f"Erro! dados incompletos.")
                 self.show_error_popup("Erro!","É necessário que todos os campos estejam preenchidos.")
@@ -548,16 +562,47 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             else:
                 msg1 = "Conectado com Sucesso!"
                 msg2 = f"Não foi possível se conectar ao banco de dados {database}"
+                
+                if port == '' or port == None:
+                    port = '3306'
 
-                conn2 = conect.Conections_MySQL()
-                self.conn2 = conn2
-                resp = self.conn2.MYSQL(server, database, user, password)
+                self.conn2 = conect.Conections_MySQL()
+                resp = self.conn2.MYSQL(server, database, user, password, port=port)
 
                 if resp == 'OK':
                     self.output_query.appendPlainText(f"{msg1}")
                 elif resp == 'ERRO':
                     self.output_query.appendPlainText(f"Erro: {msg2}")                
                 self.msg_popup(resp,msg1,msg2)
+
+    def conectar_ao_PostgreSQL(self):
+        server = self.txt_server_db.text()
+        database = self.txt_dataBase_db.text()
+        user = self.txt_user_db.text()
+        password = self.txt_pass_db.text()
+        port = self.txt_port_db.text()
+
+
+        if server == '' and database == '' and user == '' and password == '':
+            self.show_error_popup("Erro!","É necessário que todos os campos estejam preenchidos.")
+            self.output_query.appendPlainText(f"Erro! dados incompletos.")
+        else:
+            msg1 = "Conectado com Sucesso!"
+            msg2 = f"Não foi possível se conectar ao banco de dados {database}"
+            if port == '' or port == None:
+                port = '5432'
+            # Instancie a classe Conections_SQLServer com os argumentos necessários
+            self.conn4 = conect.Conections_PostgreSQL()
+            resp = self.conn4.postgresql_conect(server, database, user, password, port)
+            
+            if resp == 'OK':
+                self.output_query.appendPlainText(f"{msg1}")
+            elif resp == 'ERRO':
+                self.output_query.appendPlainText(f"Erro: {msg2}")
+
+            self.msg_popup(resp,msg1,msg2)
+            
+            # self.bt_tela_bkp.setVisible(True)
 
     def buscar_db(self):
         # Abre um diálogo de seleção de arquivo
@@ -623,6 +668,12 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             tables = self.tables_SQLite3()  # Obtém as tabelas do SQLite3
             self.showTables_in_Table(tables)
             self.bt_mostrar_tabelas.setVisible(True)
+        elif selected_data == 'PostgreSQL':
+            self.label_conectando.setVisible(True)
+            self.conectar_ao_PostgreSQL()
+            self.bt_mostrar_tabelas.setVisible(True)
+            tables = self.tables_PostgreSQL()
+            self.showTables_in_Table(tables)
 
     def list_DataBases(self):
         try:
@@ -777,6 +828,8 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 self.execute_mysql_query(query_value)
             elif selected_data == 'SQLite3':
                 self.execute_sqlite_query(query_value)
+            elif selected_data == 'PostgreSQL':
+                self.execute_PostgreSQL_query(query_value)
             else:
                 self.output_query.appendPlainText("Banco de dados selecionado não suportado.")
                 print("Banco de dados selecionado não suportado.")
@@ -824,6 +877,27 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         except Exception as e:
             self.output_query.appendPlainText("Erro ao executar o comando SQLite: " + str(e))
 
+    def execute_PostgreSQL_query(self, query):
+        try:
+            # Executar a consulta
+            self.conn4.cursor.execute(query)
+            # Verificar se a consulta é uma consulta SELECT
+            if query.strip().upper().startswith('SELECT'):
+                # Recuperar os resultados da consulta
+                resp = self.conn4.cursor.fetchall()
+                # Recuperar os nomes das colunas
+                column_names = [column.name for column in self.conn4.cursor.description]
+                # Exibir os resultados da consulta
+                self.display_query_results(column_names, resp)
+            else:
+                self.output_query.appendPlainText("Comando PostgreSQL executado com sucesso.")
+
+            # Fechar o self.conn4.cursor
+            self.conn4.cursor.close()
+
+        except Exception as e:
+            self.output_query.appendPlainText("Erro ao executar o comando PostgreSQL: " + str(e))
+
     def display_query_results(self, column_names, data):
         self.open_secondary_window() 
         if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
@@ -857,6 +931,19 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             return resp
         except Exception as e:
             print(e)
+        
+    def tables_PostgreSQL(self):
+        try:
+            self.conn4.cursor.execute("""
+                SELECT table_name
+                FROM information_schema.tables
+                WHERE table_schema = 'public' AND table_type = 'BASE TABLE'
+            """)
+            resp = self.conn4.cursor.fetchall()
+            return resp
+        except psycopg2.Error as e:
+            print(f"Erro ao buscar tabelas: {e}")
+            return []
 
     def tables_SQLite3(self):
         try:
@@ -957,6 +1044,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             except Exception as e:
                 error.show_error_popup(str(e)) 
                 print(e) 
+
         elif selected_data == 'MySQL':
             try:
                 query_value = f"""SELECT * FROM {table};"""
@@ -972,6 +1060,25 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             except Exception as e:
                 error.show_error_popup(str(e))
                 print(e)
+
+        elif selected_data == 'PostgreSQL':
+            try:
+                query_value = f"""SELECT * FROM {table};"""
+                self.conn4.cursor.execute(query_value)
+                resp = self.conn4.cursor.fetchall()
+
+                # Recupera os nomes das colunas do cursor.description
+                column_names = [desc[0] for desc in self.conn4.cursor.description]
+
+                self.open_secondary_window() 
+                if hasattr(self, 'secondary_window') and isinstance(self.secondary_window, SQLWindown):
+                    self.secondary_window.update_table_data(column_names, resp)  
+                else:
+                    print("Tela secundária não foi inicializada corretamente.")
+            except Exception as e:
+                error.show_error_popup(str(e))
+                print(e)
+
         elif selected_data == 'SQLite3':
             cache = self.buscar_cache()
             try:
@@ -993,6 +1100,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             except Exception as e:
                 resp = e
 
+    
     def mostrarItemSelecionado(self):
         # Implemente a lógica para mostrar o item selecionado
         selected_item = self.tableWidget_show_tables.selectedItems()
@@ -1676,11 +1784,12 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         # Conectar o evento returnPressed dos line edits ao verificador de campos de login
         self.txt_username.returnPressed.connect(self.check_login_fields)
         self.txt_senha_login.returnPressed.connect(self.check_login_fields)
-
+        
         self.verify_existence_data(path_scripts_tables,path_data,update,path_txt,path_user)
         
         version_sys = self.version_sistem_tech()
         self.lb_login_version.setText(str(f'v{version_sys}'))
+        
 
 
 
@@ -1711,6 +1820,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             
         except Exception as e:
             print(f"Erro: {e}")        
+
     def execut_scripts(self,name_data,update_scripts):
         try:
             with open(update_scripts, 'r',encoding='utf-8') as file:
@@ -1733,7 +1843,9 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
 
     def verify_existence_data(self, path_scripts, name_data, update, path_txt, path_user):
 
+
         try:
+
             if not os.path.exists(path_user):
                 script_user = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\u.db.sql"
                 self.create_dataBase_user(path_user)
@@ -1751,6 +1863,8 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
                 existing_tables = self.get_tables_existents(name_data)
                 vs = self.versions(name_data)
                 vs_db = self.version_txt(path_txt)
+                self.update_version(update)
+                
                 # Executa os scripts para criar apenas as tabelas que ainda não existem
                 self.cria_tabelas_nao_existentes(path_scripts, name_data, existing_tables)
                 self.insert_version(conect=name_data) # verifica se a versão do sistema já foi inserida, caso não, faz o insert com os dados da versão
@@ -1764,26 +1878,40 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
                         
                 else:
                     pass
+            
         except Exception as e:
             print(f"Erro!: {e}")
     
+    def update_version(self, update):
+
+        with open(update, 'r') as file:
+            v_sys = file.readline()        
+            for line in v_sys:
+                    if line.startswith("Version_app:"):
+                        v = line[len("Version_app: "):].strip()
+                        print(f"Versão atual {v}")
+
+
     def insert_version(self, conect):
         query = "SELECT version_db, version_system FROM version;"
+        update = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\up.db.sql"
         try:
             conn = sqlite3.connect(conect)
             cursor = conn.cursor()
             cursor.execute(query)
             res = cursor.fetchall()
-            print(res)
             
             if not res:  # Verifica se res é vazio
                 # Se res for vazio, executa o INSERT
                 conn = sqlite3.connect(conect)
                 cursor = conn.cursor()
-                cursor.execute("INSERT INTO version (id, version_db, version_system) VALUES (1, '0.0.2', '4.0.2');")
+                cursor.execute("INSERT INTO version (id, version_db, version_system) VALUES (1, '0.0.2', '4.0.3');")
                 conn.commit()
                 print("Dados da versão inseridos com sucesso!")
+            
             else:
+                cursor.executescript(update)
+                conn.commit()
                 print("Os dados da versão já existem.")
 
         except Exception as e:
@@ -1862,8 +1990,6 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             print("Todos os Scripts foram executados com sucesso!")
         except Exception as e:
             print(f"Erro: {e}")
-
-
 
     def execut_scripts_creation(self, path_scripts, name_data):
         try:
@@ -2000,32 +2126,6 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         except FileNotFoundError:
             # Lógica para lidar com o arquivo não existente
             pass
-    """
-    def login_user(self):
-        # Obtém o usuário e a senha digitados pelo usuário
-        username = self.txt_username.text()
-        password = self.txt_senha_login.text()
-        self.checkBox_lembrar_senha
-        # Consulta o banco de dados para obter as informações do usuário
-        conn = Manger_Connect()
-        conn.conect_db()
-        comando_user = "SELECT USER,PASSWORD,TYPE_US FROM USERS WHERE USER = ?"
-        user_data = (username,)
-        conn.cursor.execute(comando_user, user_data)
-        stored_user_data = conn.cursor.fetchall()
-
-        if stored_user_data:
-            stored_password_hash = stored_user_data[0][1]  # A senha hash está na segunda posição da tupla
-            self.cache_user(username)
-            if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash):
-                print(f'Sucesso: {stored_password_hash}')
-                # Abra a tela MainWindow após o login bem-sucedido
-                self.open_main_window()
-                self.on_login_clicked(username,password)
-            else:
-                self.show_error_popup("Erro de login", "Usuário ou senha incorretos.")
-        else:
-            self.show_error_popup("Erro de login", "Usuário não encontrado.")"""
 
     def login_user(self):
         # Obtém o usuário e a senha digitados pelo usuário

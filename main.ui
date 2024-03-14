@@ -359,8 +359,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>93</width>
+               <height>391</height>
               </rect>
              </property>
              <attribute name="label">
@@ -647,7 +647,7 @@ QPlainTextEdit{
         <enum>QFrame::Raised</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="pg_home">
         <widget class="QPushButton" name="pushButton_4">
@@ -705,7 +705,7 @@ QPlainTextEdit{
              <rect>
               <x>10</x>
               <y>30</y>
-              <width>321</width>
+              <width>271</width>
               <height>21</height>
              </rect>
             </property>
@@ -722,8 +722,8 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>70</y>
-              <width>101</width>
+              <y>60</y>
+              <width>81</width>
               <height>21</height>
              </rect>
             </property>
@@ -739,9 +739,9 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
            <widget class="QLineEdit" name="txt_user_db">
             <property name="geometry">
              <rect>
-              <x>120</x>
-              <y>70</y>
-              <width>101</width>
+              <x>100</x>
+              <y>60</y>
+              <width>91</width>
               <height>21</height>
              </rect>
             </property>
@@ -757,9 +757,9 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
            <widget class="QLineEdit" name="txt_pass_db">
             <property name="geometry">
              <rect>
-              <x>230</x>
-              <y>70</y>
-              <width>101</width>
+              <x>200</x>
+              <y>60</y>
+              <width>81</width>
               <height>21</height>
              </rect>
             </property>
@@ -775,9 +775,9 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
            <widget class="QComboBox" name="comboBox_dataBases_db">
             <property name="geometry">
              <rect>
-              <x>350</x>
+              <x>290</x>
               <y>30</y>
-              <width>91</width>
+              <width>81</width>
               <height>22</height>
              </rect>
             </property>
@@ -792,6 +792,11 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
             <item>
              <property name="text">
               <string>SQL Server</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PostgreSQL</string>
              </property>
             </item>
             <item>
@@ -813,9 +818,9 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
            <widget class="QPushButton" name="bt_conectar_db">
             <property name="geometry">
              <rect>
-              <x>350</x>
-              <y>70</y>
-              <width>91</width>
+              <x>390</x>
+              <y>30</y>
+              <width>71</width>
               <height>25</height>
              </rect>
             </property>
@@ -1068,7 +1073,7 @@ QPushButton:hover{
             <property name="geometry">
              <rect>
               <x>480</x>
-              <y>10</y>
+              <y>0</y>
               <width>21</width>
               <height>16</height>
              </rect>
@@ -1144,7 +1149,7 @@ QPushButton:hover{
            <widget class="QPushButton" name="bt_tela_bkp">
             <property name="geometry">
              <rect>
-              <x>460</x>
+              <x>480</x>
               <y>30</y>
               <width>31</width>
               <height>31</height>
@@ -1177,6 +1182,24 @@ QPushButton:hover{
               <width>25</width>
               <height>25</height>
              </size>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="txt_port_db">
+            <property name="geometry">
+             <rect>
+              <x>290</x>
+              <y>60</y>
+              <width>81</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(38, 68, 149);color: rgb(255, 85, 0);
+font: 700 9pt &quot;Segoe UI&quot;;</string>
+            </property>
+            <property name="placeholderText">
+             <string>Port</string>
             </property>
            </widget>
           </widget>
