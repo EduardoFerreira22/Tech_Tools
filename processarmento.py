@@ -138,6 +138,8 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         try:
             with open('resource\\EXPIRED_NCM.json', 'r', encoding='utf-8') as f:
                 expired_ncms_data = json.load(f)
+                codigos = [ncm['Codigo'] for ncm in expired_ncms_data.get('Nomenclaturas', [])]
+                print(codigos)
                 expired_ncms = [ncm['Codigo'] for ncm in expired_ncms_data.get('Nomenclaturas', [])]
                 return expired_ncms
         except FileNotFoundError:
@@ -728,7 +730,9 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         # Atualizar a tabela com as linhas filtradas
         self.update_table_filter(linhas_filtradas)
 
+    #ENCONTRA VALORES NEGATIVOS E MUDA PARA ZERO
     def valores_negativos(self):
+        self.backup_process_csv()
         coluna = self.combo_column1.currentText()
         try:
             df = pd.read_csv(self.path_csv, delimiter=';', encoding='latin1')

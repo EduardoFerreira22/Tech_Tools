@@ -1769,8 +1769,10 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         self.setWindowTitle("Tech Tools")
         appIcon = QIcon(u"img\\TECH NEW LOGO.png")
         self.setWindowIcon(appIcon)
-        self.setFixedSize(600, 460)
+        self.setFixedSize(600, 445)
         self.read_saved_data()
+        self.time = QTimer()
+        self.time.timeout.connect(self.clean_logs)
         
         path_scripts_tables = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db.sql"
         path_data = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db"
@@ -1789,7 +1791,19 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         
         version_sys = self.version_sistem_tech()
         self.lb_login_version.setText(str(f'v{version_sys}'))
-        
+
+        self.lb_logs_login.setText(None)
+
+    def clean_logs(self):   
+        self.lb_logs_login.clear()
+
+        self.time.stop()
+
+    def logs_login(self,text):
+        self.lb_logs_login.clear()
+        self.lb_logs_login.setText(str(text))
+        self.time.start(5000)
+
 
 
 
@@ -2067,9 +2081,10 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         if self.txt_username.text() and self.txt_senha_login.text():
             # Chamar a função de login
             self.login_user()
-        else:
+        else:           
             # Exibir uma mensagem informando ao usuário que ambos os campos devem ser preenchidos
             QMessageBox.warning(self, "Aviso", "Por favor, preencha ambos os campos de login.")
+            
 
 
     def cache_user(self,username):
@@ -2140,21 +2155,29 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         conn.cursor.execute(comando_user, user_data)
         stored_user_data = conn.cursor.fetchall()
 
-        if stored_user_data:
-            stored_password_hash = stored_user_data[0][1]  # A senha hash está na segunda posição da tupla
-            # Convertendo stored_password_hash para uma string UTF-8
-            stored_password_hash_str = stored_password_hash.decode('utf-8')
-            self.cache_user(username)
-            if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash_str.encode('utf-8')):
-                print(f'Sucesso: {stored_password_hash}')
-                # Abra a tela MainWindow após o login bem-sucedido
-                self.open_main_window()
-                self.on_login_clicked(username,password)
-            else:
-                self.show_error_popup("Erro de login", "Usuário ou senha incorretos.")
-        else:
-            self.show_error_popup("Erro de login", "Usuário não encontrado.")
+        if username == '' or password == '':
+            self.logs_login("Por favor, preencha ambos os campos de login.")
 
+        else:
+
+            if stored_user_data:
+                stored_password_hash = stored_user_data[0][1]  # A senha hash está na segunda posição da tupla
+                # Convertendo stored_password_hash para uma string UTF-8
+                stored_password_hash_str = stored_password_hash.decode('utf-8')
+                self.cache_user(username)
+                if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash_str.encode('utf-8')):
+                    print(f'Sucesso: {stored_password_hash}')
+                    # Abra a tela MainWindow após o login bem-sucedido
+                    self.open_main_window()
+                    self.on_login_clicked(username,password)
+                else:
+                    self.show_error_popup("Erro de login", "Usuário ou senha incorretos.")
+                    self.logs_login("Usuário ou senha incorretos.")
+            else:
+                self.show_error_popup("Erro de login", "Usuário não encontrado.")
+                self.logs_login("Usuário não encontrado.")
+
+            
 
 
     def open_main_window(self):
@@ -2178,3 +2201,4 @@ if __name__ == "__main__":
     window = LoginWindow()
     window.show()
     sys.exit(app.exec())  # Execute o loop de eventos e finalize o programa corretamente
+

@@ -26,7 +26,7 @@ class UI_LoginWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(600, 460)
+        MainWindow.resize(600, 457)
         MainWindow.setStyleSheet(u"background-color: rgb(38, 68, 149);")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -51,13 +51,9 @@ class UI_LoginWindow(object):
 "font: 700 7pt \"Segoe UI\";")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_2 = QVBoxLayout(self.frame)
-        self.verticalLayout_2.setSpacing(6)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.verticalLayout_2.setContentsMargins(120, 70, 120, 80)
         self.frame_2 = QFrame(self.frame)
         self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setGeometry(QRect(121, 70, 340, 241))
         self.frame_2.setMaximumSize(QSize(16777215, 16777215))
         self.frame_2.setStyleSheet(u"QLineEdit{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -69,7 +65,7 @@ class UI_LoginWindow(object):
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.txt_username = QLineEdit(self.frame_2)
         self.txt_username.setObjectName(u"txt_username")
-        self.txt_username.setGeometry(QRect(50, 80, 241, 31))
+        self.txt_username.setGeometry(QRect(50, 90, 241, 31))
         self.txt_username.setStyleSheet(u"border-radius:6px;\n"
 "border-style:outset;\n"
 "border-width:2px;\n"
@@ -78,7 +74,7 @@ class UI_LoginWindow(object):
 "font: 700 8pt \"Segoe UI\";")
         self.txt_senha_login = QLineEdit(self.frame_2)
         self.txt_senha_login.setObjectName(u"txt_senha_login")
-        self.txt_senha_login.setGeometry(QRect(50, 120, 241, 31))
+        self.txt_senha_login.setGeometry(QRect(50, 130, 241, 31))
         self.txt_senha_login.setFocusPolicy(Qt.StrongFocus)
         self.txt_senha_login.setStyleSheet(u"border-radius:6px;\n"
 "border-style:outset;\n"
@@ -90,7 +86,7 @@ class UI_LoginWindow(object):
         self.txt_senha_login.setEchoMode(QLineEdit.Password)
         self.bt_login = QPushButton(self.frame_2)
         self.bt_login.setObjectName(u"bt_login")
-        self.bt_login.setGeometry(QRect(120, 190, 101, 31))
+        self.bt_login.setGeometry(QRect(120, 200, 101, 31))
         self.bt_login.setCursor(QCursor(Qt.PointingHandCursor))
         self.bt_login.setStyleSheet(u"\n"
 "QPushButton{\n"
@@ -106,7 +102,7 @@ class UI_LoginWindow(object):
 "}")
         self.checkBox_lembrar_senha = QCheckBox(self.frame_2)
         self.checkBox_lembrar_senha.setObjectName(u"checkBox_lembrar_senha")
-        self.checkBox_lembrar_senha.setGeometry(QRect(50, 160, 111, 20))
+        self.checkBox_lembrar_senha.setGeometry(QRect(50, 170, 111, 20))
         self.checkBox_lembrar_senha.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "font: 700 9pt \"Segoe UI\";")
         self.bt_logo_techtools = QPushButton(self.frame_2)
@@ -117,11 +113,9 @@ class UI_LoginWindow(object):
         icon1.addFile(u":/icons/image/TECH TOOLS TITULO LOGO.png", QSize(), QIcon.Normal, QIcon.Off)
         self.bt_logo_techtools.setIcon(icon1)
         self.bt_logo_techtools.setIconSize(QSize(280, 280))
-
-        self.verticalLayout_2.addWidget(self.frame_2)
-
         self.frame_3 = QFrame(self.frame)
         self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setGeometry(QRect(121, 320, 340, 30))
         self.frame_3.setMaximumSize(QSize(16777215, 30))
         self.frame_3.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "font: 700 7pt \"Segoe UI\";")
@@ -136,9 +130,15 @@ class UI_LoginWindow(object):
         self.lb_login_version_2 = QLabel(self.frame_3)
         self.lb_login_version_2.setObjectName(u"lb_login_version_2")
         self.lb_login_version_2.setGeometry(QRect(120, 0, 191, 21))
-
-        self.verticalLayout_2.addWidget(self.frame_3)
-
+        self.frame_4 = QFrame(self.frame)
+        self.frame_4.setObjectName(u"frame_4")
+        self.frame_4.setGeometry(QRect(0, 390, 581, 31))
+        self.frame_4.setMaximumSize(QSize(16777215, 50))
+        self.frame_4.setFrameShape(QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QFrame.Raised)
+        self.lb_logs_login = QLabel(self.frame_4)
+        self.lb_logs_login.setObjectName(u"lb_logs_login")
+        self.lb_logs_login.setGeometry(QRect(0, 10, 581, 21))
 
         self.verticalLayout.addWidget(self.frame)
 
@@ -164,6 +164,7 @@ class UI_LoginWindow(object):
         self.label_dados_tech.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">Tech Tools </span></p></body></html>", None))
         self.lb_login_version.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><br/></p></body></html>", None))
         self.lb_login_version_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">- Copyright \u00a9 2023-2024, Eduardo Ferreira.</span></p></body></html>", None))
+        self.lb_logs_login.setText("")
     # retranslateUi
 
 
