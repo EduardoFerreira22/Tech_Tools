@@ -138,8 +138,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         try:
             with open('resource\\EXPIRED_NCM.json', 'r', encoding='utf-8') as f:
                 expired_ncms_data = json.load(f)
-                codigos = [ncm['Codigo'] for ncm in expired_ncms_data.get('Nomenclaturas', [])]
-                print(codigos)
+
                 expired_ncms = [ncm['Codigo'] for ncm in expired_ncms_data.get('Nomenclaturas', [])]
                 return expired_ncms
         except FileNotFoundError:

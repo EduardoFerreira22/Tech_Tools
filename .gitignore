@@ -11,9 +11,11 @@ Ativador Magico/
 3DP.exe
 main
 teste
+-main
 
 
-product_formatado.csv
+
+
 produto.csv
 teste_login.py
 teste_login.ui
@@ -27,7 +29,7 @@ produto.csv
 .gitattributes
 exemplo_testes.py
 backup.csv
-produtos02.csv
-SmartPdv.db
 teste.csv
 testes
+update_sys
+requirements.txt
