@@ -838,65 +838,88 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
     def execute_sql_server_query(self, query):
         try:
-            self.conn1.cursor.execute(query)
-            if query.strip().upper().startswith('SELECT'):
-                resp = self.conn1.cursor.fetchall()
-                column_names = [column[0] for column in self.conn1.cursor.description]
-                self.display_query_results(column_names, resp)
+            if "DROP" in query.strip().upper():
+                self.output_query.appendPlainText("Para garantir a integridade do banco de dados\nA operação 'DROP' não será permitida permitida.")
+            elif "--" in query.strip():  # Verifica se há comentários na consulta
+                self.output_query.appendPlainText("** Comentários não são permitidos na consulta. **")
             else:
-                self.output_query.appendPlainText("Comando SQL Server executado com sucesso.")
+                self.conn1.cursor.execute(query)
+                if query.strip().upper().startswith('SELECT'):
+                    resp = self.conn1.cursor.fetchall()
+                    column_names = [column[0] for column in self.conn1.cursor.description]
+                    self.display_query_results(column_names, resp)
+                else:
+                    self.conn1.conn.commit()
+                    self.output_query.appendPlainText("Comando SQL Server executado com sucesso.")
         except Exception as e:
             self.output_query.appendPlainText("Erro ao executar o comando SQL Server: " + str(e))
 
+
     def execute_mysql_query(self, query):
         try:
-            self.conn2.cursor.execute(query)
-            if query.strip().upper().startswith('SELECT'):
-                resp = self.conn2.cursor.fetchall()
-                column_names = self.conn2.cursor.column_names
-                self.display_query_results(column_names, resp)
+            if "DROP" in query.strip().upper():
+                self.output_query.appendPlainText("Para garantir a integridade do banco de dados\nA operação 'DROP' não será permitida permitida.")
+            elif "--" in query.strip():  # Verifica se há comentários na consulta
+                self.output_query.appendPlainText("** Comentários não são permitidos na consulta. **")
             else:
-                self.output_query.appendPlainText("Comando MySQL executado com sucesso.")
+                self.conn2.cursor.execute(query)
+                if query.strip().upper().startswith('SELECT'):
+                    resp = self.conn2.cursor.fetchall()
+                    column_names = self.conn2.cursor.column_names
+                    self.display_query_results(column_names, resp)
+                else:
+                    self.conn2.conn.commit()
+                    self.output_query.appendPlainText("Comando MySQL executado com sucesso.")
         except Exception as e:
             self.output_query.appendPlainText("Erro ao executar o comando MySQL: " + str(e))
 
+
     def execute_sqlite_query(self, query):
         try:
-            cache = self.buscar_cache()
-            if cache:
-                self.conn3.conectar_sqlite3_db(cache)
-                self.conn3.cursor.execute(query)
-                if query.strip().upper().startswith('SELECT'):
-                    res = self.conn3.cursor.fetchall()
-                    column_names = [description[0] for description in self.conn3.cursor.description]
-                    self.display_query_results(column_names, res)
-                else:
-                    self.output_query.appendPlainText("Comando SQLite executado com sucesso.")
+            if "DROP" in query.strip().upper():
+                self.output_query.appendPlainText("Para garantir a integridade do banco de dados\nA operação 'DROP' não será permitida permitida.")
+            elif "--" in query.strip():  # Verifica se há comentários na consulta
+                self.output_query.appendPlainText("** Comentários não são permitidos na consulta. **")
             else:
-                self.output_query.appendPlainText("Nenhum caminho de banco de dados SQLite encontrado no arquivo de cache.")
+                cache = self.buscar_cache()
+                if cache:
+                    self.conn3.conectar_sqlite3_db(cache)
+                    self.conn3.cursor.execute(query)
+                    if query.strip().upper().startswith('SELECT'):
+                        res = self.conn3.cursor.fetchall()
+                        column_names = [description[0] for description in self.conn3.cursor.description]
+                        self.display_query_results(column_names, res)
+                    else:
+
+                        self.conn3.conn.commit()
+                        self.output_query.appendPlainText("Comando SQLite executado com sucesso.")
+                else:
+                    self.output_query.appendPlainText("Nenhum caminho de banco de dados SQLite encontrado no arquivo de cache.")
         except Exception as e:
             self.output_query.appendPlainText("Erro ao executar o comando SQLite: " + str(e))
 
+
     def execute_PostgreSQL_query(self, query):
         try:
-            # Executar a consulta
-            self.conn4.cursor.execute(query)
-            # Verificar se a consulta é uma consulta SELECT
-            if query.strip().upper().startswith('SELECT'):
-                # Recuperar os resultados da consulta
-                resp = self.conn4.cursor.fetchall()
-                # Recuperar os nomes das colunas
-                column_names = [column.name for column in self.conn4.cursor.description]
-                # Exibir os resultados da consulta
-                self.display_query_results(column_names, resp)
+            if "DROP" in query.strip().upper():
+                self.output_query.appendPlainText("Para garantir a integridade do banco de dados\nA operação 'DROP' não será permitida permitida.")
+            elif "--" in query.strip():  # Verifica se há comentários na consulta
+                self.output_query.appendPlainText("** Comentários não são permitidos na consulta. **")
             else:
-                self.output_query.appendPlainText("Comando PostgreSQL executado com sucesso.")
+                self.conn4.cursor.execute(query)
+                if query.strip().upper().startswith('SELECT'):
+                    resp = self.conn4.cursor.fetchall()
+                    column_names = [column.name for column in self.conn4.cursor.description]
+                    self.display_query_results(column_names, resp)
+                else:
+                    self.conn4.conn.commit()
+                    self.output_query.appendPlainText("Comando PostgreSQL executado com sucesso.")
 
-            # Fechar o self.conn4.cursor
-            self.conn4.cursor.close()
+                self.conn4.cursor.close()
 
         except Exception as e:
             self.output_query.appendPlainText("Erro ao executar o comando PostgreSQL: " + str(e))
+
 
     def display_query_results(self, column_names, data):
         self.open_secondary_window() 

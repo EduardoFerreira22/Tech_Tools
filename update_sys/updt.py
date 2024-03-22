@@ -6,7 +6,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QLabel,
-    QMainWindow, QProgressBar, QPushButton, QSizePolicy,
+    QMainWindow, QProgressBar, QPushButton, QSizePolicy,QMessageBox,
     QVBoxLayout, QWidget)
 
 from ui_update import Ui_Updating
@@ -17,6 +17,7 @@ import time
 import sys
 import shutil
 import os
+import re
 
 
 
@@ -137,21 +138,29 @@ class Win_Update(QMainWindow,Ui_Updating):
         self.download_timer.timeout.connect(self.update_progress)
         self.download_timer.start(5000)  # Define o intervalo em milissegundos (5 segundos)
         self.download_timer.setSingleShot(True)
+
+    def show_error_popup(self, title, message):
+        msg = QMessageBox()
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        msg.setIcon(QMessageBox.Warning)
+        msg.exec()
+
+
     
     def verificar_atualizacoes(self):
         # URL da API do GitHub para acessar os lançamentos do repositório
         url = "https://api.github.com/repos/EduardoFerreira22/Tech_Tools/releases"
-        token = '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'
 
-        headers = {'Authorization': f'token {token}'}
 
         try:
             # Faz uma solicitação HTTP para a API do GitHub
-            r = requests.get(url, headers=headers)
+            r = requests.get(url)
 
             # Verifica se a solicitação foi bem-sucedida
             if r.status_code != 200:
-                print("Erro ao acessar a API do GitHub.")
+                self.show_error_popup("Erro!","Erro ao acessar a API para download da versão.")
+                print("Erro ao acessar a API para download da versão.")
                 return
 
             # Analisa a resposta em formato JSON
@@ -160,6 +169,7 @@ class Win_Update(QMainWindow,Ui_Updating):
             # Verifica se há lançamentos disponíveis
             if not releases:
                 print("Sem atualizações disponíveis.")
+                self.show_error_popup("Versões","Sem atualizações disponíveis.")
                 return
 
 
@@ -203,6 +213,7 @@ class Win_Update(QMainWindow,Ui_Updating):
             print(f"Erro: {e}")
     
     def download_version(self):
+        pre_fixo = self.buscar_arquivo_extraido()
         self.progressBar_instalao.setVisible(True)
         try:
             # Simula um atraso de 10 segundos antes de iniciar o download
@@ -216,15 +227,22 @@ class Win_Update(QMainWindow,Ui_Updating):
                         f.write(chunk)
                         self.download_timer.start(1000)  # Inicia o temporizador de 5 segundos para atualizar a barra de progresso
             print("Download completo.")
+
             # Extrai os arquivos do zip
             with zipfile.ZipFile(self.arquivo_zip, "r") as zip_ref:
                 zip_ref.extractall(self.destiny_path)
+            caminho = 'C:\\Tech Tools'
+            for file_name in os.listdir(caminho):
+                if re.match(r"EduardoFerreira22-Tech_Tools-\w+", file_name):
+                    pre_fixo = file_name[len("EduardoFerreira22-Tech_Tools-"):].strip()
+
             # Chame a função copy_files com os diretórios de origem e destino
-            source_dir = "C:\\Tech Tools\\EduardoFerreira22-Tech_Tools-c6bbe80"
+            source_dir = f"C:\\Tech Tools\\EduardoFerreira22-Tech_Tools-{pre_fixo}"
             dest_dir = "C:\\Tech Tools"
             self.copy_files(source_dir, dest_dir)
 
         except Exception as e:
+            self.show_error_popup("Erro",f"Erro durante o download: {e}")
             print(f"Erro durante o download: {e}")
 
     def update_progress(self):
@@ -240,6 +258,7 @@ class Win_Update(QMainWindow,Ui_Updating):
         # Verifica se o diretório de origem existe
         if not os.path.exists(source_dir):
             print(f"Diretório de origem '{source_dir}' não existe.")
+            self.show_error_popup("Erro",f"Diretório de origem '{source_dir}' não existe.")
             return
         
         # Verifica se o diretório de destino existe, se não, cria
@@ -270,7 +289,18 @@ class Win_Update(QMainWindow,Ui_Updating):
             print("Cópia de arquivos concluída com sucesso.")
         except Exception as e:
             print(f"Erro ao copiar arquivos: {e}")
+            self.show_error_popup("Erro",f"Erro ao copiar arquivos: {e}")
 
+    def buscar_arquivo_extraido(self):
+        try:
+            caminho = 'C:\\Tech Tools'
+            for file_name in os.listdir(caminho):
+                if re.match(r"EduardoFerreira22-Tech_Tools-\w+", file_name):
+                    pre_fixo = file_name[len("EduardoFerreira22-Tech_Tools-"):].strip()
+                    print(pre_fixo)
+                    return pre_fixo
+        except Exception as e:
+            print(f"Erro: {e}")
 
 if __name__ == '__main__':
     import sys
