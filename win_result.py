@@ -19,6 +19,8 @@ from PySide6.QtWidgets import (QApplication,QFileDialog, QFrame, QGridLayout, QH
     QLabel, QMainWindow, QPushButton, QSizePolicy,
     QTableWidget, QTableWidgetItem, QWidget)
 from openpyxl import Workbook
+from functions.logs import App_logs
+import os
 import csv
 import icons_rc
 
@@ -101,6 +103,12 @@ class SQLWindown(QMainWindow,object):
 
 
         self.pushButton.clicked.connect(self.save_data)
+            #LOGS ----------------------------------------------------------------------------------------------------------
+            # Obtém o nome do arquivo atual
+        self.file_name = os.path.splitext(os.path.basename(__file__))[0] if __name__ != "__main__" else "win_result"
+        self.path_logs = 'logs'
+        self.class_name = self.__class__.__name__
+        self.log = App_logs()
 
     def update_table_data(self, column_names, data):
             self.tableWidget_query.clearContents()
@@ -164,7 +172,9 @@ class SQLWindown(QMainWindow,object):
                         writer.writerows(table_data)
                 else:
                     print("Formato de arquivo não suportado.")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"save_data Formato de arquivo não suportado.")
             except Exception as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"save_data Erro: {e}")
                 print(f"Erro ao salvar o arquivo: {e}")
 
 

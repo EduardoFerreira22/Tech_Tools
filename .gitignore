@@ -9,7 +9,11 @@ instaladores.csv
 # Ignora a pasta Ativador Magico/
 Ativador Magico/
 3DP.exe
+3DP - Copia.exe
+
 main
+-main
+logs
 teste
 
 

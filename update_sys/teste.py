@@ -1,17 +1,17 @@
-import os
-import re
+"""import psutil
 
-def buscar_arquivo_extraido():
-    try:
-        caminho = 'C:\\Tech Tools'
-        for file_name in os.listdir(caminho):
-            print(f"Nome do arquivo: {file_name}")
-            if re.match(r"EduardoFerreira22-Tech_Tools-\w+", file_name):
-                pre_fixo = file_name[len("EduardoFerreira22-Tech_Tools-"):].strip()
-                fixo = pre_fixo
-                print(f"Prefixo encontrado: {fixo}")
-                return fixo
-    except Exception as e:
-        print(f"Erro: {e}")
+def list_dispositivos():
+    dispositivos = []
+    for particao in psutil.disk_partitions():
+        dispositivo = {
+            'dispositivo':particao.device,
+            'ponto_de_montagem':particao.mountpoint,
+            'tipo':particao.fstype
+        }
+        dispositivos.append(dispositivo)
 
-print(buscar_arquivo_extraido())
+    return dispositivos
+
+listar_dispositivos_conectados = list_dispositivos()
+for dispositivo in listar_dispositivos_conectados:
+    print(f"Dispositivo:{dispositivo['dispositivo']}, Ponto de Montagem: {dispositivo['ponto_de_montagem']}, tipo: {dispositivo['tipo']}\n")"""

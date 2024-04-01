@@ -4,6 +4,7 @@ from PySide6 import QtCore
 from PySide6.QtWidgets import (QApplication,QMainWindow,QInputDialog,QMessageBox,QTableWidgetItem,QFileDialog,QMenu, QWidgetAction,
                                QPlainTextEdit, QPushButton, QVBoxLayout, QWidget, QSystemTrayIcon, QMenu)
 from ui_process_csv import Ui_ProcessCSV
+from functions.logs import App_logs
 from datetime import datetime
 from collections import defaultdict
 import pandas as pd
@@ -23,7 +24,12 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         appIcon = QIcon(u"img\\TECH NEW LOGO.png")
         self.setWindowIcon(appIcon)
         self.backup_history = []
-        
+            #LOGS ----------------------------------------------------------------------------------------------------------
+            # Obtém o nome do arquivo atual
+        self.file_name = os.path.splitext(os.path.basename(__file__))[0] if __name__ != "__main__" else "processamento"
+        self.path_logs = 'logs'
+        self.class_name = self.__class__.__name__
+        self.log = App_logs()
 
     #######################  BOTÕES  ##############################################################################
         self.comboBox_op_busca.currentIndexChanged.connect(self.combo_op_busca)
@@ -82,6 +88,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             #Define o caminho do arquivo dentro do QLineEdit
             self.txt_path_filecsv.setText(selected_file)
             self.txt_output_logs.appendPlainText(f"\nCaminho do arquivo selecionado:\n{selected_file}")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Caminho do arquivo selecionado:\n{selected_file}")
 
     #ABRE E PROCESSA O ARQUIVO CSV
     def processar_csv(self):
@@ -93,6 +100,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             self.txt_output_logs.appendPlainText("Erro: Usuário tentou processar, sem ter selecionado um arquivo antes.")
             self.update_label_info("Erro: Usuário tentou processar, sem ter selecionado um arquivo antes.")
             self.show_error_popup("Atenção!", "Não é possível processar antes do usuário selecionar o arquivo.csv")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro: Usuário tentou processar, sem ter selecionado um arquivo antes.")
         else:
             self.txt_output_logs.appendPlainText(f"\nProcessando arquivo CSV")
             try:
@@ -122,6 +130,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                         self.combo_Columns(head=self.header)
                         break  # Para a execução se a leitura for bem-sucedida
                     except Exception as e:
+                        self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro: {e}")
                         # Se ocorrer um erro, continue para tentar a próxima codificação
                         continue
 
@@ -129,8 +138,10 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                     # Se nenhuma codificação funcionar, mostra uma mensagem de erro
                     self.show_error_popup("Erro!", "Não foi possível abrir o arquivo CSV.")
                     self.update_label_info("Erro! Não foi possível abrir o arquivo CSV.")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro: Não foi possível abrir o arquivo CSV.")
             except Exception as e:
                 self.txt_output_logs.appendPlainText(f"Erro:\n{e}")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro: {e}")
                 self.update_label_info(f"Erro:\n{e}")
 
     #ABRE E PROCESSA O ARQUIVO JSON
@@ -145,6 +156,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         except FileNotFoundError:
             self.show_error_popup("Erro!", "Arquivo 'EXPIRED_NCM.json' não encontrado.")
             self.update_label_info("Erro!", "Arquivo 'EXPIRED_NCM.json' não encontrado.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro: Arquivo 'EXPIRED_NCM.json' não encontrado.")
 
     def processing_ncm_csv(self):
         path_csv = self.txt_path_filecsv.text()
@@ -161,6 +173,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                         # Se ocorrer um erro, continue para tentar a próxima codificação
                     continue
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro: Arquivo CSV não encontrado. {e}")
             self.show_error_popup("Erro!", "Arquivo csv não encontrado.")
             self.update_label_info(f"Erro! Arquivo csv não encontrado. {e}")
     
@@ -169,6 +182,8 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         path_csv = self.txt_path_filecsv.text()
         opcoes = self.comboBox_op_busca.currentText()
         self.txt_output_logs.appendPlainText(f"\nOpção selecionada: {opcoes}")
+        self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Opção selecionada: {opcoes}")
+
         if opcoes == '':
             self.show_error_popup("Erro!", f"É necessário selecionar uma das opções antes de realizar a busca.")
             self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")
@@ -177,6 +192,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         
         if path_csv == '':
             self.show_error_popup("Erro!", f"Não é possível usar essa funcionalidade sem antes ler o arquivo .csv")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Usuário tentou executar funcionalidade antes de carregar o arquivo")
             self.txt_output_logs.appendPlainText(f"Erro: Nenhuma opção de busca selecionada.")           
         else:
             if opcoes == 'Buscar por NCM':
@@ -204,6 +220,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         path_csv = self.txt_path_filecsv.text()
         opcoes = self.comboBox_op_processamentos.currentText()
         self.txt_output_logs.appendPlainText(f"Opção selecionada: {opcoes}")
+        self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Opção selecionada: {opcoes}")
 
         if opcoes == '':
             self.show_error_popup("Erro!", f"É necessário selecionar uma das opções antes de realizar a busca.")
@@ -290,6 +307,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
     def exetuc_process(self):
         opcoes = self.comboBox_op_processamentos.currentText()
         self.txt_output_logs.appendPlainText(f"Opção selecionada: {opcoes}")
+        self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Opção selecionada: {opcoes}")
 
         if opcoes == '':
             self.show_error_popup("Erro!", f"É necessário selecionar uma das opções antes de realizar a busca.")
@@ -334,11 +352,13 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             try:
                 col_ncm = next(i for i, col_name in enumerate(csv_data[0]) if col_name.lower() == nome_coluna.lower())
                 break  # Sai do loop se o índice da coluna for encontrado
-            except StopIteration:
+            except StopIteration as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro search_by_ncm: {e}")
                 continue  # Continua para o próximo nome de coluna se a atual não for encontrada
 
         if col_ncm is None:
             self.show_error_popup("Erro!", f"Nenhum dos nomes de coluna ({', '.join(possiveis_nomes_coluna)}) encontrado na planilha.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro: Nenhum dos nomes de coluna ({', '.join(possiveis_nomes_coluna)}) encontrado na planilha.")
             return
 
         # Filtra as linhas da planilha que contêm o NCM digitado pelo usuário
@@ -364,11 +384,14 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             try:
                 col_ncm = next(i for i, col_name in enumerate(csv_data[0]) if col_name.lower() == nome_coluna.lower())
                 break  # Sai do loop se o índice da coluna for encontrado
-            except StopIteration:
+            except StopIteration as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro: {e}")
                 continue  # Continua para o próximo nome de coluna se a atual não for encontrada
 
         if col_ncm is None:
             self.show_error_popup("Erro!", f"Nenhum dos nomes de coluna ({', '.join(possiveis_nomes_coluna)}) encontrado na planilha.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro: Nenhum dos nomes de coluna ({', '.join(possiveis_nomes_coluna)}) encontrado na planilha.")
+
             return
 
         # Filtra as linhas da planilha que contêm NCMs expirados
@@ -384,6 +407,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             self.tb_dados_csv.setColumnCount(0)
             self.txt_output_logs.appendPlainText("\nNenhum dado encontrado. Tabela limpa.")
             self.txt_lable_process.appendPlainText("Nenhum dado encontrado. Tabela limpa.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro update_table: Nenhum dado encontrado. Tabela limpa.")
             return
         
         num_rows = len(data)
@@ -405,6 +429,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             self.txt_output_logs.appendPlainText("Tabela atualizada com NCMs expirados.")
             self.update_label_info("Tabela atualizada com NCMs expirados.")
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro update_table: Erro ao atualizar tabela: {e}.")
             self.txt_output_logs.appendPlainText(f"Erro ao atualizar tabela: {e}")
             self.update_label_info(f"Erro ao atualizar tabela: {e}")
             self.show_error_popup("Erro!", f"Erro ao atualizar tabela: {e}")
@@ -432,6 +457,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                         if col_ncm is None:
                             print("Nenhuma coluna de NCM encontrada no arquivo CSV.")
                             self.txt_output_logs.appendPlainText("Nenhuma coluna de NCM encontrada no arquivo CSV.")
+                            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro update_ncm: Nenhuma coluna de NCM encontrada no arquivo CSV.")
 
                             return
 
@@ -472,16 +498,19 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                                     self.tb_dados_csv.setItem(row_idx, col_idx, item)
                         else:
                             print("Nenhuma linha modificada encontrada.")
+                            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Nenhuma linha modificada encontrada.")
                             self.txt_output_logs.appendPlainText("Nenhuma linha modificada encontrada.")
                             
                         # Saia do loop se os dados foram atualizados com sucesso
                         break
                     except Exception as e:
+                        self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro update_ncm: {e}")
                         # Se ocorrer um erro, continue para tentar a próxima codificação
                         continue
                 self.backup_process_csv()
             except Exception as e:
                 self.txt_output_logs.appendPlainText(f"Erro ao atualizar NCM: {e}")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao atualizar NCM: {e}")
                 self.update_label_info(f"Erro ao atualizar NCM: {e}")
                 print(f"Erro ao atualizar NCM: {e}")
 
@@ -494,6 +523,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         if ',' in dado_entrada1 or ',' in dado_entrada2:
             self.show_error_popup("Atenção!", "Não é permitido o uso de vírgula.\nO formato aceitável exemplo: 0.0")
             self.update_label_info("Atenção! Não é permitido o uso de vírgula. O formato aceitável exemplo: 0.0")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Atenção! Não é permitido o uso de vírgula. O formato aceitável exemplo: 0.0")
         else:
             reply = QMessageBox.question(None, "Atenção!", "Tem certeza dessa alteração", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if reply == QMessageBox.Yes:
@@ -569,6 +599,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                     self.tb_dados_csv.setItem(row_idx, col_idx, item)
         else:
             print("Nenhum resultado encontrado.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"tudo_que_contém: Nenhum resultado encontrado.")
 
     def process_tudo_que_contem(self):
         data1 = self.txt_alt_NCM1.text()
@@ -599,10 +630,12 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
 
                         self.update_table_process(linhas_atualizadas)
                     except Exception as e:
+                        self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro process_tudo_que_contem: {e}")
                             # Se ocorrer um erro, continue para tentar a próxima codificação
                         continue
                 
             except Exception as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro process_tudo_que_contem: Erro ao gravar dados no arquivo CSV: {e}")
                 self.txt_output_logs.appendPlainText(f"Erro ao gravar dados no arquivo CSV: {e}")
                 print(f"Erro ao gravar dados no arquivo CSV: {e}")
 
@@ -622,9 +655,11 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                     duplicatas = df[df.duplicated(keep=False)]
                     self.update_table_duplicate_data(df)
                 except Exception as e:
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro buscar_dados_duplicados: {e}")
                     # Se ocorrer um erro, continue para tentar a próxima codificação
                     continue
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro buscar_dados_duplicados: Erro ao ao tentar processar o arquivo. {e}")
             self.show_error_popup("Erro!", f"Erro ao ao tentar processar o arquivo. {e}")
             self.update_label_info(f"Erro! Erro ao ao tentar processar o arquivo. {e}")
             print(f"Erro ao ao tentar processar o arquivo. {e}")
@@ -671,9 +706,11 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                                 print("DataFrame carregado com sucesso:")
                                 print(df)
                         except Exception as e:
+                            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro remover_duplicatas_arquivo_csv: {e}")
                             # Se ocorrer um erro, continue para tentar a próxima codificação
                             continue
                 except Exception as e:
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro remover_duplicatas_arquivo_csv: Erro ao carregar o arquivo CSV: {e}")
                     self.show_error_popup("Erro!", f"Erro ao carregar o arquivo CSV: {e}")
                     self.update_label_info(f"Erro! Erro ao carregar o arquivo CSV: {e}")
                     print(f"Erro ao carregar o arquivo CSV: {e}")
@@ -702,10 +739,12 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                             df.to_csv(self.path_csv, index=False, sep=';', encoding=encoding)
                             print("Arquivo CSV atualizado com sucesso.")
                         except Exception as e:
+                            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro remover_duplicatas_arquivo_csv: {e}")
                             # Se ocorrer um erro, continue para tentar a próxima codificação
                             continue
 
                 except Exception as e:
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro remover_duplicatas_arquivo_csv: Erro ao salvar o arquivo CSV: {e}")
                     self.update_label_info(f"Erro ao salvar o arquivo CSV: {e}")
                     print(f"Erro ao salvar o arquivo CSV: {e}")
                     return
@@ -745,6 +784,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             self.update_label_info("Todos os dados negativos foram removidos com sucesso!")
             self.processar_csv()
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro valores_negativos : Erro ao tentar remover os dados negativos: {e}")
             self.update_label_info(f"Erro ao tentar remover os dados negativos: {e}")
             print(f"Erro: {e}")
 
@@ -807,7 +847,9 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                     print("Formato de arquivo não suportado.")
                     self.show_error_popup("Atenção!", "Formato de arquivo não suportado.")
                     self.update_label_info("Atenção! Formato de arquivo não suportado.")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro salvar_dados_filtrados: Formato de arquivo não suportado.")
             except Exception as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro salvar_dados_filtrados: Erro ao salvar o arquivo: {e}")
                 self.show_error_popup("Atenção!", f"Erro ao salvar o arquivo: {e}")
                 self.update_label_info(f"Erro ao salvar o arquivo:\n{e}")
                 print(f"Erro ao salvar o arquivo: {e}")
@@ -824,10 +866,12 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
             
             print("Dados gravados com sucesso no arquivo CSV.")
             self.txt_output_logs.appendPlainText("Dados gravados com sucesso no arquivo CSV.")
-            self.update_label_info(f"Dados gravados com sucesso no arquivo CSV.") 
+            self.update_label_info(f"Dados gravados com sucesso no arquivo CSV.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro salvar_dados_filtrados: Dados gravados com sucesso no arquivo CSV.") 
             
             
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro salvar_dados_filtrados: Erro ao gravar dados no arquivo CSV: {e}")
             self.txt_output_logs.appendPlainText(f"Erro ao gravar dados no arquivo CSV: {e}")
             self.update_label_info(f"Erro ao gravar dados no arquivo CSV: {e}")
             print(f"Erro ao gravar dados no arquivo CSV: {e}")
@@ -876,9 +920,11 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 except Exception as e:
                     self.txt_output_logs.appendPlainText(f"Erro: {e}")
                     self.update_label_info(f"Erro: {e}")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"update_table_restore Erro: {e}")
         except Exception as e:
             self.txt_output_logs.appendPlainText(f"Erro: {e}")
             self.update_label_info(f"Erro: {e}")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"update_table_restore Erro: {e}")
 
 
     def backup_process_csv(self):
@@ -896,6 +942,7 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
         except Exception as e:
             self.txt_output_logs.appendPlainText(f"Erro ao criar backup do arquivo CSV: {e}")
             print(f"Erro ao criar backup do arquivo CSV: {e}")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"backup_process_csv Erro: Erro ao criar backup do arquivo CSV: {e}")
 
     def restore_backup(self):
         if self.backup_history:
@@ -911,8 +958,10 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
                 self.backup_history.pop()
             except Exception as e:
                 self.txt_output_logs.appendPlainText(f"Erro ao restaurar arquivo CSV: {e}")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"restore_backup Erro: Erro ao restaurar arquivo CSV: {e}")
         else:
             self.txt_output_logs.appendPlainText("Não há backups para restaurar.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"restore_backup Erro: Não há backups para restaurar.")
 
 
 if __name__ == '__main__':

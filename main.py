@@ -8,6 +8,7 @@ from processarmento import Processing_CSV
 from win_result import SQLWindown
 from functions.conect import Erros
 from functions.data import SQLite_Data
+from functions.logs import App_logs
 from functions import conect
 from openpyxl import Workbook
 import subprocess
@@ -59,13 +60,20 @@ def lists_servers():
     return processos_str
 
 class Manger_Connect:
+    def __init__(self):
+            # Obtém o nome do arquivo atual
+        self.file_name = os.path.splitext(os.path.basename(__file__))[0] if __name__ != "__main__" else "processamento"
+        self.path_logs = 'logs'
+        self.class_name = self.__class__.__name__
+        self.log = App_logs()
     def conect_db(self):
         self.conn = sqlite3.connect('venv\\Lib\\site-packages\\_m\\file\\file\\u\\mu\\u.db')
         self.cursor = self.conn.cursor()
     def conect_close(self):
         try:
             self.conn.close()
-        except:
+        except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro:{e}")
             pass
     #CONECTA A DATABASE TECH_TOOLS E DEMAIS FUNÇÕES DESSE BANCO ####################################
     def contect_techtools(self):
@@ -83,7 +91,8 @@ class Manger_Connect:
                 v = v[0]
             return v
         except Exception as e:
-            print(e)
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro:{e}")
+            pass
     ####################################################################################################
     def create_user(self,user,password,tipo):
         try:
@@ -92,6 +101,7 @@ class Manger_Connect:
             cursor.connection.commit()
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao executar a query:{e}")
             print("Erro ao executar a query:", e)
             return None
         
@@ -102,6 +112,7 @@ class Manger_Connect:
             resp = cursor.fetchall()
             return resp
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao executar a query:{e}")
             print("Erro ao executar a query:", e)
             return None
         
@@ -112,6 +123,7 @@ class Manger_Connect:
             resp = cursor.fetchall()
             return resp
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao executar a query:{e}")
             print("Erro ao executar a query:", e)
             return None    
 
@@ -122,6 +134,7 @@ class Manger_Connect:
             resp = cursor.fetchall()
             return resp
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao executar a query:{e}")
             print("Erro ao executar a query:", e)
             return None   
 
@@ -132,6 +145,7 @@ class Manger_Connect:
             resp = cursor.fetchall()
             return resp
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao executar a query:{e}")
             print("Erro ao executar a query:", e)
             return None   
 
@@ -142,6 +156,7 @@ class Manger_Connect:
             resp = cursor.fetchall()
             return resp
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao executar a query:{e}")
             print("Erro ao executar a query:", e)
             return None   
 
@@ -153,6 +168,7 @@ class Manger_Connect:
             self.conn.commit()
             return ("OK")
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao executar a query:{e}")
             print("Erro ao executar a query:", e)
             return ("ERRO")             
                 
@@ -167,6 +183,7 @@ class Manger_Connect:
             self.conn.commit()
             return ("OK")
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao executar a query:{e}")
             print("Erro ao executar a query:", e)
             return ("ERRO")          
 
@@ -178,6 +195,7 @@ class Manger_Connect:
             self.conn.commit()
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao executar a query:{e}")
             print("Erro ao executar a query:", e)
             return "ERRO"
         
@@ -189,8 +207,10 @@ class Manger_Connect:
             cursor.execute(query, (user_id,))
             self.conn.commit()
             print("Usuário deletado com sucesso.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Usuário deletado com sucesso.")
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao deletar usuário:{e}")
             print(f"Erro ao deletar usuário: {e}")
             return "ERRO"
     def delete_login(self, user_id):
@@ -200,9 +220,11 @@ class Manger_Connect:
             query = f"DELETE FROM MANAGER_PASS WHERE ID = ?"
             cursor.execute(query, (user_id,))
             self.conn.commit()
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Usuário deletado com sucesso.")
             print("Usuário deletado com sucesso.")
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao deletar usuário:{e}")
             print(f"Erro ao deletar usuário: {e}")
             return "ERRO"
     
@@ -229,7 +251,11 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         self.bt_mostrar_tabelas.setVisible(False)
         self.tooltip_sqlite.setVisible(False)
         self.bt_tela_bkp.setVisible(False)
-
+            # Obtém o nome do arquivo atual
+        self.file_name = os.path.splitext(os.path.basename(__file__))[0] if __name__ != "__main__" else "processamento"
+        self.path_logs = 'logs'
+        self.class_name = self.__class__.__name__
+        self.log = App_logs()
 
         self.check_user_login()
         self.show_printers()
@@ -375,17 +401,15 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
     def verificar_atualizacoes(self):
         # URL da API do GitHub para acessar os lançamentos do repositório
         url = "https://api.github.com/repos/EduardoFerreira22/Tech_Tools/releases"
-        token = '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'
-
-        headers = {'Authorization': f'token {token}'}
 
         try:
             # Faz uma solicitação HTTP para a API do GitHub
-            r = requests.get(url, headers=headers)
+            r = requests.get(url)
 
             # Verifica se a solicitação foi bem-sucedida
             if r.status_code != 200:
                 print("Erro ao acessar a API do GitHub.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao acessar a API do GitHub.{r.status_code}")
                 return
 
             # Analisa a resposta em formato JSON
@@ -394,6 +418,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             # Verifica se há lançamentos disponíveis
             if not releases:
                 print("Sem atualizações disponíveis.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Sem atualizações disponíveis.")
                 return
 
 
@@ -421,6 +446,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 
 
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro: {e}")
             print(f"Erro: {e}")
     
     #FUNÇÃO PARA ESCONDER A BARRA DE MENU LATERAL
@@ -467,6 +493,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             # Se for 'SQLite3', torna o botão visível
             self.bt_conectar_db_4.setVisible(True)
             self.output_query.appendPlainText("IBExpert selecionado com sucesso!")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"IBExpert selecionado com sucesso!")
             self.txt_port_db.setVisible(False)
         else:
             # Caso contrário, torna o botão invisível
@@ -476,6 +503,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         if selected_data == 'SQLite3':
             # Se for 'Firebird', torna os elementos visíveis
             self.output_query.appendPlainText("Opção SQLite selecionado com sucesso!")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Opção SQLite selecionado com sucesso!")
             self.tooltip_sqlite.setVisible(True)
             self.txt_server_db_2.clear()
             self.txt_server_db_2.setVisible(True)
@@ -492,10 +520,13 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
         if selected_data == 'PostgreSQL':
             self.txt_port_db.setVisible(True)
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Opção PostgreSQL selecionado com sucesso!")
         elif selected_data == 'MySQL':
             self.txt_port_db.setVisible(True)
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Opção MySQL selecionado com sucesso!")
         elif selected_data == 'SQL Server':
             self.txt_port_db.setVisible(False)
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Opção SQL Server selecionado com sucesso!")
 
     
     def check_cache(self):
@@ -508,6 +539,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     return user_cache
         else:
             print('não foi possível retornar o cache')
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"não foi possível retornar o cache")
             pass    
     
     def get_type_ac(self):
@@ -530,6 +562,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         password = self.txt_pass_db.text()
         if server == '' and database == '' and user == '' and password == '':
             self.show_error_popup("Erro!","É necessário que todos os campos estejam preenchidos.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro! É necessário que todos os campos estejam preenchidos.")
             self.output_query.appendPlainText(f"Erro! dados incompletos.")
         else:
             msg1 = "Conectado com Sucesso!"
@@ -541,8 +574,10 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             
             if resp == 'OK':
                 self.output_query.appendPlainText(f"{msg1}")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"{msg1}")
             elif resp == 'ERRO':
                 self.output_query.appendPlainText(f"Erro: {msg2}")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro: {msg2}")
 
             self.msg_popup(resp,msg1,msg2)
             
@@ -558,6 +593,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             if server == '' and database == '' and user == '':
                 self.output_query.appendPlainText(f"Erro! dados incompletos.")
                 self.show_error_popup("Erro!","É necessário que todos os campos estejam preenchidos.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro! É necessário que todos os campos estejam preenchidos.")
             
             else:
                 msg1 = "Conectado com Sucesso!"
@@ -571,8 +607,10 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
                 if resp == 'OK':
                     self.output_query.appendPlainText(f"{msg1}")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"{msg1}")
                 elif resp == 'ERRO':
-                    self.output_query.appendPlainText(f"Erro: {msg2}")                
+                    self.output_query.appendPlainText(f"Erro: {msg2}")   
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"{msg2}")             
                 self.msg_popup(resp,msg1,msg2)
 
     def conectar_ao_PostgreSQL(self):
@@ -585,6 +623,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
         if server == '' and database == '' and user == '' and password == '':
             self.show_error_popup("Erro!","É necessário que todos os campos estejam preenchidos.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro! É necessário que todos os campos estejam preenchidos.")
             self.output_query.appendPlainText(f"Erro! dados incompletos.")
         else:
             msg1 = "Conectado com Sucesso!"
@@ -597,8 +636,10 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             
             if resp == 'OK':
                 self.output_query.appendPlainText(f"{msg1}")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"{msg1}")
             elif resp == 'ERRO':
                 self.output_query.appendPlainText(f"Erro: {msg2}")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"{msg2}")
 
             self.msg_popup(resp,msg1,msg2)
             
@@ -625,6 +666,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         if caminho == '':
             self.output_query.appendPlainText(f"Erro! dados incompletos.")
             self.show_error_popup("Erro!","Não foi possível identificar o caminho para o banco de dados\nConexão não realizada.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro! Não foi possível identificar o caminho para o banco de dados Conexão não realizada.")
         else:
             print(f"Caminho do Banco de Dados: {caminho}")  # Adicione esta linha para depurar
             resp = self.conn3.conectar_sqlite3_db(caminho)
@@ -640,8 +682,10 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 self.msg_popup(resp, msg1, msg2)
                 if resp == 'OK':
                     self.output_query.appendPlainText(f"{msg1}")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"{msg1}")
                 elif resp == 'ERRO':
                     self.output_query.appendPlainText(f"Erro: {msg2}")   
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"{msg2}")
             return self.conn3  # Retorna o objeto de conexão em vez da string 'OK'
 
    
@@ -682,6 +726,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             print(databases)
             return databases
         except pyodbc.Error as err:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro ao conectar ao SQL Server: {err}")
             print("Erro ao conectar ao SQL Server:", err)
             return []
 
@@ -726,6 +771,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     comando_backup = f'mysqldump -u {user} -p{password} {nome_banco} > {directory}'
                 else:
                     self.output_log_bkp_rest.appendPlainText("Tipo de banco de dados inválido")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"backup_database - Tipo de banco de dados inválido")
                     print("Tipo de banco de dados inválido.")
                     return
 
@@ -734,14 +780,19 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     output = subprocess.run(comando_backup, shell=True, check=True, capture_output=True, text=True)
                     self.output_log_bkp_rest.appendPlainText(output.stdout)
                     self.output_log_bkp_rest.appendPlainText(f"Arquivo selecionado para backup: {directory}")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"backup_database Arquivo selecionado para backup: {directory}")
                     self.output_log_bkp_rest.appendPlainText("Backup realizado com sucesso!")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"backup_database Backup realizado com sucesso!")
                     
                 except subprocess.CalledProcessError as e:
                     self.output_log_bkp_rest.appendPlainText(f"Erro ao realizar o backup: {e.stderr}")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"backup_database - Erro ao realizar o backup: {e.stderr}")
                 except Exception as e:
                     self.output_log_bkp_rest.appendPlainText(f"Erro inesperado: {e}")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"backup_database - Erro inesperado: {e}")
                     print(f"Erro inesperado: {e}")
             except Exception as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"backup_database - Erro: {e}")
                 pass
             print(f"Arquivo selecionado para backup: {directory}")
 
@@ -767,10 +818,12 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         password = self.txt_pass_db.text()
         self.output_log_bkp_rest.appendPlainText(f"Iniciando...")
         self.output_log_bkp_rest.appendPlainText(f"Caminho Data Base selecionado:\n{backup_file}")
+        self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"restaure_database - Caminho Data Base selecionado:{backup_file}")
         if tipo_banco.lower() == 'sqlserver':
             # Extrair o nome do arquivo sem a extensão
             nome_banco = os.path.splitext(os.path.basename(backup_file))[0]
             self.output_log_bkp_rest.appendPlainText(f"Data Base: {nome_banco}")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"restaure_database - Data Base: {nome_banco}")
             print(nome_banco)
         else:
             nome_banco = None
@@ -782,12 +835,14 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 comando_restauracao = f'mysql -u {user} -p{password} {nome_banco} < {backup_file}'
             else:
                 self.output_log_bkp_rest.appendPlainText("Tipo de banco de dados inválido.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"restaure_database - Tipo de banco de dados inválido.")
                 print("Tipo de banco de dados inválido.")
                 return
 
             try:
                 subprocess.run(comando_restauracao, shell=True, check=True)
                 print("Restauração realizada com sucesso!")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"restaure_database - Restauração realizada com sucesso!")
 
                 # Exibir os dados de saída no output de logs
                 output_log = f"Restauração realizada com sucesso!\n"
@@ -795,11 +850,14 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 self.output_log_bkp_rest.appendPlainText(output_log)
             except subprocess.CalledProcessError as e:
                 print(f"Erro ao realizar a restauração: {e}")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"restaure_database - Erro ao realizar a restauração: {e}")
             except Exception as e:
                 self.output_log_bkp_rest.appendPlainText(f"Erro inesperado: {e}")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"restaure_database - Erro inesperado: {e}")
 
         except Exception as e:
             self.output_log_bkp_rest.appendPlainText(f"Erro ao restaurar o banco de dados: {e}")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"restaure_database - Erro ao restaurar o banco de dados: {e}")
 
     def open_secondary_window(self):
         self.secondary_window = SQLWindown()  # Instanciando a tela secundária
@@ -815,6 +873,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     return cache
         else:
             print("Arquivo de cache não encontrado.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"restaure_database - Arquivo de cache não encontrado.")
 
     def query(self):
         error = Erros()
@@ -832,16 +891,20 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 self.execute_PostgreSQL_query(query_value)
             else:
                 self.output_query.appendPlainText("Banco de dados selecionado não suportado.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query - Banco de dados selecionado não suportado.")
                 print("Banco de dados selecionado não suportado.")
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query - Erro:{e}")
             error.show_error_popup(str(e))
 
     def execute_sql_server_query(self, query):
         try:
             if "DROP" in query.strip().upper():
                 self.output_query.appendPlainText("Para garantir a integridade do banco de dados\nA operação 'DROP' não será permitida permitida.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_sql_server_query - Para garantir a integridade do banco de dados A operação 'DROP' não será permitida permitida.")
             elif "--" in query.strip():  # Verifica se há comentários na consulta
                 self.output_query.appendPlainText("** Comentários não são permitidos na consulta. **")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_sql_server_query - ** Comentários não são permitidos na consulta. ** - ACAO: Retire os comentários da query")
             else:
                 self.conn1.cursor.execute(query)
                 if query.strip().upper().startswith('SELECT'):
@@ -851,16 +914,21 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 else:
                     self.conn1.conn.commit()
                     self.output_query.appendPlainText("Comando SQL Server executado com sucesso.")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_sql_server_query - Comando SQL Server executado com sucesso")
         except Exception as e:
             self.output_query.appendPlainText("Erro ao executar o comando SQL Server: " + str(e))
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_sql_server_query - Erro ao executar o comando SQL Server: {e}")
 
 
     def execute_mysql_query(self, query):
         try:
             if "DROP" in query.strip().upper():
                 self.output_query.appendPlainText("Para garantir a integridade do banco de dados\nA operação 'DROP' não será permitida permitida.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_mysql_query - Para garantir a integridade do banco de dados A operação 'DROP' não será permitida permitida.")
+
             elif "--" in query.strip():  # Verifica se há comentários na consulta
                 self.output_query.appendPlainText("** Comentários não são permitidos na consulta. **")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_mysql_query - ** Comentários não são permitidos na consulta. ** - ACAO: Retire os comentários da query")
             else:
                 self.conn2.cursor.execute(query)
                 if query.strip().upper().startswith('SELECT'):
@@ -870,16 +938,23 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 else:
                     self.conn2.conn.commit()
                     self.output_query.appendPlainText("Comando MySQL executado com sucesso.")
+                    
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_mysql_query - Comando SQL Server executado com sucesso")
         except Exception as e:
             self.output_query.appendPlainText("Erro ao executar o comando MySQL: " + str(e))
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_mysql_query - Erro ao executar o comando SQL Server: {e}")
 
 
     def execute_sqlite_query(self, query):
         try:
             if "DROP" in query.strip().upper():
                 self.output_query.appendPlainText("Para garantir a integridade do banco de dados\nA operação 'DROP' não será permitida permitida.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_sqlite_query - Para garantir a integridade do banco de dados A operação 'DROP' não será permitida permitida.")
+
             elif "--" in query.strip():  # Verifica se há comentários na consulta
                 self.output_query.appendPlainText("** Comentários não são permitidos na consulta. **")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_sqlite_query - ** Comentários não são permitidos na consulta. ** - ACAO: Retire os comentários da query")
+
             else:
                 cache = self.buscar_cache()
                 if cache:
@@ -893,18 +968,24 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
                         self.conn3.conn.commit()
                         self.output_query.appendPlainText("Comando SQLite executado com sucesso.")
+                        self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_sqlite_query - Comando SQL Server executado com sucesso")
+
                 else:
                     self.output_query.appendPlainText("Nenhum caminho de banco de dados SQLite encontrado no arquivo de cache.")
         except Exception as e:
             self.output_query.appendPlainText("Erro ao executar o comando SQLite: " + str(e))
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_sqlite_query - Erro ao executar o comando SQL Server: {e}")
 
 
     def execute_PostgreSQL_query(self, query):
         try:
             if "DROP" in query.strip().upper():
                 self.output_query.appendPlainText("Para garantir a integridade do banco de dados\nA operação 'DROP' não será permitida permitida.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_PostgreSQL_query - Para garantir a integridade do banco de dados A operação 'DROP' não será permitida permitida.")
+
             elif "--" in query.strip():  # Verifica se há comentários na consulta
                 self.output_query.appendPlainText("** Comentários não são permitidos na consulta. **")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_PostgreSQL_query - ** Comentários não são permitidos na consulta. ** - ACAO: Retire os comentários da query")
             else:
                 self.conn4.cursor.execute(query)
                 if query.strip().upper().startswith('SELECT'):
@@ -914,11 +995,13 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 else:
                     self.conn4.conn.commit()
                     self.output_query.appendPlainText("Comando PostgreSQL executado com sucesso.")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_PostgreSQL_query - Comando SQL Server executado com sucesso")
 
                 self.conn4.cursor.close()
 
         except Exception as e:
             self.output_query.appendPlainText("Erro ao executar o comando PostgreSQL: " + str(e))
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execute_PostgreSQL_query - Erro ao executar o comando SQL Server: {e}")
 
 
     def display_query_results(self, column_names, data):
@@ -927,6 +1010,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             self.secondary_window.update_table_data(column_names, data)
         else:
             print("Tela secundária não foi inicializada corretamente.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"display_query_results - Tela secundária não foi inicializada corretamente.")
 
             # Mostrar a saída da consulta no QPlainTextEdit
             self.output_query.appendPlainText("Resultado da consulta:")
@@ -942,6 +1026,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             resp = self.conn1.cursor.fetchall()
             return resp
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"tables_SqlServer - Erro: {e}")
             print(e)
 
     def tables_MySQL(self):
@@ -953,6 +1038,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             resp = self.conn2.cursor.fetchall()
             return resp
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"tables_MySQL - Erro: {e}")
             print(e)
         
     def tables_PostgreSQL(self):
@@ -965,6 +1051,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             resp = self.conn4.cursor.fetchall()
             return resp
         except psycopg2.Error as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"tables_PostgreSQL - Erro ao buscar tabelas: {e}")
             print(f"Erro ao buscar tabelas: {e}")
             return []
 
@@ -976,6 +1063,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             resp = self.conn3.cursor.fetchall()
             return resp
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"tables_SQLite3 - Erro: {e}")
             print(e)
 
     def showTables_in_Table(self, tables):
@@ -993,7 +1081,8 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 self.tableWidget_show_tables.setItem(row_idx, 0, item)
         else:
             print("Nenhuma tabela encontrada.")
-            # Adicione aqui qualquer ação que você deseja executar caso nenhuma tabela seja encontrada
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"showTables_in_Table - Nenhuma tabela encontrada.")
+ 
 
 
     def execut_i(self):
@@ -1028,6 +1117,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             subprocess.run([caminho_executavel])
         else:
             self.show_error_popup("Erro!","Executável não encontrado.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"Erro! Executável não encontrado.")
 
     def showContextMenu(self, position):
         # Obter posição da célula clicada
@@ -1064,7 +1154,9 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     self.secondary_window.update_table_data(column_names,resp)  
                 else:
                     print("Tela secundária não foi inicializada corretamente.")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query_table_list -  Tela secundária não foi inicializada corretamente")
             except Exception as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query_table_list -  Erro:{e}")
                 error.show_error_popup(str(e)) 
                 print(e) 
 
@@ -1080,7 +1172,9 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     self.secondary_window.update_table_data(column_names,resp)  
                 else:
                     print("Tela secundária não foi inicializada corretamente.")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query_table_list -  Tela secundária não foi inicializada corretamente.")
             except Exception as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query_table_list -  Erro:{e}")
                 error.show_error_popup(str(e))
                 print(e)
 
@@ -1098,7 +1192,9 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     self.secondary_window.update_table_data(column_names, resp)  
                 else:
                     print("Tela secundária não foi inicializada corretamente.")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query_table_list - Tela secundária não foi inicializada corretamente.")
             except Exception as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query_table_list -  Erro:{e}")
                 error.show_error_popup(str(e))
                 print(e)
 
@@ -1118,9 +1214,12 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                         self.secondary_window.update_table_data(column_names, res)
                     else:
                         print("Tela secundária não foi inicializada corretamente.")
+                        self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query_table_list -  Tela secundária não foi inicializada corretamente.")
                 else:
                     print("Nenhum caminho de banco de dados SQLite encontrado no arquivo de cache.")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query_table_list -  Nenhum caminho de banco de dados SQLite encontrado no arquivo de cache.")
             except Exception as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query_table_list -  Erro:{e}")
                 resp = e
 
     
@@ -1141,6 +1240,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 self.table_printers.setItem(i, 0, item)
         else:
             print("Nenhuma impressora encontrada ou erro ao recuperar dados.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"show_printers - Nenhuma impressora encontrada ou erro ao recuperar dados.")
 
     def select_line_table(self, row):
         conn = SQLite_Data()
@@ -1210,7 +1310,8 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 item = QTableWidgetItem(printer[0])
                 self.table_arquivos.setItem(i, 0, item)
         else:
-            print("Nenhuma impressora encontrada ou erro ao recuperar dados.")
+            print("Nenhuma instalador encontrado ou erro ao recuperar dados.")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"show_instadores - Nenhuma instalador encontrado ou erro ao recuperar dados.")
 
     def select_line_instalers(self, row):
         conn = SQLite_Data()
@@ -1390,6 +1491,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                         self.tableWidget_user_login.setItem(i, j, item)
             else:
                 print("Nenhum login encontrado ou erro ao recuperar dados.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"check_user_login - Nenhum login encontrado ou erro ao recuperar dados.")
 
         elif self.radioButton_user.isChecked():
             self.comboBox_tipo.setVisible(True)
@@ -1417,6 +1519,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                         self.tableWidget_user_login.setItem(i, j, item)
             else:
                 print("Nenhum usuário encontrado ou erro ao recuperar dados.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"check_user_login - Nenhum usuário encontrado ou erro ao recuperar dados.")
 
     #obtém o nome do usuário ao clicar na linha
     def select_line_user_login(self, index):
@@ -1464,6 +1567,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         if self.radioButton_login.isChecked():
             if user == '' or senha == '':
                 self.show_error_popup('Atenção!', 'É necessário que todos os campos estejam preenchidos.')
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"create_new_login_user - Atenção! É necessário que todos os campos estejam preenchidos.")
             else:
                 try:
                     msg1 = "Login cadastrado com Sucesso!"
@@ -1474,12 +1578,14 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     self.msg_popup(resp, msg1, msg2)
                     self.check_user_login()
                 except Exception as e:
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"create_new_login_user - Erro:{e}")
                     print(e)
                     pass
 
         elif self.radioButton_user.isChecked():
             if user == '' or senha == '':
                 self.show_error_popup('Atenção!', 'É necessário que todos os campos estejam preenchidos.')
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"create_new_login_user - Atenção! É necessário que todos os campos estejam preenchidos.")
             else:
                 try:
                     if tipo_user == 'User':
@@ -1496,6 +1602,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     self.msg_popup(resp,msg1,msg2) 
                     self.check_user_login()  
                 except Exception as e:
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"create_new_login_user - Erro:{e}")
                     print(e)
                     pass
 
@@ -1509,6 +1616,8 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
         if self.radioButton_login.isChecked():
             if id_user == ''  or user == '' or senha == '':
                 self.show_error_popup('Atenção!', 'É necessário que ao menos os campos ID, USER E SENHA\nsejam preenchidos corretamente')
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"alter_login_user - Atenção! É necessário que ao menos os campos ID, USER E SENHA sejam preenchidos corretamente")
+
             else:
                 try:
                     msg1 = "Login cadastrado com Sucesso!"
@@ -1519,11 +1628,14 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     self.msg_popup(resp, msg1, msg2)
                     self.check_user_login()
                 except Exception as e:
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"alter_login_user - Erro:{e}")
                     print(e)
                     pass
         elif self.radioButton_user.isChecked():
             if id_user == ''  or user == '' or senha == '':
                 self.show_error_popup('Atenção!', 'É necessário que todos os campos estejam preenchidos.')
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"alter_login_user - Atenção! É necessário que todos os campos estejam preenchidos.")
+
             else:
                 try:
                     if tipo_user == 'User':
@@ -1540,6 +1652,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     self.msg_popup(resp,msg1,msg2)   
                     self.check_user_login()
                 except Exception as e:
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"alter_login_user - Erro:{e}")
                     print(e)
                     pass
 
@@ -1567,6 +1680,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     self.msg_popup(resp, msg1, msg2)
                     self.check_user_login()
                 except Exception as e:
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"delete_user_login - Erro:{e}")
                     print(e)
                     pass
             elif self.radioButton_user.isChecked():
@@ -1579,6 +1693,7 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                     self.msg_popup(resp, msg1, msg2) 
                     self.check_user_login()  
                 except Exception as e:
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"delete_user_login - Erro:{e}")
                     print(e)
                     pass
 
@@ -1597,7 +1712,8 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
             ncm_filtradas = self.nomenclaturas_vigentes + self.nomenclaturas_expiradas
             self.atualiza_tabela_ncm(ncm_filtradas)  # Preenche a tabela com os dados carregados
 
-        except FileNotFoundError:
+        except FileNotFoundError as fe:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"carregar_dados_ncm - Erro! Arquivos 'NCM.json' e 'EXPIRED_NCM.json' não encontrados.\nErro: {fe}")
             self.show_error_popup("Erro!", "Arquivos 'NCM.json' e 'EXPIRED_NCM.json' não encontrados.")
 
     #FILTRA OS DADOS DIGITADOS PELO USUÁRIO
@@ -1664,12 +1780,14 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
                 ncm_bd = self.conn1.cursor.fetchall()
                 print(ncm_bd)
             except Exception as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"buscar_ncm_inDataBases - Erro! Conexão não estabelecida com a Base de Dados!\n{e}")
                 self.show_error_popup("Erro!",f"Conexão não estabelecida com a Base de Dados!\n{e}")
         elif select_data == 'Hiper':
             try:
                 self.conn1.cursor.execute(query2)
                 ncm_bd = self.conn1.cursor.fetchall()
             except Exception as e:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"buscar_ncm_inDataBases - Erro! Conexão não estabelecida com a Base de Dados!\n{e}")
                 self.show_error_popup("Erro!",f"Conexão não estabelecida com a Base de Dados!\n{e}")
 
         else:
@@ -1698,7 +1816,8 @@ class MainWindow(QMainWindow, Ui_MainWindow,Manger_Connect):
 
                 # Converte o dicionário de volta para uma lista de dicionários
                 filtered_expired_ncms = list(ncm_dict.values())
-        except FileNotFoundError:
+        except FileNotFoundError as fe:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"buscar_ncm_inDataBases - Erro! Arquivo 'EXPIRED_NCM.json' não encontrado.\n{fe}")
             self.show_error_popup("Erro!", "Arquivo 'EXPIRED_NCM.json' não encontrado.")
             filtered_expired_ncms = []
 
@@ -1796,6 +1915,12 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         self.read_saved_data()
         self.time = QTimer()
         self.time.timeout.connect(self.clean_logs)
+
+            # Obtém o nome do arquivo atual
+        self.file_name = os.path.splitext(os.path.basename(__file__))[0] if __name__ != "__main__" else "processamento"
+        self.path_logs = 'logs'
+        self.class_name = self.__class__.__name__
+        self.log = App_logs()
         
         path_scripts_tables = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db.sql"
         path_data = "venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db"
@@ -1842,6 +1967,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
                             print(v_db)
                             return v_db    
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"version_txt - Erro:{e}")
             print(f"Erro:\n{e}")
 
     def versions(self,name_data):
@@ -1856,6 +1982,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             return version
             
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"versions - Erro:{e}")
             print(f"Erro: {e}")        
 
     def execut_scripts(self,name_data,update_scripts):
@@ -1875,7 +2002,9 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
                 print("Arquivo removido com sucesso!")
             except Exception as e:
                     print(f"Erro ao tentar deletar arquivo:\n{e}")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execut_scripts - Erro ao tentar deletar arquivo:{e}")
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execut_scripts - Erro ao tentar deletar arquivo:{e}")
             print(f"Erro: {e}")        
 
     def verify_existence_data(self, path_scripts, name_data, update, path_txt, path_user):
@@ -1917,6 +2046,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
                     pass
             
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"verify_existence_data - Erro:{e}")
             print(f"Erro!: {e}")
     
     def update_version(self, update):
@@ -1950,8 +2080,10 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
                 cursor.executescript(update)
                 conn.commit()
                 print("Os dados da versão já existem.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"insert_version - Os dados da versão já existem.")
 
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"insert_version - Erro:{e}")
             print(f"Erro: {e}")
 
 
@@ -1960,8 +2092,10 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             conn = sqlite3.connect(path_user)
             conn.close()
             print("Data base user criada com sucesso!")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"create_dataBase_user - Data base user criada com sucesso!")
         except Exception as e:
             print(f"Erro ao criar a Data Base: {e}")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"create_dataBase_user - Erro ao criar a Data Base: {e}")
 
 
     def create_dataBase(self, path_data, progress_dialog):
@@ -1977,6 +2111,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
                 time.sleep(0.1)  # Intervalo de 100 milissegundos entre atualizações
             progress_dialog.progress_bar.setValue(100)
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"create_dataBase - Erro ao criar a Data Base: {e}")
             print(f"Erro ao criar a Data Base: {e}")
 
     def update_progress(self, progress_dialog, name_data, update):
@@ -2022,10 +2157,13 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             try:
                 os.remove(datascripts)
                 print("Arquivo removido com sucesso!")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execut_scripts_creation_userDB - Arquivo removido com sucesso!")
             except Exception as e:
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execut_scripts_creation_userDB - Erro ao tentar deletar arquivo: {e}")
                     print(f"Erro ao tentar deletar arquivo:\n{e}")
             print("Todos os Scripts foram executados com sucesso!")
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execut_scripts_creation_userDB - Erro: {e}")
             print(f"Erro: {e}")
 
     def execut_scripts_creation(self, path_scripts, name_data):
@@ -2039,12 +2177,15 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             conn.commit()
             conn.close()
             print("Todos os Scripts foram executados com sucesso!")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execut_scripts_creation - Todos os Scripts foram executados com sucesso!")
             try:
                 os.remove(path_scripts)
                 print("Arquivo removido com sucesso!")
             except Exception as e:
                     print(f"Erro ao tentar deletar arquivo:\n{e}")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execut_scripts_creation - Erro ao tentar deletar arquivo: {e}")
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"execut_scripts_creation - Erro: {e}")
             print(f"Erro: {e}")
 
     #Pega nomes das tabelas existente no banco de dados
@@ -2062,6 +2203,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             #Retorna lista  de tabelas
             return tables_existig
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"get_tables_existents - Erro ao obter lista de tabelas: {e}")
             print(f"Erro ao obter lista de tabelas:\n{e}")
 
     def cria_tabelas_nao_existentes(self,path_scripts, name_data, existing_tables):
@@ -2095,7 +2237,9 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             conn.close()
 
             print("Scripts para tabelas inexistentes foram executados com sucesso!")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"cria_tabelas_nao_existentes - Scripts para tabelas inexistentes foram executados com sucesso!")
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"cria_tabelas_nao_existentes - Erro ao executar scripts para tabelas inexistentes: {e}")
             print(f"Erro ao executar scripts para tabelas inexistentes: {e}")
 
 
@@ -2136,8 +2280,10 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
             else:
                 os.remove(path)
                 print("Dados de login excluídos com sucesso!")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"on_login_clicked - Dados de login excluídos com sucesso!")
         except Exception as e:
             print(f"Erro ao manipular o arquivo de histórico: {e}")
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"on_login_clicked - Erro ao manipular o arquivo de histórico: {e}")
 
     def read_saved_data(self):
         path = 'venv\\Lib\\site-packages\\_m\\file\\file\\u\\mu\\hist.txt'
@@ -2161,7 +2307,8 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
                     self.txt_username.setText(saved_user)
                     self.txt_senha_login.setText(saved_pass)
 
-        except FileNotFoundError:
+        except FileNotFoundError as f:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"read_saved_data - Erro: {f}")
             # Lógica para lidar com o arquivo não existente
             pass
 
@@ -2195,9 +2342,11 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
                     self.on_login_clicked(username,password)
                 else:
                     self.show_error_popup("Erro de login", "Usuário ou senha incorretos.")
+                    self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"login_user - Erro de login Usuário ou senha incorretos.")
                     self.logs_login("Usuário ou senha incorretos.")
             else:
                 self.show_error_popup("Erro de login", "Usuário não encontrado.")
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"login_user - Erro de login Usuário não encontrado.")
                 self.logs_login("Usuário não encontrado.")
 
             

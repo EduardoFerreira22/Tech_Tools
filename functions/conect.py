@@ -7,6 +7,8 @@ try:
     from PySide6.QtGui import QIcon,QFont,QColor
     from PySide6 import QtCore
     from PySide6.QtWidgets import (QApplication,QMainWindow,QMessageBox,QTableWidgetItem,QFileDialog)
+    from functions.logs import App_logs
+    import os
     import uuid
 except:
     pass
@@ -27,6 +29,13 @@ class Conections_SQLServer():
 
         self.cursor = None  # Inicializa o atributo cursor
         self.conn = None  # Inicializa a conexão como None
+            #LOGS ----------------------------------------------------------------------------------------------------------
+            # Obtém o nome do arquivo atual
+        self.file_name = os.path.splitext(os.path.basename(__file__))[0] if __name__ != "__main__" else "conect"
+        self.path_logs = 'logs'
+        self.class_name = self.__class__.__name__
+        self.log = App_logs()
+
 
     def conect_sqlserver(self, server, database, username, password):
         self.server = server
@@ -41,6 +50,7 @@ class Conections_SQLServer():
             self.cursor = self.conn.cursor()
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"conect_sqlserver Erro: {e}")
             print(e)
             return "ERRO"
 
@@ -48,6 +58,12 @@ class Conections_MySQL():
     def __init__(self):
         self.conn = None
         self.cursor = None
+            # Obtém o nome do arquivo atual
+        self.file_name = os.path.splitext(os.path.basename(__file__))[0] if __name__ != "__main__" else "conect"
+        self.path_logs = 'logs'
+        self.class_name = self.__class__.__name__
+        self.log = App_logs()
+
 
     def MYSQL(self, host, database, username, password, port):
         try:
@@ -66,6 +82,7 @@ class Conections_MySQL():
                 return "OK"
 
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"MYSQL Erro de conexão: {e}")
             print(f"Erro de conexão: {str(e)}")
             return "ERRO"
 
@@ -76,6 +93,7 @@ class Conections_MySQL():
             res = self.cursor.fetchall()
             return res
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query_MySQL Erro de conexão: {e}")
             error.show_error_popup(str(e))
             print(f'Erro:\n{e}')
 
@@ -83,6 +101,11 @@ class Conections_SQLite3():
     def __init__(self):
         self.conn = None
         self.cursor = None
+            # Obtém o nome do arquivo atual
+        self.file_name = os.path.splitext(os.path.basename(__file__))[0] if __name__ != "__main__" else "conect"
+        self.path_logs = 'logs'
+        self.class_name = self.__class__.__name__
+        self.log = App_logs()
 
 
     def conectar_sqlite3_db(self, path_db):
@@ -93,6 +116,7 @@ class Conections_SQLite3():
             print("Conexão estabelecida com sucesso.")
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"conectar_sqlite3_db Erro ao conectar à DataBase: {e}")
             print("Erro ao conectar à DataBase:", e)
             return "ERRO"
         
@@ -107,6 +131,7 @@ class Conections_SQLite3():
             print(res)
             return column_names,res
         except Exception as e:
+          self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"query_SQLite Erro: {e}")
           error.show_error_popup(str(e))
 
 
@@ -114,6 +139,11 @@ class Conections_PostgreSQL():
     def __init__(self):
         self.cursor = None
         self.conn = None
+            # Obtém o nome do arquivo atual
+        self.file_name = os.path.splitext(os.path.basename(__file__))[0] if __name__ != "__main__" else "conect"
+        self.path_logs = 'logs'
+        self.class_name = self.__class__.__name__
+        self.log = App_logs()
 
     def postgresql_conect(self, host, database, username, password, port):
         
@@ -127,5 +157,6 @@ class Conections_PostgreSQL():
                 return "OK"
 
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"postgresql_conect Erro de conexão: {e}")
             print(f"Erro de conexão: {str(e)}")
             return "ERRO"

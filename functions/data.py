@@ -1,13 +1,23 @@
 import sqlite3
-
+from functions.logs import App_logs
+import os
 class SQLite_Data():
+    def __init__(self):
+            #LOGS ----------------------------------------------------------------------------------------------------------
+            # Obtém o nome do arquivo atual
+        self.file_name = os.path.splitext(os.path.basename(__file__))[0] if __name__ != "__main__" else "data"
+        self.path_logs = 'logs'
+        self.class_name = self.__class__.__name__
+        self.log = App_logs()
+
     def conect_db(self):
         self.conn = sqlite3.connect('venv\\Lib\\site-packages\\.DB\\.bd\\file_db\\file\\bd\\techtools.db')
 
     def conect_close(self):
         try:
             self.conn.close()
-        except:
+        except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"conect_close Erro: {e}")
             pass
     
     #########################################################################################################
@@ -18,7 +28,8 @@ class SQLite_Data():
             cursor.execute("SELECT DESCRICAO FROM DRIVERS ORDER BY DESCRICAO")
             drivers = cursor.fetchall()
             return drivers
-        except:
+        except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"select_printers Erro: {e}")
             pass
 
     def select_printer_tables(self, name):
@@ -29,6 +40,7 @@ class SQLite_Data():
             return drivers
         except Exception as e:
             print("Erro ao executar a query:", e)
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"select_printer_tables - Erro ao executar a query:: {e}")
             return None
         
     def new_printer(self,name,link):
@@ -39,6 +51,7 @@ class SQLite_Data():
             return "OK"
         except Exception as e:
             print("Erro ao executar a query:", e)
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"new_printer - Erro ao executar a query:: {e}")
             return None
 
         
@@ -49,6 +62,7 @@ class SQLite_Data():
             cursor.connection.commit()
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"update_printers - Erro ao executar a query:: {e}")
             print("Erro ao executar a query:", e)
             return None
 
@@ -61,7 +75,8 @@ class SQLite_Data():
             cursor.execute("SELECT DESCRICAO FROM INSTALADORES ORDER BY DESCRICAO")
             instalers = cursor.fetchall()
             return instalers
-        except:
+        except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"select_instalers - Erro: {e}")
             pass
 
     def select_instalers_tables(self, name):
@@ -71,6 +86,7 @@ class SQLite_Data():
             installs = cursor.fetchall()
             return installs
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"select_instalers_tables - ao executar a query: {e}")
             print("Erro ao executar a query:", e)
             return None
         
@@ -81,6 +97,7 @@ class SQLite_Data():
             cursor.connection.commit()
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"new_istaler - ao executar a query: {e}")
             print("Erro ao executar a query:", e)
             return None
 
@@ -92,6 +109,7 @@ class SQLite_Data():
             cursor.connection.commit()
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"update_instaler - ao executar a query: {e}")
             print("Erro ao executar a query:", e)
             return None
 
@@ -103,7 +121,8 @@ class SQLite_Data():
             cursor.execute("SELECT DESCRICAO FROM SCRIPTS ORDER BY DESCRICAO")
             scripts = cursor.fetchall()
             return scripts
-        except:
+        except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"select_scripts Erro: {e}")
             pass
 
     def combo_script_itens(self,name):
@@ -112,7 +131,8 @@ class SQLite_Data():
             cursor.execute(f"SELECT idSCRIPT,DESCRICAO,SCRIPT_TEXT FROM SCRIPTS WHERE DESCRICAO = '{name}'")
             infor = cursor.fetchall()
             return infor
-        except:
+        except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"combo_script_itens Erro: {e}")
             pass
     def new_script(self, name, script):
         try:
@@ -122,6 +142,7 @@ class SQLite_Data():
             self.conn.commit()
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"new_script Erro ao executar a query: {e}")
             print("Erro ao executar a query:", e)
             return None
 
@@ -132,6 +153,7 @@ class SQLite_Data():
             self.conn.commit()
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"update_script Erro ao executar a query: {e}")
             print("Erro ao executar a query:", e)
             return None
 
@@ -143,5 +165,6 @@ class SQLite_Data():
             cursor.connection.commit()
             return "OK"
         except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"delete_script Erro ao executar a query: {e}")
             print("Erro ao executar a query:", e)
             return None
