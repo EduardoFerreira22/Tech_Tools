@@ -98,3 +98,6 @@ BUSCAR NCM.
 
 Nesse módulo é possível pesquisar por NCM's e verificar se o mesmo está expirado ou ainda válido.
 Também é possível salvar uma tabela em CSV contendo todos os NCM's 
+
+
+Escrevendo ...
