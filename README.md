@@ -13,7 +13,7 @@ Atualmente, o TechTools é uma ferramenta completa em seu contexto, mas está em
 e facilitar os processos realizados por nós, profissionais de T.I.
 
 
-================================= FUNCIONALIDADES ==================================
+=========================== FUNCIONALIDADES ==========================
 
 TELA DE LOGIN COM SENHA CRIPTOGRAFADA:
 
@@ -34,7 +34,7 @@ usuário:techtools
 senha:techtadm
 Este usuário tem acesso total inclusive a criação e alteração de novos usuários.
 
-
+----------------------------------------------------------------------------------------
 TELA DE CONEXÃO COM DATA BASES.
 
 ![Screenshot_42](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/4ef9aa2b-9e65-471e-a4c0-950eed65961b)
