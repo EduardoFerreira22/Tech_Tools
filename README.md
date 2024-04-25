@@ -54,8 +54,7 @@ também cadastrar novos ou alterar links existentes.
 LISTA DE INSTALADORES:
 
 Nessa tela é possível cadastrar ou alterar arquivos de instalação que lhe serão úteis posteriormente.
-
-![image](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/008e605d-74a2-4588-b9e5-6692d3ac23d3)
+![Screenshot_46](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/17080f2f-49de-48f1-aa92-12332ca4c5aa)
 
 -----------------------------------------------------------------------------------------
 REPOSITÓRIO DE SCRIPTS.
