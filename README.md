@@ -53,4 +53,48 @@ também cadastrar novos ou alterar links existentes.
 
 LISTA DE INSTALADORES:
 
-Nessa tela é possível cadastrar 
+Nessa tela é possível cadastrar ou alterar arquivos de instalação que lhe serão úteis posteriormente.
+
+![image](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/008e605d-74a2-4588-b9e5-6692d3ac23d3)
+
+
+REPOSITÓRIO DE SCRIPTS.
+
+No repositório de scripts é possível cadastrar seus scripts favoritos.
+![scripts](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/0d0b8171-26bc-41bc-9cd2-18d2f33e9de5)
+
+Novo Script;
+Alterar Script;
+Cópiar/Excluir;
+Enviar Script (Encaminha o script para a página de conexão e deixa o script pronto para ser executado).
+
+EXECUTÁVEIS.
+
+O Tech Tools Já traz diversos programas executáveis que podem ser usados no seu dia a dia como proficional de T.I.
+![Screenshot_41](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/79a2eca1-e8dd-4fb2-8913-3bde9b261727)
+
+Advanced_IP_Scanner;
+AnyDesk;
+Ativador Mágico(Ativa Todos os Windows e Pacote Office);
+CristalDiskInfo;
+3DP drivers de rede;
+WinToHDD_Free;
+Rufus.
+
+TRATAMENTO DE CSV.
+
+O Tech Tools disponhe de um módulo com diversas ferramentas para tratamento de dados em arquivos .CSV.
+![Screenshot_42](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/4842706e-bfeb-48a1-936a-0c22be4a5b9a)
+
+OPÇÕES DE BUSCA: Buscar NCM's inválidos, Buscar por NCM, Tudo que contém.
+
+OPÇÕES DE PROCESSAMENTOS:
+Substituir NCM, Tudo que contém mude para, P. X da Coluna A, Coluna B Recebe.
+
+![Screenshot_44](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/9bf219c6-86f0-4f77-8d5e-d7686e83845b)
+
+
+BUSCAR NCM.
+
+Nesse módulo é possível pesquisar por NCM's e verificar se o mesmo está expirado ou ainda válido.
+Também é possível salvar uma tabela em CSV contendo todos os NCM's 
