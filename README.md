@@ -42,7 +42,7 @@ TELA DE CONEXÃO COM DATA BASES.
 Nessa tela é possível se conectar com diversos Bancos de dados e executar querys, ver as tabelas daquela data base realizar backups do SQL Server.
 Conexão a bancos de dados (SQL Server, MySQL, Postgresql, SQLite, IbExpert);
 
-
+-----------------------------------------------------------------------------------------
 LISTA DE DRIVERS DE IMPRESSORAS.
 
 ![Screenshot_43](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/2fd44f1c-8929-4aab-b835-668c5dcacb9a)
@@ -57,7 +57,7 @@ Nessa tela é possível cadastrar ou alterar arquivos de instalação que lhe se
 
 ![image](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/008e605d-74a2-4588-b9e5-6692d3ac23d3)
 
-
+-----------------------------------------------------------------------------------------
 REPOSITÓRIO DE SCRIPTS.
 
 No repositório de scripts é possível cadastrar seus scripts favoritos.
@@ -68,6 +68,7 @@ Alterar Script;
 Cópiar/Excluir;
 Enviar Script (Encaminha o script para a página de conexão e deixa o script pronto para ser executado).
 
+-----------------------------------------------------------------------------------------
 EXECUTÁVEIS.
 
 O Tech Tools Já traz diversos programas executáveis que podem ser usados no seu dia a dia como proficional de T.I.
@@ -81,6 +82,7 @@ CristalDiskInfo;
 WinToHDD_Free;
 Rufus.
 
+-----------------------------------------------------------------------------------------
 TRATAMENTO DE CSV.
 
 O Tech Tools disponhe de um módulo com diversas ferramentas para tratamento de dados em arquivos .CSV.
@@ -94,6 +96,7 @@ Substituir NCM, Tudo que contém mude para, P. X da Coluna A, Coluna B Recebe.
 ![Screenshot_44](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/9bf219c6-86f0-4f77-8d5e-d7686e83845b)
 
 
+-----------------------------------------------------------------------------------------
 BUSCAR NCM.
 
 Nesse módulo é possível pesquisar por NCM's e verificar se o mesmo está expirado ou ainda válido.
