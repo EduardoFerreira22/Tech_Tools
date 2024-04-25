@@ -12,10 +12,8 @@ Assim, ele passou a oferecer uma ampla gama dos principais drivers de impressora
 Atualmente, o TechTools é uma ferramenta completa em seu contexto, mas está em constante atualização, com novas ferramentas sendo adicionadas ao programa com o objetivo de melhorar
 e facilitar os processos realizados por nós, profissionais de T.I.
 
-=============================================== FUNCIONALIDADES ========================================================================
 
-
-
+=============== FUNCIONALIDADES ===============
 
 TELA DE LOGIN COM SENHA CRIPTOGRAFADA:
 
