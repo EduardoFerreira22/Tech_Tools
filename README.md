@@ -13,7 +13,7 @@ Atualmente, o TechTools é uma ferramenta completa em seu contexto, mas está em
 e facilitar os processos realizados por nós, profissionais de T.I.
 
 
-=============== FUNCIONALIDADES ===============
+================================= FUNCIONALIDADES ==================================
 
 TELA DE LOGIN COM SENHA CRIPTOGRAFADA:
 
