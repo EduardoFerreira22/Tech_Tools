@@ -20,6 +20,7 @@ TELA DE LOGIN COM SENHA CRIPTOGRAFADA:
 ![LOGIN](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/759e38e3-8789-420d-beef-27d645885924)
 
 O Tech Tools tem controle de usuários onde é possível se conectar inicialmente com dois usuários que obterão acesso a funcionalidades diferentes.
+
 usuário:admin 
 senha:admin 
 Esse usuário receberá acesso padrão e terá acesso as funcionalidades:
@@ -29,6 +30,10 @@ Lista de links de executáveis (Podem ser excluídos, adcionados novos e alterad
 Lista de Scripts mais usados (Podem ser excluídos, adcionados novos e alterados);
 Executáveis.
 
+usuário:techtools 
+senha:techtadm
+Este usuário tem acesso total inclusive a criação e alteração de novos usuários.
+
 
 TELA DE CONEXÃO COM DATA BASES.
 
@@ -36,3 +41,16 @@ TELA DE CONEXÃO COM DATA BASES.
 
 Nessa tela é possível se conectar com diversos Bancos de dados e executar querys, ver as tabelas daquela data base realizar backups do SQL Server.
 Conexão a bancos de dados (SQL Server, MySQL, Postgresql, SQLite, IbExpert);
+
+
+LISTA DE DRIVERS DE IMPRESSORAS.
+
+![Screenshot_43](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/2fd44f1c-8929-4aab-b835-668c5dcacb9a)
+
+Nessa tela é possível encontrar vários drivers das principais impressoras usadas no dia a dia de um profissional de T.I.
+É usado como um repositório de links de drivers que ao ser executados já inicia-se o download do driver desejado, é possível
+também cadastrar novos ou alterar links existentes.
+
+LISTA DE INSTALADORES:
+
+Nessa tela é possível cadastrar 
