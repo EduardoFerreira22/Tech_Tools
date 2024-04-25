@@ -15,4 +15,24 @@ e facilitar os processos realizados por nós, profissionais de T.I.
 FUNCIONALIDADES:
 
 
-![7](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/dad64afa-5658-4404-b2f3-ed633b01c32e)
+TELA DE LOGIN COM SENHA CRIPTOGRAFADA:
+
+![LOGIN](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/759e38e3-8789-420d-beef-27d645885924)
+
+O Tech Tools tem controle de usuários onde é possível se conectar inicialmente com dois usuários que obterão acesso a funcionalidades diferentes.
+usuário:admin 
+senha:admin 
+Esse usuário receberá acesso padrão e terá acesso as funcionalidades:
+Conexão a bancos de dados (SQL Server, MySQL, Postgresql, SQLite, IbExpert);
+Lista de drivers de impressoras (Podem ser excluídos, adcionados novos e alterados);
+Lista de links de executáveis (Podem ser excluídos, adcionados novos e alterados);
+Lista de Scripts mais usados (Podem ser excluídos, adcionados novos e alterados);
+Executáveis.
+
+
+TELA DE CONEXÃO COM DATA BASES.
+
+![Screenshot_42](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/4ef9aa2b-9e65-471e-a4c0-950eed65961b)
+
+Nessa tela é possível se conectar com diversos Bancos de dados e executar querys, ver as tabelas daquela data base realizar backups do SQL Server.
+Conexão a bancos de dados (SQL Server, MySQL, Postgresql, SQLite, IbExpert);
