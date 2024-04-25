@@ -1,3 +1,5 @@
+                                                               **      Como o TechTools surgiu?   **
+
 O TechTools foi inicialmente projetado para estabelecer conexão com o banco de dados SQL Server e executar consultas pré-definidas dentro do código do programa.
 O projeto, inicialmente, visava agilizar o processo de migração de dados entre sistemas de gestão diferentes. Facilitava a conexão e apresentava os dados formatados, 
 economizando tempo para o técnico responsável pela tarefa.
