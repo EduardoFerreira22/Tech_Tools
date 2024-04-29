@@ -101,5 +101,14 @@ BUSCAR NCM.
 Nesse módulo é possível pesquisar por NCM's e verificar se o mesmo está expirado ou ainda válido.
 Também é possível salvar uma tabela em CSV contendo todos os NCM's 
 
+Obs: Base de dados de ncm's atualizada.
+![NCM](https://github.com/EduardoFerreira22/Tech_Tools/assets/104332245/cfa3c748-4d4d-4143-8877-54fc3d04ef8f)
 
-Escrevendo ...
+
+USUÁRIOS E CADASTROS DE LOGINS.
+
+Cadestre seus logins e senhas de forma segura e criptografada. Na área de usuários é possível cadastrar ou alterar usuários existentes.
+Também é possível cadastrar seus logins e senhas de forma segura, lembrando que apenas os usuários com acesso de Super-User tem acesso à 
+área de usuários.
+
+Obs: em caso de dúvidas ou queira contribuir com o projeto, você pode está entrando em contato pelo e-mail: eduardoferreira_of@outlook.com.
