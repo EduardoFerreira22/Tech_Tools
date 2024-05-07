@@ -693,6 +693,8 @@ class Processing_CSV(QMainWindow,Ui_ProcessCSV):
 
         self.update_label_info(f"Tabela Atualizada.")
         self.bt_remover_duplicatas.setVisible(True)
+
+
     
     def remover_duplicatas_arquivo_csv(self):
             reply = QMessageBox.question(None, "Atenção!", "Tem certeza dessa alteração", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)

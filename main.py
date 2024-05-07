@@ -1941,6 +1941,7 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         self.lb_login_version.setText(str(f'v{version_sys}'))
 
         self.lb_logs_login.setText(None)
+        self.remove_main()
 
     def clean_logs(self):   
         self.lb_logs_login.clear()
@@ -1953,6 +1954,15 @@ class LoginWindow(QMainWindow, UI_LoginWindow,Manger_Connect):
         self.time.start(5000)
 
 
+    def remove_main(self):
+        try:
+            if os.path.exists('C:\\Tech Tools\\main.py'):
+                os.remove('C:\\Tech Tools\\main.py')
+            else:
+                self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"remove_main - Nenhum arquivo main foi encontrado...")
+
+        except Exception as e:
+            self.log.logs(name_file=self.file_name,path=self.path_logs,msg=f"remove_main - Erro:{e}")
 
 
     def version_txt(self,path_txt):

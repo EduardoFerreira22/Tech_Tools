@@ -8,6 +8,7 @@ instaladores.csv
 
 # Ignora a pasta Ativador Magico/
 Ativador Magico/
+Ativador Magico.cmd
 3DP.exe
 3DP - Copia.exe
 
@@ -35,3 +36,7 @@ produtos02.csv
 SmartPdv.db
 teste.csv
 testes
+venv/
+\venv
+exemplo_testes.py
+__pycache__
